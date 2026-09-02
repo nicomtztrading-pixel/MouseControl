@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,1263 +12,1454 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* =========================================================
-           VIDEOS MOUSECONTROL / HACKAIM
-           ========================================================= */
 
-        .video-products {
+        /* ================================
+           VENTANA YA TRANSFERÍ
+        ================================ */
+
+        .transfer-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .transfer-modal.active {
+            display: flex;
+        }
+
+        .transfer-modal-box {
+            width: min(560px, 100%);
+            position: relative;
+            padding: 34px;
+            border-radius: 24px;
+            background: rgba(20, 14, 30, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            text-align: center;
+        }
+
+        .transfer-modal-box .section-tag {
+            margin-bottom: 10px;
+        }
+
+        .transfer-modal-box h2 {
+            margin: 0;
+            font-size: clamp(26px, 5vw, 38px);
+        }
+
+        .transfer-modal-text {
+            margin: 18px 0 24px;
+            color: rgba(255, 255, 255, 0.76);
+            line-height: 1.7;
+        }
+
+        .transfer-instructions {
+            display: grid;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .transfer-item {
+            padding: 18px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            text-align: left;
+        }
+
+        .transfer-item span {
+            display: block;
+            margin-bottom: 6px;
+            color: #b777f5;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .transfer-item strong {
+            display: block;
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+        .transfer-close,
+        .complaint-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .transfer-close:hover,
+        .complaint-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+
+        /* ================================
+           CONTADOR DE DESCARGAS
+        ================================ */
+
+        .download-counter {
+            margin-top: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(190, 115, 255, 0.10);
+            border: 1px solid rgba(190, 115, 255, 0.22);
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .download-counter strong {
+            color: #d39aff;
+        }
+
+
+        /* ================================
+           BOTÓN SOPORTE CENTRADO
+        ================================ */
+
+        .support-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+
+        /* ================================
+           VENTANA DE SOPORTE
+        ================================ */
+
+        .complaint-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .complaint-modal.active {
+            display: flex;
+        }
+
+        .complaint-modal-box {
+            width: min(520px, 100%);
+            position: relative;
+            padding: 34px;
+            border-radius: 24px;
+            background: rgba(20, 14, 30, 0.90);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            text-align: center;
+        }
+
+        .complaint-modal-box h2 {
+            margin: 0;
+            font-size: clamp(26px, 5vw, 38px);
+        }
+
+        .complaint-text {
+            margin: 18px 0 24px;
+            color: rgba(255, 255, 255, 0.76);
+            line-height: 1.7;
+        }
+
+        .complaint-email {
+            margin: 24px 0;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .complaint-email span {
+            display: block;
+            margin-bottom: 8px;
+            color: #b777f5;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .complaint-email strong {
+            display: block;
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+
+        /* =========================================================
+           SOLO PARA LOS DOS VIDEOS PRINCIPALES
+           NO MODIFICA LOS VIDEOS DE GAMEPLAY
+        ========================================================= */
+
+        .main-videos {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
-            max-width: 1050px;
-            margin: 0 auto;
+            gap: 24px;
         }
 
-        .video-product {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 18px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .video-product-header {
-            width: 100%;
+        .main-video-card {
+            min-width: 0;
             text-align: center;
-            margin-bottom: 14px;
         }
 
-        .video-product-header .section-tag {
-            margin: 0 0 6px;
-        }
-
-        .video-product-header h3 {
-            margin: 0 0 6px;
-            font-size: 22px;
-        }
-
-        .video-product-header p:last-child {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.68);
-            line-height: 1.45;
-            font-size: 13px;
-        }
-
-        /*
-           Achicamos específicamente los videos de esta sección.
-           No modificamos el .video-container general del sitio.
-        */
-        .video-product .video-container {
+        .main-video-card .video-container {
             width: 100%;
-            max-width: 470px;
+            max-width: none;
             margin: 0 auto;
         }
 
-        .video-product .video-container iframe {
+        .main-video-card .video-container iframe {
             width: 100%;
             aspect-ratio: 16 / 9;
             display: block;
         }
 
-        .video-buy-button {
-            margin-top: 14px;
+        .main-video-title {
+            margin: 0 0 12px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .main-video-description {
+            margin: 0 0 16px;
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .main-video-button {
+            margin-top: 16px;
             width: 100%;
         }
 
-        .how-it-works {
-            padding-top: 38px !important;
-            padding-bottom: 38px !important;
-        }
+        /* ================================
+           PRECIOS
+        ================================ */
 
-        .how-it-works .section-header {
-            margin-bottom: 22px;
-        }
-
-        /* =========================================================
-           PRECIOS MOUSECONTROL / HACKAIM
-           ========================================================= */
-
-        .pricing-groups {
+        .pricing-products {
             display: grid;
             gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
         }
 
-        .pricing-group {
-            padding: 24px;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 255, 255, 0.10);
+        .pricing-product {
+            width: 100%;
         }
 
-        .pricing-group-header {
+        .pricing-product-title {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 0 0 20px;
         }
 
-        .pricing-group-header .section-tag {
-            margin: 0 0 7px;
+        .pricing-product-title .section-tag {
+            margin-bottom: 8px;
         }
 
-        .pricing-group-header h3 {
+        .pricing-product-title h3 {
             margin: 0;
-            font-size: 27px;
+            font-size: 26px;
         }
 
-        .pricing-group-header p:last-child {
-            margin: 7px 0 0;
-            color: rgba(255, 255, 255, 0.62);
+        .pricing-product-title p {
+            margin: 8px 0 0;
+            color: rgba(255, 255, 255, 0.65);
         }
+
+        .pricing-product .pricing {
+            margin-top: 0;
+        }
+
+
+        /* ================================
+           RESPONSIVE
+        ================================ */
 
         @media (max-width: 900px) {
-            .video-products {
+
+            .main-videos {
                 grid-template-columns: 1fr;
-                max-width: 700px;
+                max-width: 650px;
             }
 
-            .video-product {
-                width: 100%;
-            }
         }
 
         @media (max-width: 650px) {
-            .how-it-works {
-                padding-top: 30px !important;
-                padding-bottom: 30px !important;
+
+            .transfer-modal {
+                padding: 12px;
             }
 
-            .video-product {
+            .transfer-modal-box {
+                padding: 28px 20px;
+                border-radius: 20px;
+            }
+
+            .transfer-item {
                 padding: 15px;
             }
 
-            .video-product-header h3 {
-                font-size: 21px;
+            .complaint-modal {
+                padding: 12px;
             }
 
-            .pricing-group {
-                padding: 18px;
+            .complaint-modal-box {
+                padding: 28px 20px;
+                border-radius: 20px;
             }
 
-            .pricing-group-header h3 {
-                font-size: 24px;
+            .main-videos {
+                gap: 20px;
             }
+
+            .main-video-title {
+                font-size: 18px;
+            }
+
         }
+
     </style>
 
-    <style>
-        /* =========================================================
-           MODAL TRANSFERENCIA
-           ========================================================= */
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.78);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            width: 100%;
-            max-width: 520px;
-            padding: 30px;
-            border-radius: 24px;
-            background: rgba(20, 20, 25, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.5);
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 18px;
-            font-size: 28px;
-            cursor: pointer;
-            color: white;
-        }
-
-        .transfer-data {
-            margin: 20px 0;
-        }
-
-        .transfer-row {
-            margin-bottom: 14px;
-        }
-
-        .transfer-row strong {
-            display: block;
-            font-size: 12px;
-            opacity: 0.6;
-            margin-bottom: 3px;
-        }
-
-        .transfer-row span {
-            font-size: 16px;
-        }
-
-        .whatsapp-button {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* =========================================================
-           CONTADOR
-           ========================================================= */
-
-        .download-counter {
-            margin-top: 18px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        /* =========================================================
-           SOPORTE
-           ========================================================= */
-
-        .support-modal {
-            display: none;
-            position: fixed;
-            z-index: 10000;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.78);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .support-modal-content {
-            width: 100%;
-            max-width: 500px;
-            padding: 30px;
-            border-radius: 24px;
-            background: rgba(20, 20, 25, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            position: relative;
-        }
-
-        .support-close {
-            position: absolute;
-            top: 12px;
-            right: 18px;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-        @media (max-width: 650px) {
-            .modal-content,
-            .support-modal-content {
-                padding: 22px;
-            }
-        }
-    </style>
 </head>
+
 
 <body>
 
-    <!-- =========================================================
-         NAVBAR
-         ========================================================= -->
+    <!-- FONDO -->
+    <div class="background"></div>
 
-    <nav class="navbar">
-        <div class="nav-container">
 
-            <a href="#inicio" class="logo">
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="page">
+
+
+        <!-- ENCABEZADO -->
+
+        <header class="glass navbar">
+
+            <div class="logo">
                 🎯 MOUSECONTROL <span>/ HACKAIM</span> 🖱️
-            </a>
-
-            <div class="nav-links">
-                <a href="#inicio">INICIO</a>
-                <a href="#videos">CÓMO FUNCIONA</a>
-                <a href="#funciones">FUNCIONES</a>
-                <a href="#precios">PRECIOS</a>
-                <a href="#gameplay">GAMEPLAY</a>
-                <a href="#noticias">NOTICIAS</a>
-                <a href="#soporte">SOPORTE</a>
             </div>
 
-        </div>
-    </nav>
+            <nav>
 
-
-    <!-- =========================================================
-         HERO
-         ========================================================= -->
-
-    <section id="inicio" class="hero">
-
-        <div class="hero-content">
-
-            <p class="hero-eyebrow">
-                🎯 MOUSECONTROL / HACKAIM 🖱️
-            </p>
-
-            <h1>
-                CONTROLÁ TU EXPERIENCIA
-            </h1>
-
-            <p class="hero-subtitle">
-                Controlá tu recoil en todos los juegos.
-            </p>
-
-            <div class="download-counter">
-                100.000+ DESCARGAS
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         CÓMO FUNCIONA
-         ========================================================= -->
-
-    <section id="videos" class="glass section how-it-works">
-
-        <div class="section-header">
-
-            <p class="section-tag">
-                MOUSECONTROL / HACKAIM
-            </p>
-
-            <h2>
-                ¿CÓMO FUNCIONA?
-            </h2>
-
-            <p>
-                Conocé cómo funciona cada programa y elegí el que mejor se adapte a vos.
-            </p>
-
-        </div>
-
-
-        <div class="video-products">
-
-            <!-- MOUSECONTROL -->
-
-            <article class="video-product">
-
-                <div class="video-product-header">
-
-                    <p class="section-tag">
-                        VIDEO 01
-                    </p>
-
-                    <h3>
-                        MOUSECONTROL
-                    </h3>
-
-                    <p>
-                        Conocé el funcionamiento de MouseControl y sus herramientas de Anti-Recoil.
-                    </p>
-
-                </div>
-
-                <div class="video-container">
-
-                    <iframe
-                        src="https://www.youtube.com/embed/UQgaHR6llKA"
-                        title="Cómo funciona MouseControl"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-
-                </div>
-
-                <a href="#mousecontrol" class="button primary video-buy-button">
-                    COMPRAR MOUSECONTROL
+                <a href="#inicio">
+                    Inicio
                 </a>
 
-            </article>
-
-
-            <!-- HACKAIM -->
-
-            <article class="video-product">
-
-                <div class="video-product-header">
-
-                    <p class="section-tag">
-                        VIDEO 02
-                    </p>
-
-                    <h3>
-                        HACKAIM
-                    </h3>
-
-                    <p>
-                        Conocé HACKAIM y sus funciones diseñadas para mejorar tu experiencia de juego.
-                    </p>
-
-                </div>
-
-                <div class="video-container">
-
-                    <iframe
-                        src="https://www.youtube.com/embed/RIBJBD2AYCA"
-                        title="Cómo funciona HACKAIM"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-
-                </div>
-
-                <a href="#hackaim" class="button primary video-buy-button">
-                    COMPRAR HACKAIM
+                <a href="#funciones">
+                    Funciones
                 </a>
 
-            </article>
+                <a href="#videos">
+                    Videos
+                </a>
 
-        </div>
+                <a href="#precios">
+                    Comprar
+                </a>
 
-    </section>
+                <a href="#noticias">
+                    Noticias
+                </a>
 
+                <a href="#soporte">
+                    Soporte
+                </a>
 
-    <!-- =========================================================
-         FUNCIONES
-         ========================================================= -->
+            </nav>
 
-    <section id="funciones" class="glass section">
-
-        <div class="section-header">
-
-            <p class="section-tag">
-                FUNCIONES
-            </p>
-
-            <h2>
-                TODO BAJO CONTROL
-            </h2>
-
-            <p>
-                Herramientas diseñadas para llevar tu experiencia al siguiente nivel.
-            </p>
-
-        </div>
+        </header>
 
 
-        <div class="cards">
+        <!-- INICIO -->
 
-            <!-- ANTI RECOIL -->
+        <main id="inicio">
 
-            <div class="card">
+            <section class="glass hero">
 
-                <div class="card-icon">
-                    🎯
-                </div>
+                <div class="hero-content">
 
-                <h3>
-                    ANTI-RECOIL
-                </h3>
-
-                <p>
-                    Configurá los parámetros verticales y horizontales de cada perfil.
-                </p>
-
-                <span class="status available">
-                    DISPONIBLE
-                </span>
-
-            </div>
-
-
-            <!-- AIM ASSIST -->
-
-            <div class="card">
-
-                <div class="card-icon">
-                    🧲
-                </div>
-
-                <h3>
-                    AIM ASSIST
-                </h3>
-
-                <p>
-                    Función disponible dentro de HACKAIM.
-                </p>
-
-                <span class="status available">
-                    DISPONIBLE
-                </span>
-
-            </div>
-
-
-            <!-- PERFILES -->
-
-            <div class="card">
-
-                <div class="card-icon">
-                    👤
-                </div>
-
-                <h3>
-                    PERFILES
-                </h3>
-
-                <p>
-                    Opciones disponibles para personalizar tus perfiles.
-                </p>
-
-                <span class="status available">
-                    DISPONIBLE
-                </span>
-
-            </div>
-
-
-            <!-- CONTROL -->
-
-            <div class="card">
-
-                <div class="card-icon">
-                    ⚙️
-                </div>
-
-                <h3>
-                    CONTROL
-                </h3>
-
-                <p>
-                    Herramientas de control y configuración disponibles.
-                </p>
-
-                <span class="status available">
-                    DISPONIBLE
-                </span>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         PRECIOS
-         ========================================================= -->
-
-    <section id="precios" class="glass section">
-
-        <div class="section-header">
-
-            <p class="section-tag">
-                PRECIOS
-            </p>
-
-            <h2>
-                ELEGÍ TU PLAN
-            </h2>
-
-            <p>
-                Elegí la licencia que mejor se adapte a vos.
-            </p>
-
-        </div>
-
-
-        <div class="pricing-groups">
-
-
-            <!-- =================================================
-                 MOUSECONTROL
-                 ================================================= -->
-
-            <div id="mousecontrol" class="pricing-group">
-
-                <div class="pricing-group-header">
-
-                    <p class="section-tag">
-                        PRODUCTO 01
+                    <p class="eyebrow">
+                        🎯 MOUSECONTROL / HACKAIM 🖱️
                     </p>
 
+                    <h1>
+                        CONTROLÁ TU EXPERIENCIA
+                    </h1>
+
+                    <p class="hero-text">
+                        Controlá tu recoil en todos los juegos.
+                    </p>
+
+                    <div class="download-counter">
+                        🚀 <strong>100.000+</strong> DESCARGAS
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================
+                 VIDEOS PRINCIPALES
+            ================================ -->
+
+            <section id="videos" class="glass section">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        MOUSECONTROL / HACKAIM
+                    </p>
+
+                    <h2>
+                        ¿CÓMO FUNCIONA?
+                    </h2>
+
+                    <p>
+                        Mirá los videos y conocé cómo funciona cada programa.
+                    </p>
+
+                </div>
+
+
+                <div class="main-videos">
+
+
+                    <!-- MOUSECONTROL -->
+
+                    <article class="main-video-card">
+
+                        <h3 class="main-video-title">
+                            MOUSECONTROL
+                        </h3>
+
+                        <p class="main-video-description">
+                            Conocé las principales funciones de MouseControl.
+                        </p>
+
+                        <div class="video-container">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/UQgaHR6llKA"
+                                title="Cómo funciona MouseControl"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+
+                        </div>
+
+                        <a
+                            href="#mousecontrol"
+                            class="button primary main-video-button">
+                            COMPRAR MOUSECONTROL
+                        </a>
+
+                    </article>
+
+
+                    <!-- HACKAIM -->
+
+                    <article class="main-video-card">
+
+                        <h3 class="main-video-title">
+                            HACKAIM
+                        </h3>
+
+                        <p class="main-video-description">
+                            Conocé las principales funciones de HACKAIM.
+                        </p>
+
+                        <div class="video-container">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/RIBJBD2AYCA"
+                                title="Cómo funciona HACKAIM"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+
+                        </div>
+
+                        <a
+                            href="#hackaim"
+                            class="button primary main-video-button">
+                            COMPRAR HACKAIM
+                        </a>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- FUNCIONES -->
+
+            <section id="funciones" class="glass section">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        MOUSECONTROL / HACKAIM
+                    </p>
+
+                    <h2>
+                        FUNCIONES
+                    </h2>
+
+                    <p>
+                        Conocé las principales funciones disponibles y las próximas novedades.
+                    </p>
+
+                </div>
+
+
+                <div class="cards">
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            01
+                        </div>
+
+                        <div class="status available">
+                            DISPONIBLE
+                        </div>
+
+                        <h3>
+                            ANTI-RECOIL
+                        </h3>
+
+                        <p>
+                            Configurá los parámetros verticales y horizontales de cada perfil.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            02
+                        </div>
+
+                        <div class="status available">
+                            DISPONIBLE
+                        </div>
+
+                        <h3>
+                            AIM ASSIST
+                        </h3>
+
+                        <p>
+                            Función disponible dentro de HACKAIM.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            03
+                        </div>
+
+                        <div class="status available">
+                            DISPONIBLE
+                        </div>
+
+                        <h3>
+                            PERFILES
+                        </h3>
+
+                        <p>
+                            Opciones disponibles para personalizar tus perfiles.
+                        </p>
+
+                    </article>
+
+
+                    <article class="feature-card">
+
+                        <div class="feature-number">
+                            04
+                        </div>
+
+                        <div class="status available">
+                            DISPONIBLE
+                        </div>
+
+                        <h3>
+                            CONTROL
+                        </h3>
+
+                        <p>
+                            Herramientas de control y configuración disponibles.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- PRECIOS -->
+
+            <section id="precios" class="glass section">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        LICENCIAS
+                    </p>
+
+                    <h2>
+                        ELEGÍ TU PLAN
+                    </h2>
+
+                    <p>
+                        Elegí la duración de tu licencia.
+                    </p>
+
+                </div>
+
+
+                <div class="pricing-products">
+
+
+                    <!-- ================================
+                         MOUSECONTROL
+                    ================================ -->
+
+                    <div id="mousecontrol" class="pricing-product">
+
+                        <div class="pricing-product-title">
+
+                            <p class="section-tag">
+                                MOUSECONTROL
+                            </p>
+
+                            <h3>
+                                MOUSECONTROL
+                            </h3>
+
+                            <p>
+                                Elegí la duración de tu licencia.
+                            </p>
+
+                        </div>
+
+
+                        <div class="pricing">
+
+
+                            <!-- MENSUAL -->
+
+                            <article class="price-card">
+
+                                <p class="price-type">
+                                    MENSUAL
+                                </p>
+
+                                <div class="price">
+                                    $15.000 (arg)15usd
+                                </div>
+
+                                <p class="price-description">
+                                    Pesos argentinos. Licencia válida durante 1 mes.
+                                </p>
+
+                                <a
+                                    href="#comprar"
+                                    class="button primary">
+                                    COMPRAR
+                                </a>
+
+                            </article>
+
+
+                            <!-- ANUAL -->
+
+                            <article class="price-card featured">
+
+                                <div class="recommended">
+                                    RECOMENDADO
+                                </div>
+
+                                <p class="price-type">
+                                    ANUAL
+                                </p>
+
+                                <div class="price">
+                                    $50.000 (arg)50usd
+                                </div>
+
+                                <p class="price-description">
+                                    Pesos argentinos. Licencia válida durante 12 meses.
+                                </p>
+
+                                <a
+                                    href="#comprar"
+                                    class="button primary">
+                                    COMPRAR
+                                </a>
+
+                            </article>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================
+                         HACKAIM
+                    ================================ -->
+
+                    <div id="hackaim" class="pricing-product">
+
+                        <div class="pricing-product-title">
+
+                            <p class="section-tag">
+                                HACKAIM
+                            </p>
+
+                            <h3>
+                                HACKAIM
+                            </h3>
+
+                            <p>
+                                Elegí la duración de tu licencia.
+                            </p>
+
+                        </div>
+
+
+                        <div class="pricing">
+
+
+                            <!-- MENSUAL -->
+
+                            <article class="price-card">
+
+                                <p class="price-type">
+                                    MENSUAL
+                                </p>
+
+                                <div class="price">
+                                    $20.000 ARS (20 USD)
+                                </div>
+
+                                <p class="price-description">
+                                    Pesos argentinos. Licencia válida durante 1 mes.
+                                </p>
+
+                                <a
+                                    href="#comprar"
+                                    class="button primary">
+                                    COMPRAR
+                                </a>
+
+                            </article>
+
+
+                            <!-- ANUAL -->
+
+                            <article class="price-card featured">
+
+                                <div class="recommended">
+                                    RECOMENDADO
+                                </div>
+
+                                <p class="price-type">
+                                    ANUAL
+                                </p>
+
+                                <div class="price">
+                                    $70.000 ARS (70 USD)
+                                </div>
+
+                                <p class="price-description">
+                                    Pesos argentinos. Licencia válida durante 12 meses.
+                                </p>
+
+                                <a
+                                    href="#comprar"
+                                    class="button primary">
+                                    COMPRAR
+                                </a>
+
+                            </article>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- COMPRA -->
+
+            <section id="comprar" class="glass section purchase">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        COMPRA
+                    </p>
+
+                    <h2>
+                        COMPRAR MOUSECONTROL
+                    </h2>
+
+                    <p>
+                        Realizá la transferencia y luego enviá el comprobante para recibir tu licencia y el enlace de descarga.
+                    </p>
+
+                </div>
+
+
+                <div class="purchase-box">
+
                     <h3>
-                        MOUSECONTROL
+                        DATOS PARA TRANSFERENCIA
+                    </h3>
+
+
+                    <div class="payment-data">
+
+                        <div>
+
+                            <span>
+                                TITULAR
+                            </span>
+
+                            <strong>
+                                JUAN NICOLAS MARTINEZ
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                ALIAS
+                            </span>
+
+                            <strong>
+                                nicomtz32
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                MEDIO DE PAGO
+                            </span>
+
+                            <strong>
+                                TRANSFERENCIA
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="#"
+                        class="button primary"
+                        id="transferButton">
+                        YA TRANSFERÍ
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- GAMEPLAY -->
+
+            <section class="glass section">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        GAMEPLAY
+                    </p>
+
+                    <h2>
+                        MOUSECONTROL EN ACCIÓN
+                    </h2>
+
+                    <p>
+                        Gameplays y videos mostrando MouseControl en funcionamiento.
+                    </p>
+
+                </div>
+
+
+                <div class="video-grid">
+
+
+                    <div class="small-video">
+
+                        <iframe
+                            src="https://www.youtube.com/embed/w7G01DRXQY0"
+                            title="Gameplay MouseControl"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+
+                    <div class="small-video">
+
+                        <iframe
+                            src="https://www.youtube.com/embed/OTJQx4uUURE"
+                            title="Gameplay MouseControl"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTICIAS -->
+
+            <section id="noticias" class="glass section">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        NOVEDADES
+                    </p>
+
+                    <h2>
+                        NOTICIAS Y ACTUALIZACIONES
+                    </h2>
+
+                    <p>
+                        Acá vamos a publicar las novedades, mejoras y futuras actualizaciones de MouseControl.
+                    </p>
+
+                </div>
+
+
+                <div class="news-grid">
+
+
+                    <article class="news-card">
+
+                        <span>
+                            ACTUALIZACIÓN
+                        </span>
+
+                        <h3>
+                            MouseControl
+                        </h3>
+
+                        <p>
+                            Primera versión del sitio oficial y del programa.
+                        </p>
+
+                    </article>
+
+
+                    <article class="news-card">
+
+                        <span>
+                            PRÓXIMAMENTE
+                        </span>
+
+                        <h3>
+                            Nuevas funciones
+                        </h3>
+
+                        <p>
+                            Próximamente vamos a publicar nuevas funciones y mejoras.
+                        </p>
+
+                    </article>
+
+
+                    <article class="news-card">
+
+                        <span>
+                            FUTURA ACTUALIZACIÓN
+                        </span>
+
+                        <h3>
+                            Anti-Recoil para mandos
+                        </h3>
+
+                        <p>
+                            Estamos preparando nuevas funciones de Anti-Recoil para mandos.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- SOPORTE -->
+
+            <section id="soporte" class="glass section support">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        SOPORTE
+                    </p>
+
+                    <h2>
+                        ¿TENÉS UNA QUEJA?
+                    </h2>
+
+                    <p>
+                        Podés enviarnos una queja, sugerencia o problema relacionado con MouseControl.
+                    </p>
+
+                </div>
+
+
+                <!-- BOTÓN CENTRADO -->
+
+                <div class="support-button-container">
+
+                    <button
+                        type="button"
+                        class="button secondary large"
+                        id="complaintButton">
+                        ENVIAR UNA QUEJA
+                    </button>
+
+                </div>
+
+
+                <div class="community">
+
+                    <h3>
+                        COMUNIDAD
                     </h3>
 
                     <p>
-                        Controlá tu recoil de forma simple y personalizada.
+                        Unite próximamente a nuestra comunidad de Discord.
                     </p>
 
-                </div>
-
-
-                <div class="pricing">
-
-                    <!-- MENSUAL -->
-
-                    <div class="price-card">
-
-                        <div class="price-card-header">
-
-                            <p class="price-tag">
-                                MENSUAL
-                            </p>
-
-                            <h3>
-                                $15.000 ARS
-                            </h3>
-
-                            <p>
-                                15 USD
-                            </p>
-
-                        </div>
-
-                        <ul>
-                            <li>✓ Licencia mensual</li>
-                            <li>✓ Acceso al programa</li>
-                            <li>✓ Configuración personalizada</li>
-                        </ul>
-
-                        <a href="#comprar" class="button primary">
-                            COMPRAR
-                        </a>
-
-                    </div>
-
-
-                    <!-- ANUAL -->
-
-                    <div class="price-card recommended">
-
-                        <div class="recommended-badge">
-                            RECOMENDADO
-                        </div>
-
-                        <div class="price-card-header">
-
-                            <p class="price-tag">
-                                ANUAL
-                            </p>
-
-                            <h3>
-                                $50.000 ARS
-                            </h3>
-
-                            <p>
-                                50 USD
-                            </p>
-
-                        </div>
-
-                        <ul>
-                            <li>✓ Licencia anual</li>
-                            <li>✓ Acceso al programa</li>
-                            <li>✓ Configuración personalizada</li>
-                        </ul>
-
-                        <a href="#comprar" class="button primary">
-                            COMPRAR
-                        </a>
-
-                    </div>
+                    <a
+                        href="https://discord.gg/EPTzMvAQtm"
+                        class="button primary"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        DISCORD
+                    </a>
 
                 </div>
 
+            </section>
+
+        </main>
+
+
+        <!-- PIE -->
+
+        <footer class="glass footer">
+
+            <div class="logo">
+                🎯 MOUSECONTROL <span>/ HACKAIM</span> 🖱️
             </div>
-
-
-            <!-- =================================================
-                 HACKAIM
-                 ================================================= -->
-
-            <div id="hackaim" class="pricing-group">
-
-                <div class="pricing-group-header">
-
-                    <p class="section-tag">
-                        PRODUCTO 02
-                    </p>
-
-                    <h3>
-                        HACKAIM
-                    </h3>
-
-                    <p>
-                        Una nueva experiencia con funciones avanzadas.
-                    </p>
-
-                </div>
-
-
-                <div class="pricing">
-
-                    <!-- MENSUAL -->
-
-                    <div class="price-card">
-
-                        <div class="price-card-header">
-
-                            <p class="price-tag">
-                                MENSUAL
-                            </p>
-
-                            <h3>
-                                $20.000 ARS
-                            </h3>
-
-                            <p>
-                                20 USD
-                            </p>
-
-                        </div>
-
-                        <ul>
-                            <li>✓ Licencia mensual</li>
-                            <li>✓ Acceso a HACKAIM</li>
-                            <li>✓ Funciones disponibles</li>
-                        </ul>
-
-                        <a href="#comprar" class="button primary">
-                            COMPRAR
-                        </a>
-
-                    </div>
-
-
-                    <!-- ANUAL -->
-
-                    <div class="price-card recommended">
-
-                        <div class="recommended-badge">
-                            RECOMENDADO
-                        </div>
-
-                        <div class="price-card-header">
-
-                            <p class="price-tag">
-                                ANUAL
-                            </p>
-
-                            <h3>
-                                $70.000 ARS
-                            </h3>
-
-                            <p>
-                                70 USD
-                            </p>
-
-                        </div>
-
-                        <ul>
-                            <li>✓ Licencia anual</li>
-                            <li>✓ Acceso a HACKAIM</li>
-                            <li>✓ Funciones disponibles</li>
-                        </ul>
-
-                        <a href="#comprar" class="button primary">
-                            COMPRAR
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         COMPRAR
-         ========================================================= -->
-
-    <section id="comprar" class="glass section purchase-section">
-
-        <div class="section-header">
-
-            <p class="section-tag">
-                COMPRA
-            </p>
-
-            <h2>
-                COMPRAR MOUSECONTROL
-            </h2>
 
             <p>
-                Realizá la transferencia y enviá el comprobante para recibir tu licencia.
+                © 2026 MouseControl / HACKAIM. Todos los derechos reservados.
             </p>
 
-        </div>
+        </footer>
 
-
-        <div class="purchase-card">
-
-            <div class="purchase-info">
-
-                <div class="purchase-row">
-
-                    <span>
-                        TITULAR
-                    </span>
-
-                    <strong>
-                        JUAN NICOLAS MARTINEZ
-                    </strong>
-
-                </div>
-
-
-                <div class="purchase-row">
-
-                    <span>
-                        ALIAS
-                    </span>
-
-                    <strong>
-                        nicomtz32
-                    </strong>
-
-                </div>
-
-
-                <div class="purchase-row">
-
-                    <span>
-                        MEDIO DE PAGO
-                    </span>
-
-                    <strong>
-                        TRANSFERENCIA
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <button class="button primary" onclick="openTransferModal()">
-                VER DATOS DE TRANSFERENCIA
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         GAMEPLAY
-         ========================================================= -->
-
-    <section id="gameplay" class="glass section">
-
-        <div class="section-header">
-
-            <p class="section-tag">
-                GAMEPLAY
-            </p>
-
-            <h2>
-                MIRÁ MOUSECONTROL EN ACCIÓN
-            </h2>
-
-            <p>
-                Conocé el funcionamiento del programa dentro del juego.
-            </p>
-
-        </div>
-
-
-        <div class="gameplay-grid">
-
-            <div class="video-container">
-
-                <iframe
-                    src="https://www.youtube.com/embed/w7G01DRXQY0"
-                    title="MouseControl Gameplay"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
-
-            </div>
-
-
-            <div class="video-container">
-
-                <iframe
-                    src="https://www.youtube.com/embed/OTJQx4uUURE"
-                    title="MouseControl Gameplay 2"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         NOTICIAS
-         ========================================================= -->
-
-    <section id="noticias" class="glass section">
-
-        <div class="section-header">
-
-            <p class="section-tag">
-                NOVEDADES
-            </p>
-
-            <h2>
-                ÚLTIMAS NOTICIAS
-            </h2>
-
-            <p>
-                Todas las novedades de MouseControl y HACKAIM.
-            </p>
-
-        </div>
-
-
-        <div class="news-grid">
-
-            <article class="news-card">
-
-                <span class="news-date">
-                    NUEVO
-                </span>
-
-                <h3>
-                    HACKAIM
-                </h3>
-
-                <p>
-                    Conocé nuestro nuevo programa y todas sus funciones.
-                </p>
-
-            </article>
-
-
-            <article class="news-card">
-
-                <span class="news-date">
-                    ACTUALIZACIÓN
-                </span>
-
-                <h3>
-                    MOUSECONTROL
-                </h3>
-
-                <p>
-                    Nuevas mejoras y herramientas disponibles.
-                </p>
-
-            </article>
-
-
-            <article class="news-card">
-
-                <span class="news-date">
-                    INFORMACIÓN
-                </span>
-
-                <h3>
-                    LICENCIAS
-                </h3>
-
-                <p>
-                    Elegí entre nuestras licencias mensuales y anuales.
-                </p>
-
-            </article>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         SOPORTE
-         ========================================================= -->
-
-    <section id="soporte" class="glass section">
-
-        <div class="section-header">
-
-            <p class="section-tag">
-                SOPORTE
-            </p>
-
-            <h2>
-                ¿NECESITÁS AYUDA?
-            </h2>
-
-            <p>
-                Estamos para ayudarte con cualquier consulta.
-            </p>
-
-        </div>
-
-
-        <div class="support-content">
-
-            <button class="button primary" onclick="openSupportModal()">
-                CONTACTAR SOPORTE
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         FOOTER
-         ========================================================= -->
-
-    <footer class="footer">
-
-        <div class="footer-logo">
-            🎯 MOUSECONTROL <span>/ HACKAIM</span> 🖱️
-        </div>
-
-        <p>
-            © 2026 MouseControl / HACKAIM. Todos los derechos reservados.
-        </p>
-
-    </footer>
-
-
-    <!-- =========================================================
-         MODAL TRANSFERENCIA
-         ========================================================= -->
-
-    <div id="transferModal" class="modal">
-
-        <div class="modal-content">
-
-            <span class="modal-close" onclick="closeTransferModal()">
-                ×
-            </span>
-
-            <p class="section-tag">
-                INFORMACIÓN DE PAGO
-            </p>
-
-            <h2>
-                DATOS DE TRANSFERENCIA
-            </h2>
-
-            <div class="transfer-data">
-
-                <div class="transfer-row">
-
-                    <strong>
-                        TITULAR
-                    </strong>
-
-                    <span>
-                        JUAN NICOLAS MARTINEZ
-                    </span>
-
-                </div>
-
-
-                <div class="transfer-row">
-
-                    <strong>
-                        ALIAS
-                    </strong>
-
-                    <span>
-                        nicomtz32
-                    </span>
-
-                </div>
-
-
-                <div class="transfer-row">
-
-                    <strong>
-                        MEDIO DE PAGO
-                    </strong>
-
-                    <span>
-                        TRANSFERENCIA
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <p>
-                Una vez realizada la transferencia, enviá el comprobante para recibir tu licencia.
-            </p>
-
-            <a
-                href="https://wa.me/5491122823023"
-                target="_blank"
-                class="button primary whatsapp-button">
-                ENVIAR COMPROBANTE POR WHATSAPP
-            </a>
-
-        </div>
 
     </div>
 
 
-    <!-- =========================================================
-         MODAL SOPORTE
-         ========================================================= -->
+    <!-- =====================================
+         VENTANA DE TRANSFERENCIA
+    ===================================== -->
 
-    <div id="supportModal" class="support-modal">
+    <div
+        class="transfer-modal"
+        id="transferModal">
 
-        <div class="support-modal-content">
+        <div class="transfer-modal-box">
 
-            <span class="support-close" onclick="closeSupportModal()">
+
+            <button
+                class="transfer-close"
+                id="closeTransfer"
+                aria-label="Cerrar"
+                type="button">
                 ×
-            </span>
+            </button>
+
 
             <p class="section-tag">
-                SOPORTE
+                MOUSECONTROL
             </p>
+
 
             <h2>
-                CONTACTAR SOPORTE
+                ¡TRANSFERENCIA RECIBIDA!
             </h2>
 
-            <p>
-                Si tenés algún problema o consulta, podés comunicarte con nosotros.
+
+            <p class="transfer-modal-text">
+                Para recibir tu licencia y el link de descarga, necesitamos que nos envíes el comprobante de tu transferencia junto con tu correo electrónico.
             </p>
+
+
+            <div class="transfer-instructions">
+
+
+                <div class="transfer-item">
+
+                    <span>
+                        01 — COMPROBANTE
+                    </span>
+
+                    <strong>
+                        Compartí una captura de pantalla o comprobante de tu transferencia.
+                    </strong>
+
+                </div>
+
+
+                <div class="transfer-item">
+
+                    <span>
+                        02 — CORREO ELECTRÓNICO
+                    </span>
+
+                    <strong>
+                        Escribí junto al comprobante el correo electrónico donde querés recibir la licencia.
+                    </strong>
+
+                </div>
+
+
+                <div class="transfer-item">
+
+                    <span>
+                        03 — WHATSAPP
+                    </span>
+
+                    <strong>
+                        +54 9 1122823023
+                    </strong>
+
+                </div>
+
+
+                <div class="transfer-item">
+
+                    <span>
+                        04 — CORREO
+                    </span>
+
+                    <strong>
+                        nicomartine20@gmail.com
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <p class="transfer-modal-text">
+                Una vez que verifiquemos el pago, te enviaremos tu licencia y el enlace para descargar MouseControl.
+            </p>
+
 
             <button
                 class="button primary"
-                onclick="sendSupportEmail()">
-                ENVIAR EMAIL
+                id="closeTransferBottom"
+                type="button">
+                ENTENDIDO
             </button>
+
 
         </div>
 
     </div>
 
 
-    <!-- =========================================================
+    <!-- =====================================
+         VENTANA DE SOPORTE
+    ===================================== -->
+
+    <div
+        class="complaint-modal"
+        id="complaintModal">
+
+        <div class="complaint-modal-box">
+
+
+            <button
+                class="complaint-close"
+                id="closeComplaint"
+                aria-label="Cerrar"
+                type="button">
+                ×
+            </button>
+
+
+            <p class="section-tag">
+                SOPORTE
+            </p>
+
+
+            <h2>
+                CONTACTÁ CON NOSOTROS
+            </h2>
+
+
+            <p class="complaint-text">
+                Si tenés una queja, sugerencia o problema relacionado con MouseControl, podés comunicarte directamente con nosotros.
+            </p>
+
+
+            <div class="complaint-email">
+
+                <span>
+                    CORREO DE CONTACTO
+                </span>
+
+                <strong>
+                    nicomtz320@gmail.com
+                </strong>
+
+            </div>
+
+
+            <!-- BOTÓN QUE ABRE EL CORREO -->
+
+            <a
+                href="mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl"
+                class="button primary"
+                id="openComplaintEmail">
+                ABRIR CORREO
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
          JAVASCRIPT
-         ========================================================= -->
+    ===================================== -->
 
     <script>
 
-        /* =====================================================
-           MODAL TRANSFERENCIA
-           ===================================================== */
 
-        function openTransferModal() {
+        /* ================================
+           TRANSFERENCIA
+        ================================ */
 
-            const modal = document.getElementById("transferModal");
+        const transferButton =
+            document.getElementById("transferButton");
 
-            if (modal) {
-                modal.style.display = "flex";
-            }
+        const transferModal =
+            document.getElementById("transferModal");
 
-        }
+        const closeTransfer =
+            document.getElementById("closeTransfer");
 
-
-        function closeTransferModal() {
-
-            const modal = document.getElementById("transferModal");
-
-            if (modal) {
-                modal.style.display = "none";
-            }
-
-        }
+        const closeTransferBottom =
+            document.getElementById("closeTransferBottom");
 
 
-        /* =====================================================
-           MODAL SOPORTE
-           ===================================================== */
+        transferButton.addEventListener("click", function(event) {
 
-        function openSupportModal() {
+            event.preventDefault();
 
-            const modal = document.getElementById("supportModal");
+            transferModal.classList.add("active");
 
-            if (modal) {
-                modal.style.display = "flex";
-            }
-
-        }
+        });
 
 
-        function closeSupportModal() {
+        closeTransfer.addEventListener("click", function() {
 
-            const modal = document.getElementById("supportModal");
+            transferModal.classList.remove("active");
 
-            if (modal) {
-                modal.style.display = "none";
-            }
-
-        }
+        });
 
 
-        function sendSupportEmail() {
+        closeTransferBottom.addEventListener("click", function() {
 
-            window.location.href =
-                "mailto:soporte@mousecontrol.com?subject=Soporte%20MouseControl%20%2F%20HACKAIM";
+            transferModal.classList.remove("active");
 
-        }
+        });
 
 
-        /* =====================================================
-           CERRAR MODALES HACIENDO CLICK AFUERA
-           ===================================================== */
-
-        window.addEventListener("click", function(event) {
-
-            const transferModal =
-                document.getElementById("transferModal");
-
-            const supportModal =
-                document.getElementById("supportModal");
-
+        transferModal.addEventListener("click", function(event) {
 
             if (event.target === transferModal) {
-                transferModal.style.display = "none";
-            }
 
+                transferModal.classList.remove("active");
 
-            if (event.target === supportModal) {
-                supportModal.style.display = "none";
             }
 
         });
 
 
-        /* =====================================================
-           ESC PARA CERRAR
-           ===================================================== */
+        /* ================================
+           SOPORTE / QUEJA
+        ================================ */
+
+        const complaintButton =
+            document.getElementById("complaintButton");
+
+        const complaintModal =
+            document.getElementById("complaintModal");
+
+        const closeComplaint =
+            document.getElementById("closeComplaint");
+
+        const openComplaintEmail =
+            document.getElementById("openComplaintEmail");
+
+
+        /* ABRIR VENTANA DE SOPORTE */
+
+        complaintButton.addEventListener("click", function(event) {
+
+            event.preventDefault();
+
+            complaintModal.classList.add("active");
+
+        });
+
+
+        /* CERRAR VENTANA */
+
+        closeComplaint.addEventListener("click", function() {
+
+            complaintModal.classList.remove("active");
+
+        });
+
+
+        /* CERRAR HACIENDO CLICK FUERA */
+
+        complaintModal.addEventListener("click", function(event) {
+
+            if (event.target === complaintModal) {
+
+                complaintModal.classList.remove("active");
+
+            }
+
+        });
+
+
+        /* ================================
+           ABRIR CORREO
+        ================================ */
+
+        openComplaintEmail.addEventListener("click", function() {
+
+            window.location.href =
+                "mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl";
+
+        });
+
+
+        /* ================================
+           ESCAPE PARA CERRAR
+        ================================ */
 
         document.addEventListener("keydown", function(event) {
 
             if (event.key === "Escape") {
 
-                closeTransferModal();
-                closeSupportModal();
+                transferModal.classList.remove("active");
+
+                complaintModal.classList.remove("active");
 
             }
 
         });
 
+
     </script>
 
 </body>
+
 </html>
