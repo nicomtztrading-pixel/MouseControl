@@ -1,2145 +1,605 @@
-<!DOCTYPE html>
-<html lang="es">
+from flask import Flask, request, jsonify
+import os
+import json
+import urllib.request
+import urllib.error
+import uuid
+import base64
+import secrets
+import hashlib
+import hmac
+from datetime import datetime, timezone
 
-<head>
+app = Flask(__name__)
 
-    <!-- =====================================
-         GOOGLE ANALYTICS
-    ===================================== -->
+ALLOWED_ORIGIN = "https://nicomtztrading-pixel.github.io"
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ1YPVD8HB"></script>
 
-    <script>
-        window.dataLayer = window.dataLayer || [];
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = ALLOWED_ORIGIN
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
 
-        function gtag() {
-            dataLayer.push(arguments);
+
+WEBSITE_URL = "https://nicomtztrading-pixel.github.io/MouseControl/"
+WEBHOOK_URL = "https://mousecontrol-payment.onrender.com/webhook/dlocal"
+
+LICENSE_SECRET = "MC_NICO_LICENSE_2026_V1_8f2c9d7a"
+
+# =========================================================
+# PRODUCTOS
+# =========================================================
+
+PRODUCTS = {
+    "mousecontrol_monthly": {
+        "name": "MouseControl - Mensual",
+        "amount": 10.0,
+        "license_type": "M"
+    },
+    "mousecontrol_annual": {
+        "name": "MouseControl - Anual",
+        "amount": 60.0,
+        "license_type": "A"
+    },
+    "hackaim_monthly": {
+        "name": "HACKAIM - Mensual",
+        "amount": 13.0,
+        "license_type": "M"
+    },
+    "hackaim_annual": {
+        "name": "HACKAIM - Anual",
+        "amount": 65.0,
+        "license_type": "A"
+    }
+}
+
+ORDERS = {}
+GENERATED_LICENSES = {}
+
+
+# =========================================================
+# INICIO
+# =========================================================
+
+@app.route("/")
+def home():
+    return "MouseControl Payment Server OK"
+
+
+# =========================================================
+# FIRMA DE LICENCIA
+# =========================================================
+
+def crear_firma(payload):
+    firma = hmac.new(
+        LICENSE_SECRET.encode("utf-8"),
+        payload.encode("utf-8"),
+        hashlib.sha256
+    ).digest()
+
+    return "".join(
+        f"{byte:02X}"
+        for byte in firma[:8]
+    )
+
+
+# =========================================================
+# GENERAR LICENCIA
+# =========================================================
+
+def generar_licencia(cliente, tipo):
+
+    cliente = cliente.strip()
+
+    if not cliente:
+        raise ValueError("Nombre de cliente vacío")
+
+    if tipo not in ["M", "A"]:
+        raise ValueError("Tipo de licencia inválido")
+
+    vencimiento = datetime.now().date()
+
+    import calendar
+
+    if tipo == "M":
+        month = vencimiento.month + 1
+        year = vencimiento.year + (month - 1) // 12
+        month = ((month - 1) % 12) + 1
+
+        day = min(
+            vencimiento.day,
+            calendar.monthrange(year, month)[1]
+        )
+
+        vencimiento = vencimiento.replace(
+            year=year,
+            month=month,
+            day=day
+        )
+
+    else:
+        year = vencimiento.year + 1
+
+        day = min(
+            vencimiento.day,
+            calendar.monthrange(
+                year,
+                vencimiento.month
+            )[1]
+        )
+
+        vencimiento = vencimiento.replace(
+            year=year,
+            day=day
+        )
+
+    fecha = vencimiento.strftime("%Y%m%d")
+
+    cliente_codificado = (
+        base64.urlsafe_b64encode(
+            cliente.encode("utf-8")
+        )
+        .decode("ascii")
+        .rstrip("=")
+    )
+
+    nonce = secrets.token_bytes(4).hex().upper()
+
+    payload = (
+        f"MC1|{tipo}|{fecha}|"
+        f"{cliente_codificado}|{nonce}"
+    )
+
+    firma = crear_firma(payload)
+
+    licencia = (
+        f"{payload.replace('|', '-')}-{firma}"
+    )
+
+    return licencia, vencimiento
+
+
+# =========================================================
+# CONSULTAR PAGO DLOCAL
+# =========================================================
+
+def get_dlocal_payment(payment_id):
+
+    api_key = os.getenv("DLOCAL_SANDBOX_API_KEY")
+    secret_key = os.getenv("DLOCAL_SANDBOX_SECRET_KEY")
+
+    if not api_key or not secret_key:
+        raise Exception(
+            "No se encontraron las credenciales Sandbox"
+        )
+
+    url = (
+        "https://api-sbx.dlocalgo.com/v1/payments/"
+        + payment_id
+    )
+
+    headers = {
+        "Authorization": f"Bearer {api_key}:{secret_key}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    req = urllib.request.Request(
+        url,
+        headers=headers,
+        method="GET"
+    )
+
+    with urllib.request.urlopen(req, timeout=20) as response:
+        return json.loads(
+            response.read().decode("utf-8")
+        )
+
+
+# =========================================================
+# WEBHOOK
+# =========================================================
+
+@app.route(
+    "/webhook/dlocal",
+    methods=["GET", "HEAD", "POST"]
+)
+def dlocal_webhook():
+
+    if request.method in ["GET", "HEAD"]:
+        return jsonify({
+            "status": "webhook_online"
+        }), 200
+
+    data = request.get_json(
+        silent=True
+    ) or {}
+
+    print("===================================")
+    print("NUEVA NOTIFICACIÓN DE DLOCAL")
+    print("===================================")
+
+    print(
+        json.dumps(
+            data,
+            indent=2,
+            ensure_ascii=False
+        )
+    )
+
+    payment_id = data.get("payment_id")
+
+    if not payment_id:
+        return jsonify({
+            "status": "received",
+            "warning": "payment_id missing"
+        }), 200
+
+    try:
+
+        payment = get_dlocal_payment(payment_id)
+
+        status = str(
+            payment.get("status", "")
+        ).upper()
+
+        order_id = payment.get("order_id")
+
+        print("ESTADO:", status)
+        print("ORDER ID:", order_id)
+
+        if status != "PAID":
+            return jsonify({
+                "status": "received",
+                "payment_id": payment_id,
+                "payment_status": status
+            }), 200
+
+        if payment_id in GENERATED_LICENSES:
+            return jsonify({
+                "status": "already_processed",
+                "payment_id": payment_id
+            }), 200
+
+        order = ORDERS.get(order_id)
+
+        if order:
+
+            cliente = order["customer_name"]
+            email = order["customer_email"]
+            product_code = order["product_code"]
+
+        else:
+
+            payer = payment.get("payer", {})
+
+            cliente = (
+                f'{payer.get("first_name", "")} '
+                f'{payer.get("last_name", "")}'
+            ).strip()
+
+            email = str(
+                payer.get("email", "")
+            ).strip()
+
+            if "-MC-MONTHLY-" in order_id:
+                product_code = "mousecontrol_monthly"
+
+            elif "-MC-ANNUAL-" in order_id:
+                product_code = "mousecontrol_annual"
+
+            elif "-HA-MONTHLY-" in order_id:
+                product_code = "hackaim_monthly"
+
+            elif "-HA-ANNUAL-" in order_id:
+                product_code = "hackaim_annual"
+
+            else:
+                raise Exception(
+                    "No se pudo determinar el producto"
+                )
+
+        product = PRODUCTS[product_code]
+
+        licencia, vencimiento = generar_licencia(
+            cliente,
+            product["license_type"]
+        )
+
+        GENERATED_LICENSES[payment_id] = {
+            "payment_id": payment_id,
+            "order_id": order_id,
+            "customer_name": cliente,
+            "customer_email": email,
+            "product_code": product_code,
+            "product_name": product["name"],
+            "license": licencia,
+            "expires": vencimiento.strftime("%d/%m/%Y"),
+            "created_at": datetime.now(
+                timezone.utc
+            ).isoformat()
         }
 
-        gtag('js', new Date());
+        print("===================================")
+        print("LICENCIA GENERADA")
+        print("===================================")
+        print("CLIENTE:", cliente)
+        print("EMAIL:", email)
+        print("PRODUCTO:", product["name"])
+        print("VENCIMIENTO:", vencimiento.strftime("%d/%m/%Y"))
+        print("LICENCIA:", licencia)
+        print("===================================")
 
-        gtag('config', 'G-TZ1YPVD8HB');
-    </script>
+        return jsonify({
+            "status": "license_generated",
+            "payment_id": payment_id
+        }), 200
 
+    except Exception as e:
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        print("ERROR PROCESANDO WEBHOOK:")
+        print(str(e))
 
-    <title>MouseControl / HACKAIM</title>
-
-    <meta name="description" content="Página oficial de MouseControl / HACKAIM">
-
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        /* ================================
-           CONTADOR DE DESCARGAS
-        ================================ */
-
-        .download-counter {
-            margin-top: 30px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(190, 115, 255, 0.10);
-            border: 1px solid rgba(190, 115, 255, 0.22);
-            color: rgba(255, 255, 255, 0.82);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .download-counter strong {
-            color: #d39aff;
-        }
+        return jsonify({
+            "status": "received",
+            "payment_id": payment_id,
+            "error": str(e)
+        }), 200
 
 
-        /* ================================
-           BOTÓN SOPORTE CENTRADO
-        ================================ */
+# =========================================================
+# CREAR PAGO
+# =========================================================
 
-        .support-button-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+def create_payment(
+    product_code,
+    customer_name,
+    customer_email
+):
 
+    product = PRODUCTS.get(product_code)
 
-        /* ================================
-           VENTANA DE SOPORTE
-        ================================ */
+    if not product:
+        return jsonify({
+            "ok": False,
+            "error": "Producto inválido"
+        }), 400
 
-        .complaint-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
+    api_key = os.getenv("DLOCAL_SANDBOX_API_KEY")
+    secret_key = os.getenv("DLOCAL_SANDBOX_SECRET_KEY")
 
-        .complaint-modal.active {
-            display: flex;
-        }
+    if not api_key or not secret_key:
+        return jsonify({
+            "ok": False,
+            "error": "No se encontraron las credenciales Sandbox"
+        }), 500
 
-        .complaint-modal-box {
-            width: min(520px, 100%);
-            position: relative;
-            padding: 34px;
-            border-radius: 24px;
-            background: rgba(20, 14, 30, 0.90);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.55),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            text-align: center;
-        }
+    customer_name = customer_name.strip()
+    customer_email = customer_email.strip()
 
-        .complaint-modal-box h2 {
-            margin: 0;
-            font-size: clamp(26px, 5vw, 38px);
-        }
+    if not customer_name:
+        return jsonify({
+            "ok": False,
+            "error": "El nombre es obligatorio"
+        }), 400
 
-        .complaint-text {
-            margin: 18px 0 24px;
-            color: rgba(255, 255, 255, 0.76);
-            line-height: 1.7;
-        }
+    if not customer_email:
+        return jsonify({
+            "ok": False,
+            "error": "El email es obligatorio"
+        }), 400
 
-        .complaint-email {
-            margin: 24px 0;
-            padding: 20px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-        }
+    if product_code.startswith("mousecontrol_"):
+        prefix = "MC"
+    else:
+        prefix = "HA"
 
-        .complaint-email span {
-            display: block;
-            margin-bottom: 8px;
-            color: #b777f5;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
+    duration = (
+        "MONTHLY"
+        if product["license_type"] == "M"
+        else "ANNUAL"
+    )
 
-        .complaint-email strong {
-            display: block;
-            font-size: 15px;
-            word-break: break-word;
-        }
+    order_id = (
+        f"{prefix}-{duration}-"
+        f"{uuid.uuid4().hex[:12].upper()}"
+    )
 
-        .complaint-close,
-        .weapon-modal-close {
-            position: absolute;
-            top: 14px;
-            right: 16px;
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.06);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
+    url = "https://api-sbx.dlocalgo.com/v1/payments"
 
-        .complaint-close:hover,
-        .weapon-modal-close:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-1px);
-        }
+    payload = {
+        "country_code": "AR",
+        "currency": "USD",
+        "amount": product["amount"],
+        "order_id": order_id,
+        "success_url": WEBSITE_URL,
+        "back_url": WEBSITE_URL,
+        "notification_url": WEBHOOK_URL
+    }
 
+    body = json.dumps(payload).encode("utf-8")
 
-        /* =========================================================
-           CONFIGURACIONES DE ARMAS
-        ========================================================= */
+    headers = {
+        "Authorization": f"Bearer {api_key}:{secret_key}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "User-Agent": "Mozilla/5.0"
+    }
 
-        .weapon-section {
-            scroll-margin-top: 110px;
-        }
+    req = urllib.request.Request(
+        url,
+        data=body,
+        headers=headers,
+        method="POST"
+    )
 
-        .weapon-category-title {
-            text-align: center;
-            margin: 0 0 26px;
-        }
+    try:
 
-        .weapon-category-title h3 {
-            margin: 0;
-            font-size: 24px;
-            letter-spacing: 0.5px;
-        }
+        with urllib.request.urlopen(
+            req,
+            timeout=20
+        ) as response:
 
-        .weapon-category-title p {
-            margin: 8px 0 0;
-            color: rgba(255, 255, 255, 0.62);
-            font-size: 13px;
-        }
+            data = json.loads(
+                response.read().decode("utf-8")
+            )
 
-        .weapon-grid {
-            display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .weapon-card {
-            position: relative;
-            overflow: hidden;
-            padding: 0;
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.055);
-            color: white;
-            cursor: pointer;
-            text-align: left;
-            font-family: inherit;
-            transition:
-                transform 0.22s ease,
-                border-color 0.22s ease,
-                box-shadow 0.22s ease,
-                background 0.22s ease;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        .weapon-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(190, 115, 255, 0.48);
-            background: rgba(190, 115, 255, 0.08);
-            box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.32),
-                0 0 25px rgba(151, 73, 224, 0.10);
-        }
-
-        .weapon-card:focus-visible {
-            outline: 2px solid #c16fff;
-            outline-offset: 3px;
-        }
-
-        .weapon-image {
-            width: 100%;
-            height: 145px;
-            display: block;
-            object-fit: cover;
-            object-position: center;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(190, 115, 255, 0.13),
-                    rgba(0, 0, 0, 0.35)
-                );
-        }
-
-        .weapon-card-content {
-            padding: 16px;
-            text-align: center;
-        }
-
-        .weapon-card-content h4 {
-            margin: 0;
-            font-size: 15px;
-            letter-spacing: 0.6px;
-        }
-
-        .weapon-card-content span {
-            display: block;
-            margin-top: 7px;
-            color: #b777f5;
-            font-size: 9px;
-            font-weight: 800;
-            letter-spacing: 1.2px;
-        }
-
-
-        /* ================================
-           MODAL CONFIGURACIÓN DE ARMA
-        ================================ */
-
-        .weapon-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 10001;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .weapon-modal.active {
-            display: flex;
-        }
-
-        .weapon-modal-box {
-            width: min(520px, 100%);
-            position: relative;
-            overflow: hidden;
-            border-radius: 24px;
-            background: rgba(20, 14, 30, 0.94);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow:
-                0 30px 90px rgba(0, 0, 0, 0.65),
-                0 0 45px rgba(151, 73, 224, 0.10),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            text-align: center;
-            animation: weaponModalIn 0.2s ease;
-        }
-
-        @keyframes weaponModalIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px) scale(0.97);
+            ORDERS[order_id] = {
+                "customer_name": customer_name,
+                "customer_email": customer_email,
+                "product_code": product_code,
+                "payment_id": data.get("id"),
+                "status": data.get("status")
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            print("===================================")
+            print("PEDIDO CREADO")
+            print("===================================")
+            print("PRODUCTO:", product["name"])
+            print("PRECIO:", product["amount"])
+            print("CLIENTE:", customer_name)
+            print("EMAIL:", customer_email)
+            print("ORDER ID:", order_id)
+            print("PAYMENT ID:", data.get("id"))
+
+            return jsonify({
+                "ok": True,
+                "order_id": order_id,
+                "product": product_code,
+                "product_name": product["name"],
+                "amount": product["amount"],
+                "payment": data
+            }), response.status
+
+    except urllib.error.HTTPError as e:
+
+        body = e.read().decode(
+            "utf-8",
+            errors="replace"
+        )
+
+        return jsonify({
+            "ok": False,
+            "http_status": e.code,
+            "dlocal_response": body
+        }), e.code
+
+    except Exception as e:
+
+        return jsonify({
+            "ok": False,
+            "error": str(e)
+        }), 500
+
+
+# =========================================================
+# CHECKOUT DESDE LA WEB
+# =========================================================
+
+@app.route(
+    "/checkout",
+    methods=["POST", "OPTIONS"]
+)
+def checkout():
+
+    if request.method == "OPTIONS":
+        return "", 204
+
+    data = request.get_json(
+        silent=True
+    ) or {}
+
+    name = str(
+        data.get("name", "")
+    ).strip()
+
+    email = str(
+        data.get("email", "")
+    ).strip()
+
+    product_code = str(
+        data.get("product", "")
+    ).strip().lower()
+
+    return create_payment(
+        product_code,
+        name,
+        email
+    )
+
+
+# =========================================================
+# PRUEBA DE SANDBOX
+# =========================================================
+
+@app.route("/test/dlocal-sandbox")
+def test_dlocal_sandbox():
+
+    try:
+
+        api_key = os.getenv("DLOCAL_SANDBOX_API_KEY")
+        secret_key = os.getenv("DLOCAL_SANDBOX_SECRET_KEY")
+
+        url = "https://api-sbx.dlocalgo.com/v1/me"
+
+        headers = {
+            "Authorization": f"Bearer {api_key}:{secret_key}",
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0"
         }
 
-        .weapon-modal-image {
-            width: 100%;
-            height: 220px;
-            display: block;
-            object-fit: cover;
-            object-position: center;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(190, 115, 255, 0.14),
-                    rgba(0, 0, 0, 0.40)
-                );
-        }
+        req = urllib.request.Request(
+            url,
+            headers=headers,
+            method="GET"
+        )
 
-        .weapon-modal-content {
-            padding: 28px;
-        }
+        with urllib.request.urlopen(req, timeout=15) as response:
+            body = response.read().decode("utf-8")
 
-        .weapon-modal-content .section-tag {
-            margin-bottom: 8px;
-        }
+            return jsonify({
+                "ok": True,
+                "http_status": response.status,
+                "dlocal_response": body
+            }), response.status
 
-        .weapon-modal-content h2 {
-            margin: 0;
-            font-size: clamp(28px, 5vw, 38px);
-        }
+    except Exception as e:
 
-        .weapon-modal-description {
-            margin: 9px 0 22px;
-            color: rgba(255, 255, 255, 0.58);
-            font-size: 12px;
-        }
+        return jsonify({
+            "ok": False,
+            "error": str(e)
+        }), 500
 
-        .weapon-values {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-top: 20px;
-        }
 
-        .weapon-value {
-            padding: 20px 15px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-        }
+# =========================================================
+# CONSULTAR PAGO
+# =========================================================
 
-        .weapon-value span {
-            display: block;
-            margin-bottom: 8px;
-            color: #b777f5;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1.4px;
-        }
+@app.route("/test/payment/<payment_id>")
+def test_payment(payment_id):
 
-        .weapon-value strong {
-            display: block;
-            font-size: 30px;
-            font-weight: 900;
-        }
+    try:
 
-        .weapon-modal-note {
-            margin: 18px 0 0;
-            color: rgba(255, 255, 255, 0.48);
-            font-size: 10px;
-        }
+        payment = get_dlocal_payment(payment_id)
 
+        return jsonify({
+            "ok": True,
+            "payment": payment
+        }), 200
 
-        /* =========================================================
-           SOLO PARA LOS DOS VIDEOS PRINCIPALES
-        ========================================================= */
+    except Exception as e:
 
-        .main-videos {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-        }
+        return jsonify({
+            "ok": False,
+            "error": str(e)
+        }), 500
 
-        .main-video-card {
-            min-width: 0;
-            text-align: center;
-        }
 
-        .main-video-card .video-container {
-            width: 100%;
-            max-width: none;
-            margin: 0 auto;
-        }
-
-        .main-video-card .video-container iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            display: block;
-        }
-
-        .main-video-title {
-            margin: 0 0 12px;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .main-video-description {
-            margin: 0 0 16px;
-            color: rgba(255, 255, 255, 0.68);
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .main-video-button {
-            margin-top: 16px;
-            width: 100%;
-        }
-
-
-        /* ================================
-           VIDEO INDIVIDUAL HACKAIM
-        ================================ */
-
-        .hackaim-how-video {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .hackaim-how-video iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            display: block;
-        }
-
-
-        /* ================================
-           PRECIOS
-        ================================ */
-
-        .pricing-products {
-            display: grid;
-            gap: 30px;
-        }
-
-        .pricing-product {
-            width: 100%;
-        }
-
-        .pricing-product-title {
-            text-align: center;
-            margin: 0 0 20px;
-        }
-
-        .pricing-product-title .section-tag {
-            margin-bottom: 8px;
-        }
-
-        .pricing-product-title h3 {
-            margin: 0;
-            font-size: 26px;
-        }
-
-        .pricing-product-title p {
-            margin: 8px 0 0;
-            color: rgba(255, 255, 255, 0.65);
-        }
-
-        .pricing-product .pricing {
-            margin-top: 0;
-        }
-
-        .payment-methods-note {
-            margin: 18px 0 0;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.62);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.7px;
-        }
-
-        .payment-methods-note strong {
-            color: #d39aff;
-        }
-
-
-        /* ================================
-           BOTÓN FLOTANTE WHATSAPP
-        ================================ */
-
-        .whatsapp-floating {
-            position: fixed;
-            right: 24px;
-            bottom: 24px;
-            z-index: 11000;
-
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            padding: 13px 18px;
-            border-radius: 999px;
-
-            background: #25D366;
-            color: #ffffff;
-
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-
-            box-shadow:
-                0 12px 35px rgba(0, 0, 0, 0.35),
-                0 0 25px rgba(37, 211, 102, 0.22);
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .whatsapp-floating:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 16px 40px rgba(0, 0, 0, 0.42),
-                0 0 30px rgba(37, 211, 102, 0.30);
-        }
-
-        .whatsapp-floating:active {
-            transform: translateY(-1px);
-        }
-
-        .whatsapp-icon {
-            width: 25px;
-            height: 25px;
-            flex-shrink: 0;
-            display: block;
-        }
-
-
-        /* ================================
-           RESPONSIVE
-        ================================ */
-
-        @media (max-width: 1050px) {
-
-            .weapon-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-
-        }
-
-
-        @media (max-width: 900px) {
-
-            .main-videos {
-                grid-template-columns: 1fr;
-                max-width: 650px;
-            }
-
-            .weapon-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-        }
-
-
-        @media (max-width: 650px) {
-
-            .complaint-modal {
-                padding: 12px;
-            }
-
-            .complaint-modal-box {
-                padding: 28px 20px;
-                border-radius: 20px;
-            }
-
-            .weapon-grid {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .weapon-image {
-                height: 180px;
-            }
-
-            .weapon-modal {
-                padding: 12px;
-            }
-
-            .weapon-modal-box {
-                border-radius: 20px;
-            }
-
-            .weapon-modal-image {
-                height: 180px;
-            }
-
-            .weapon-modal-content {
-                padding: 24px 18px;
-            }
-
-            .weapon-values {
-                grid-template-columns: 1fr;
-            }
-
-            .main-videos {
-                gap: 20px;
-            }
-
-            .main-video-title {
-                font-size: 18px;
-            }
-
-            .payment-methods-note {
-                margin-top: 16px;
-                font-size: 10px;
-            }
-
-            .whatsapp-floating {
-                right: 16px;
-                bottom: 16px;
-                padding: 12px 15px;
-                font-size: 12px;
-            }
-
-            .whatsapp-icon {
-                width: 23px;
-                height: 23px;
-            }
-
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-    <div class="background"></div>
-
-    <div class="page">
-
-        <header class="glass navbar">
-
-            <div class="logo">
-                🎯 MOUSECONTROL <span>/ HACKAIM</span> 🖱️
-            </div>
-
-            <nav>
-
-                <a href="#inicio">Inicio</a>
-                <a href="#funciones">Funciones</a>
-                <a href="#videos">Videos</a>
-                <a href="#precios">Comprar</a>
-                <a href="#noticias">Noticias</a>
-                <a href="#soporte">Soporte</a>
-                <a href="#configuraciones-armas">Configuraciones de armas</a>
-
-            </nav>
-
-        </header>
-
-
-        <main id="inicio">
-
-            <section class="glass hero">
-
-                <div class="hero-content">
-
-                    <p class="eyebrow">
-                        🎯 MOUSECONTROL / HACKAIM 🖱️
-                    </p>
-
-                    <h1>
-                        CONTROLÁ TU EXPERIENCIA
-                    </h1>
-
-                    <p class="hero-text">
-                        Controlá tu recoil en todos los juegos.
-                    </p>
-
-                    <div class="download-counter">
-                        🚀 <strong>100.000+</strong> DESCARGAS
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- VIDEOS PRINCIPALES -->
-
-            <section id="videos" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        MOUSECONTROL / HACKAIM
-                    </p>
-
-                    <h2>
-                        ¿CÓMO FUNCIONA?
-                    </h2>
-
-                    <p>
-                        Mirá los videos y conocé cómo funciona cada programa.
-                    </p>
-
-                </div>
-
-
-                <div class="main-videos">
-
-
-                    <article class="main-video-card">
-
-                        <h3 class="main-video-title">
-                            MOUSECONTROL
-                        </h3>
-
-                        <p class="main-video-description">
-                            Conocé las principales funciones de MouseControl.
-                        </p>
-
-                        <div class="video-container">
-
-                            <iframe
-                                src="https://www.youtube.com/embed/UQgaHR6llKA"
-                                title="Cómo funciona MouseControl"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <a
-                            href="#mousecontrol"
-                            class="button primary main-video-button">
-                            COMPRAR MOUSECONTROL
-                        </a>
-
-                    </article>
-
-
-                    <article class="main-video-card">
-
-                        <h3 class="main-video-title">
-                            HACKAIM
-                        </h3>
-
-                        <p class="main-video-description">
-                            Conocé las principales funciones de HACKAIM.
-                        </p>
-
-                        <div class="video-container">
-
-                            <iframe
-                                src="https://www.youtube.com/embed/RIBJBD2AYCA"
-                                title="Cómo funciona HACKAIM"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <a
-                            href="#hackaim"
-                            class="button primary main-video-button">
-                            COMPRAR HACKAIM
-                        </a>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-
-            <!-- FUNCIONES -->
-
-            <section id="funciones" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        MOUSECONTROL / HACKAIM
-                    </p>
-
-                    <h2>
-                        FUNCIONES
-                    </h2>
-
-                    <p>
-                        Conocé las principales funciones disponibles y las próximas novedades.
-                    </p>
-
-                </div>
-
-
-                <div class="cards">
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            01
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            ANTI-RECOIL
-                        </h3>
-
-                        <p>
-                            Configurá los parámetros verticales y horizontales de cada perfil.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            02
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            AIM ASSIST
-                        </h3>
-
-                        <p>
-                            Función disponible dentro de HACKAIM.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            03
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            PERFILES
-                        </h3>
-
-                        <p>
-                            Opciones disponibles para personalizar tus perfiles.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            04
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            CONTROL
-                        </h3>
-
-                        <p>
-                            Herramientas de control y configuración disponibles.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-
-            <!-- CONFIGURACIONES DE ARMAS -->
-
-            <section
-                id="configuraciones-armas"
-                class="glass section weapon-section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        HACKAIM
-                    </p>
-
-                    <h2>
-                        CONFIGURACIONES DE ARMAS
-                    </h2>
-
-                    <p>
-                        Seleccioná un arma para consultar su configuración.
-                    </p>
-
-                </div>
-
-
-                <div class="weapon-category-title">
-
-                    <h3>
-                        FUSILES DE ASALTO
-                    </h3>
-
-                    <p>
-                        Configuraciones disponibles
-                    </p>
-
-                </div>
-
-
-                <div class="weapon-grid">
-
-
-                    <!-- FG42 -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="FG42"
-                        data-vertical="-73"
-                        data-horizontal="-11"
-                        data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/FG42%20Gunsmith%20BO7.png">
-
-                        <img
-                            class="weapon-image"
-                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/FG42%20Gunsmith%20BO7.png"
-                            alt="FG42"
-                            loading="lazy">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                FG42
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- AN-94 -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="AN-94"
-                        data-vertical="-65"
-                        data-horizontal="-11"
-                        data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/AN-94%20Gunsmith%20BO7.png">
-
-                        <img
-                            class="weapon-image"
-                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/AN-94%20Gunsmith%20BO7.png"
-                            alt="AN-94"
-                            loading="lazy">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                AN-94
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- VX COMPACT -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="VX COMPACT"
-                        data-vertical="-65"
-                        data-horizontal="-3"
-                        data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/VX%20Compact%20Gunsmith%20BO7.png">
-
-                        <img
-                            class="weapon-image"
-                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/VX%20Compact%20Gunsmith%20BO7.png"
-                            alt="VX Compact"
-                            loading="lazy">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                VX COMPACT
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- MK35 ISR -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="MK35 ISR"
-                        data-vertical="-75"
-                        data-horizontal="-7"
-                        data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/MK35%20ISR%20Gunsmith%20BO7.png">
-
-                        <img
-                            class="weapon-image"
-                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/MK35%20ISR%20Gunsmith%20BO7.png"
-                            alt="MK35 ISR"
-                            loading="lazy">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                MK35 ISR
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- AK-27 -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="AK-27"
-                        data-vertical="-62"
-                        data-horizontal="-7"
-                        data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/AK-27%20Gunsmith%20BO7.png">
-
-                        <img
-                            class="weapon-image"
-                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/AK-27%20Gunsmith%20BO7.png"
-                            alt="AK-27"
-                            loading="lazy">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                AK-27
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                </div>
-
-            </section>
-
-
-            <!-- CÓMO FUNCIONA HACKAIM -->
-
-            <section id="como-funciona-hackaim" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        HACKAIM
-                    </p>
-
-                    <h2>
-                        ¿CÓMO FUNCIONA?
-                    </h2>
-
-                </div>
-
-
-                <div class="hackaim-how-video">
-
-                    <iframe
-                        src="https://www.youtube.com/embed/Knbly_A1JKc"
-                        title="Cómo funciona HACKAIM"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-
-                </div>
-
-            </section>
-
-
-            <!-- PRECIOS -->
-
-            <section id="precios" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        LICENCIAS
-                    </p>
-
-                    <h2>
-                        ELEGÍ TU PLAN
-                    </h2>
-
-                    <p>
-                        Elegí la duración de tu licencia.
-                    </p>
-
-                </div>
-
-
-                <div class="pricing-products">
-
-
-                    <!-- MOUSECONTROL -->
-
-                    <div id="mousecontrol" class="pricing-product">
-
-                        <div class="pricing-product-title">
-
-                            <p class="section-tag">
-                                MOUSECONTROL
-                            </p>
-
-                            <h3>
-                                MOUSECONTROL
-                            </h3>
-
-                            <p>
-                                Elegí la duración de tu licencia.
-                            </p>
-
-                        </div>
-
-
-                        <div class="pricing">
-
-
-                            <!-- MOUSECONTROL MENSUAL -->
-
-                            <article class="price-card">
-
-                                <p class="price-type">
-                                    MENSUAL
-                                </p>
-
-                                <div class="price">
-                                    10 USD
-                                </div>
-
-                                <p class="price-description">
-                                    Licencia válida durante 1 mes.
-                                </p>
-
-
-                                <!-- BOTÓN DLOCAL GO — USD 10 -->
-
-                                <script data-reference-id="cd668f68-8b7a-4dd9-8860-63fe58f57d3d">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="cd668f68-8b7a-4dd9-8860-63fe58f57d3d"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-cd668f68-8b7a-4dd9-8860-63fe58f57d3d";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "10",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
-
-                            </article>
-
-
-                            <!-- MOUSECONTROL ANUAL -->
-
-                            <article class="price-card featured">
-
-                                <div class="recommended">
-                                    RECOMENDADO
-                                </div>
-
-                                <p class="price-type">
-                                    ANUAL
-                                </p>
-
-                                <div class="price">
-                                    60 USD
-                                </div>
-
-                                <p class="price-description">
-                                    Licencia válida durante 12 meses.
-                                </p>
-
-
-                                <!-- BOTÓN DLOCAL GO — USD 60 -->
-
-                                <script data-reference-id="89f74459-3866-43d8-9726-8259ff1ee825">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="89f74459-3866-43d8-9726-8259ff1ee825"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-89f74459-3866-43d8-9726-8259ff1ee825";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "60",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
-
-                            </article>
-
-
-                        </div>
-
-
-                        <div class="payment-methods-note">
-                            💳 <strong>SE ACEPTAN TODOS LOS MEDIOS DE PAGO</strong>
-                        </div>
-
-                    </div>
-
-
-                    <!-- HACKAIM -->
-
-                    <div id="hackaim" class="pricing-product">
-
-                        <div class="pricing-product-title">
-
-                            <p class="section-tag">
-                                HACKAIM
-                            </p>
-
-                            <h3>
-                                HACKAIM
-                            </h3>
-
-                            <p>
-                                Elegí la duración de tu licencia.
-                            </p>
-
-                        </div>
-
-
-                        <div class="pricing">
-
-
-                            <!-- HACKAIM MENSUAL -->
-
-                            <article class="price-card">
-
-                                <p class="price-type">
-                                    MENSUAL
-                                </p>
-
-                                <div class="price">
-                                    13 USD
-                                </div>
-
-                                <p class="price-description">
-                                    Licencia válida durante 1 mes.
-                                </p>
-
-
-                                <!-- BOTÓN DLOCAL GO — USD 13 -->
-
-                                <script data-reference-id="ac2afdcb-af69-48f6-99aa-c1956a2fc859">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="ac2afdcb-af69-48f6-99aa-c1956a2fc859"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-ac2afdcb-af69-48f6-99aa-c1956a2fc859";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "13",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
-
-                            </article>
-
-
-                            <!-- HACKAIM ANUAL -->
-
-                            <article class="price-card featured">
-
-                                <div class="recommended">
-                                    RECOMENDADO
-                                </div>
-
-                                <p class="price-type">
-                                    ANUAL
-                                </p>
-
-                                <div class="price">
-                                    65 USD
-                                </div>
-
-                                <p class="price-description">
-                                    Licencia válida durante 12 meses.
-                                </p>
-
-
-                                <!-- BOTÓN DLOCAL GO — USD 65 -->
-
-                                <script data-reference-id="ad64f68f-f0ee-466d-b05d-61d9a19b8e00">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="ad64f68f-f0ee-466d-b05d-61d9a19b8e00"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-ad64f68f-f0ee-466d-b05d-61d9a19b8e00";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "65",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
-
-                            </article>
-
-
-                        </div>
-
-
-                        <div class="payment-methods-note">
-                            💳 <strong>SE ACEPTAN TODOS LOS MEDIOS DE PAGO</strong>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </section>
-
-
-            <!-- GAMEPLAY -->
-
-            <section class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        GAMEPLAY
-                    </p>
-
-                    <h2>
-                        MOUSECONTROL EN ACCIÓN
-                    </h2>
-
-                    <p>
-                        Gameplays y videos mostrando MouseControl en funcionamiento.
-                    </p>
-
-                </div>
-
-
-                <div class="video-grid">
-
-                    <div class="small-video">
-
-                        <iframe
-                            src="https://www.youtube.com/embed/w7G01DRXQY0"
-                            title="Gameplay MouseControl"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-
-                    </div>
-
-
-                    <div class="small-video">
-
-                        <iframe
-                            src="https://www.youtube.com/embed/OTJQx4uUURE"
-                            title="Gameplay MouseControl"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- NOTICIAS -->
-
-            <section id="noticias" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        NOVEDADES
-                    </p>
-
-                    <h2>
-                        NOTICIAS Y ACTUALIZACIONES
-                    </h2>
-
-                    <p>
-                        Acá vamos a publicar las novedades, mejoras y futuras actualizaciones de MouseControl.
-                    </p>
-
-                </div>
-
-
-                <div class="news-grid">
-
-                    <article class="news-card">
-
-                        <span>
-                            ACTUALIZACIÓN
-                        </span>
-
-                        <h3>
-                            MouseControl
-                        </h3>
-
-                        <p>
-                            Primera versión del sitio oficial y del programa.
-                        </p>
-
-                    </article>
-
-
-                    <article class="news-card">
-
-                        <span>
-                            PRÓXIMAMENTE
-                        </span>
-
-                        <h3>
-                            Nuevas funciones
-                        </h3>
-
-                        <p>
-                            Próximamente vamos a publicar nuevas funciones y mejoras.
-                        </p>
-
-                    </article>
-
-
-                    <article class="news-card">
-
-                        <span>
-                            FUTURA ACTUALIZACIÓN
-                        </span>
-
-                        <h3>
-                            Anti-Recoil para mandos
-                        </h3>
-
-                        <p>
-                            Estamos preparando nuevas funciones de Anti-Recoil para mandos.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-
-            <!-- SOPORTE -->
-
-            <section id="soporte" class="glass section support">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        SOPORTE
-                    </p>
-
-                    <h2>
-                        ¿TENÉS UNA QUEJA?
-                    </h2>
-
-                    <p>
-                        Podés enviarnos una queja, sugerencia o problema relacionado con MouseControl.
-                    </p>
-
-                </div>
-
-
-                <div class="support-button-container">
-
-                    <button
-                        type="button"
-                        class="button secondary large"
-                        id="complaintButton">
-                        ENVIAR UNA QUEJA
-                    </button>
-
-                </div>
-
-
-                <div class="community">
-
-                    <h3>
-                        COMUNIDAD
-                    </h3>
-
-                    <p>
-                        Unite próximamente a nuestra comunidad de Discord.
-                    </p>
-
-                    <a
-                        href="https://discord.gg/EPTzMvAQtm"
-                        class="button primary"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        DISCORD
-                    </a>
-
-                </div>
-
-            </section>
-
-        </main>
-
-
-        <!-- PIE -->
-
-        <footer class="glass footer">
-
-            <div class="logo">
-                🎯 MOUSECONTROL <span>/ HACKAIM</span> 🖱️
-            </div>
-
-            <p>
-                © 2026 MouseControl / HACKAIM. Todos los derechos reservados.
-            </p>
-
-        </footer>
-
-
-    </div>
-
-
-    <!-- BOTÓN FLOTANTE WHATSAPP -->
-
-    <a
-        href="https://wa.me/5491128823023"
-        class="whatsapp-floating"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Consultas a WhatsApp">
-
-        <svg
-            class="whatsapp-icon"
-            viewBox="0 0 32 32"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true">
-
-            <path
-                fill="currentColor"
-                d="M16 3C8.82 3 3 8.72 3 15.78c0 2.45.7 4.73 1.91 6.67L3 29l6.77-1.87A13.02 13.02 0 0 0 16 28.56c7.18 0 13-5.72 13-12.78S23.18 3 16 3Zm0 23.4c-2.03 0-3.92-.59-5.52-1.61l-.39-.24-4.02 1.11 1.1-3.91-.26-.4a10.56 10.56 0 0 1-1.63-5.57C5.28 9.96 10.1 5.22 16 5.22s10.72 4.74 10.72 10.56S21.9 26.4 16 26.4Zm5.87-7.91c-.32-.16-1.89-.92-2.18-1.02-.29-.11-.5-.16-.71.16-.21.32-.81 1.02-.99 1.23-.18.21-.36.24-.68.08-.32-.16-1.35-.49-2.57-1.56-.95-.83-1.59-1.85-1.77-2.17-.18-.32-.02-.49.14-.65.14-.14.32-.36.47-.53.16-.18.21-.3.32-.51.11-.21.05-.39-.03-.55-.08-.16-.71-1.7-.97-2.33-.26-.63-.52-.54-.71-.55h-.6c-.21 0-.55.08-.84.39-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.23 3.38 5.4 4.74.76.33 1.35.53 1.81.68.76.24 1.45.21 2 .13.61-.09 1.89-.77 2.15-1.51.26-.74.26-1.38.18-1.51-.08-.13-.29-.21-.61-.37Z"/>
-
-        </svg>
-
-        <span>
-            Consultas a WhatsApp
-        </span>
-
-    </a>
-
-
-    <!-- VENTANA DE CONFIGURACIÓN DE ARMA -->
-
-    <div
-        class="weapon-modal"
-        id="weaponModal">
-
-        <div class="weapon-modal-box">
-
-            <button
-                class="weapon-modal-close"
-                id="closeWeapon"
-                aria-label="Cerrar"
-                type="button">
-                ×
-            </button>
-
-
-            <img
-                id="weaponModalImage"
-                class="weapon-modal-image"
-                src=""
-                alt="Configuración del arma">
-
-
-            <div class="weapon-modal-content">
-
-                <p class="section-tag">
-                    CONFIGURACIÓN
-                </p>
-
-                <h2 id="weaponModalName">
-                    AN-94
-                </h2>
-
-                <p class="weapon-modal-description">
-                    Valores recomendados para esta clase de arma.
-                </p>
-
-
-                <div class="weapon-values">
-
-                    <div class="weapon-value">
-
-                        <span>
-                            VERTICAL
-                        </span>
-
-                        <strong id="weaponVertical">
-                            -65
-                        </strong>
-
-                    </div>
-
-
-                    <div class="weapon-value">
-
-                        <span>
-                            HORIZONTAL
-                        </span>
-
-                        <strong id="weaponHorizontal">
-                            -11
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <p class="weapon-modal-note">
-                    Configuración MouseControl / HACKAIM
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- VENTANA DE SOPORTE -->
-
-    <div
-        class="complaint-modal"
-        id="complaintModal">
-
-        <div class="complaint-modal-box">
-
-            <button
-                class="complaint-close"
-                id="closeComplaint"
-                aria-label="Cerrar"
-                type="button">
-                ×
-            </button>
-
-            <p class="section-tag">
-                SOPORTE
-            </p>
-
-            <h2>
-                CONTACTÁ CON NOSOTROS
-            </h2>
-
-            <p class="complaint-text">
-                Si tenés una queja, sugerencia o problema relacionado con MouseControl, podés comunicarte directamente con nosotros.
-            </p>
-
-            <div class="complaint-email">
-
-                <span>
-                    CORREO DE CONTACTO
-                </span>
-
-                <strong>
-                    nicomtz320@gmail.com
-                </strong>
-
-            </div>
-
-            <a
-                href="mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl"
-                class="button primary"
-                id="openComplaintEmail">
-                ABRIR CORREO
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <!-- JAVASCRIPT -->
-
-    <script>
-
-        /* ================================
-           CONFIGURACIONES DE ARMAS
-        ================================ */
-
-        const weaponModal =
-            document.getElementById("weaponModal");
-
-        const closeWeapon =
-            document.getElementById("closeWeapon");
-
-        const weaponModalImage =
-            document.getElementById("weaponModalImage");
-
-        const weaponModalName =
-            document.getElementById("weaponModalName");
-
-        const weaponVertical =
-            document.getElementById("weaponVertical");
-
-        const weaponHorizontal =
-            document.getElementById("weaponHorizontal");
-
-
-        const weaponCards =
-            document.querySelectorAll(".weapon-card");
-
-
-        weaponCards.forEach(function(card) {
-
-            card.addEventListener("click", function() {
-
-                const weapon =
-                    card.dataset.weapon;
-
-                const vertical =
-                    card.dataset.vertical;
-
-                const horizontal =
-                    card.dataset.horizontal;
-
-                const image =
-                    card.dataset.image;
-
-
-                weaponModalName.textContent =
-                    weapon;
-
-                weaponVertical.textContent =
-                    vertical;
-
-                weaponHorizontal.textContent =
-                    horizontal;
-
-                weaponModalImage.src =
-                    image;
-
-                weaponModalImage.alt =
-                    weapon;
-
-
-                weaponModal.classList.add("active");
-
-                document.body.style.overflow =
-                    "hidden";
-
-            });
-
-        });
-
-
-        function closeWeaponModal() {
-
-            weaponModal.classList.remove("active");
-
-            document.body.style.overflow =
-                "";
-
-        }
-
-
-        closeWeapon.addEventListener(
-            "click",
-            closeWeaponModal
-        );
-
-
-        weaponModal.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target === weaponModal
-                ) {
-
-                    closeWeaponModal();
-
-                }
-
-            }
-        );
-
-
-        /* ================================
-           SOPORTE / QUEJA
-        ================================ */
-
-        const complaintButton =
-            document.getElementById("complaintButton");
-
-        const complaintModal =
-            document.getElementById("complaintModal");
-
-        const closeComplaint =
-            document.getElementById("closeComplaint");
-
-        const openComplaintEmail =
-            document.getElementById("openComplaintEmail");
-
-
-        complaintButton.addEventListener(
-            "click",
-            function(event) {
-
-                event.preventDefault();
-
-                complaintModal.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-
-        closeComplaint.addEventListener(
-            "click",
-            function() {
-
-                complaintModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        complaintModal.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target === complaintModal
-                ) {
-
-                    complaintModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* ================================
-           ABRIR CORREO
-        ================================ */
-
-        openComplaintEmail.addEventListener(
-            "click",
-            function() {
-
-                window.location.href =
-                    "mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl";
-
-            }
-        );
-
-
-        /* ================================
-           ESCAPE PARA CERRAR
-        ================================ */
-
-        document.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (event.key === "Escape") {
-
-                    weaponModal.classList.remove(
-                        "active"
-                    );
-
-                    complaintModal.classList.remove(
-                        "active"
-                    );
-
-                    document.body.style.overflow =
-                        "";
-
-                }
-
-            }
-        );
-
-    </script>
-
-</body>
-
-</html>
+if __name__ == "__main__":
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )
