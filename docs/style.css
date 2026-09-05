@@ -1,1120 +1,1139 @@
 * {
-  box-sizing: border-box;
-  }
- {
-scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-margin: 0;
-min-height: 100vh;
-font-family: Arial, Helvetica, sans-serif;
-color: white;
-background: #08060d;
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background: #08060d;
 }
 
 .background {
-position: fixed;
-inset: 0;
-z-index: -3;
-background-image:
-linear-gradient(
-rgba(5, 3, 12, 0.55),
-rgba(5, 3, 12, 0.72)
-),
-url("imagenes/fondo.jpg");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background-image:
+        linear-gradient(
+            rgba(5, 3, 12, 0.55),
+            rgba(5, 3, 12, 0.72)
+        ),
+        url("imagenes/fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .page {
-width: min(1180px, calc(100% - 32px));
-margin: 0 auto;
-padding: 24px 0 40px;
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 24px 0 40px;
 }
 
 .glass {
-background: rgba(20, 14, 30, 0.38);
-border: 1px solid rgba(255, 255, 255, 0.14);
-box-shadow:
-0 20px 60px rgba(0, 0, 0, 0.35),
-inset 0 1px 0 rgba(255, 255, 255, 0.08);
-backdrop-filter: blur(18px);
--webkit-backdrop-filter: blur(18px);
+    background: rgba(20, 14, 30, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
 .navbar {
-min-height: 72px;
-border-radius: 22px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 30px;
-padding: 16px 24px;
-position: sticky;
-top: 16px;
-z-index: 20;
+    min-height: 72px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 16px 24px;
+    position: sticky;
+    top: 16px;
+    z-index: 20;
 }
 
 .logo {
-font-size: 22px;
-font-weight: 800;
-letter-spacing: 1px;
-white-space: nowrap;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    white-space: nowrap;
 }
 
 .logo span {
-color: #bd7cff;
+    color: #bd7cff;
 }
 
 nav {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-flex-wrap: wrap;
-gap: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 18px;
 }
 
 nav a {
-color: rgba(255, 255, 255, 0.84);
-text-decoration: none;
-font-size: 14px;
-transition: 0.2s ease;
+    color: rgba(255, 255, 255, 0.84);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s ease;
 }
 
 nav a:hover {
-color: #c98cff;
+    color: #c98cff;
 }
 
+
 /* =================================
-PRIMER ENCUADRE
-================================= */
+   PRIMER ENCUADRE
+   ================================= */
 
 .hero {
-margin-top: 24px;
-min-height: 495px;
-border-radius: 30px;
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-padding: 24px 30px;
-overflow: hidden;
+    margin-top: 24px;
+    height: 540px;
+    min-height: 540px;
+    max-height: 540px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px 30px;
+    overflow: hidden;
 }
 
 .hero-content {
-width: 100%;
-max-width: 980px;
+    width: 100%;
+    max-width: 980px;
 }
 
 .hero .eyebrow {
-margin: 0 0 5px;
-color: #c586ff;
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 2.5px;
+    margin: 0 0 5px;
+    color: #c586ff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
 }
 
 .hero h1 {
-margin: 0;
-font-size: clamp(32px, 5vw, 60px);
-line-height: 0.95;
-letter-spacing: -1.5px;
+    margin: 0;
+    font-size: clamp(32px, 5vw, 60px);
+    line-height: 0.95;
+    letter-spacing: -1.5px;
 }
 
 .hero .hero-text {
-max-width: 620px;
-margin: 10px auto 0;
-color: rgba(255, 255, 255, 0.76);
-font-size: 16px;
-line-height: 1.35;
+    max-width: 620px;
+    margin: 10px auto 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 16px;
+    line-height: 1.35;
 }
 
 .hero .hero-buttons {
-margin-top: 16px;
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
-gap: 10px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
+
 /* =================================
-DESCARGAS DEL PRIMER ENCUADRE
-================================= */
+   DESCARGAS DEL PRIMER ENCUADRE
+   ================================= */
 
 .hero-downloads {
-width: 100%;
-margin: 18px auto 0;
+    width: 100%;
+    margin: 20px auto 0;
 }
 
 .hero-downloads-header {
-margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .download-tag {
-display: inline-block;
-padding: 6px 11px;
-border-radius: 999px;
-background: rgba(190, 115, 255, 0.12);
-border: 1px solid rgba(190, 115, 255, 0.22);
-color: #d39aff;
-font-size: 9px;
-font-weight: 900;
-letter-spacing: 1.3px;
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: rgba(190, 115, 255, 0.12);
+    border: 1px solid rgba(190, 115, 255, 0.22);
+    color: #d39aff;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
 }
 
 .hero-downloads-header h2 {
-margin: 8px 0 4px;
-font-size: clamp(18px, 2.4vw, 25px);
-letter-spacing: 0.4px;
+    margin: 8px 0 4px;
+    font-size: clamp(20px, 2.5vw, 26px);
+    letter-spacing: 0.4px;
 }
 
 .hero-downloads-header p {
-margin: 0;
-color: rgba(255, 255, 255, 0.62);
-font-size: 11px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 11px;
 }
 
 .download-grid {
-width: 100%;
-display: grid;
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 14px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
 }
 
 .download-card {
-min-width: 0;
-display: flex;
-align-items: center;
-gap: 14px;
-padding: 16px 18px;
-text-align: left;
-border-radius: 18px;
-background: rgba(255, 255, 255, 0.055);
-border: 1px solid rgba(255, 255, 255, 0.12);
-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-transition:
-transform 0.2s ease,
-border-color 0.2s ease,
-background 0.2s ease;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    text-align: left;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .download-card:hover {
-transform: translateY(-3px);
-border-color: rgba(190, 115, 255, 0.40);
-background: rgba(190, 115, 255, 0.08);
+    transform: translateY(-3px);
+    border-color: rgba(190, 115, 255, 0.40);
+    background: rgba(190, 115, 255, 0.08);
 }
 
 .download-card-number {
-flex-shrink: 0;
-width: 42px;
-height: 42px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 12px;
-background:
-linear-gradient(
-135deg,
-#8c45d8,
-#c16fff
-);
-color: white;
-font-size: 11px;
-font-weight: 900;
-box-shadow: 0 8px 20px rgba(151, 73, 224, 0.20);
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background:
+        linear-gradient(
+            135deg,
+            #8c45d8,
+            #c16fff
+        );
+    color: white;
+    font-size: 11px;
+    font-weight: 900;
+    box-shadow: 0 8px 20px rgba(151, 73, 224, 0.20);
 }
 
 .download-card-content {
-min-width: 0;
-flex: 1;
+    min-width: 0;
+    flex: 1;
 }
 
 .download-card-content h3 {
-margin: 0;
-font-size: 15px;
-letter-spacing: 0.7px;
+    margin: 0;
+    font-size: 15px;
+    letter-spacing: 0.7px;
 }
 
 .download-card-content p {
-margin: 5px 0 12px;
-color: rgba(255, 255, 255, 0.58);
-font-size: 10px;
-line-height: 1.45;
+    margin: 5px 0 12px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 10px;
+    line-height: 1.45;
 }
 
 .download-button {
-width: 100%;
-min-height: 40px !important;
-padding: 0 12px !important;
-border-radius: 10px !important;
-font-size: 10px !important;
-letter-spacing: 0.5px !important;
+    width: 100%;
+    min-height: 40px !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.4px !important;
 }
 
+
 /* =================================
-BOTONES
-================================= */
+   BOTONES
+   ================================= */
 
 .button {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-min-height: 48px;
-padding: 0 26px;
-border-radius: 14px;
-border: 1px solid transparent;
-text-decoration: none;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 13px;
-font-weight: 800;
-letter-spacing: 0.8px;
-cursor: pointer;
-transition:
-transform 0.2s ease,
-box-shadow 0.2s ease,
-background 0.2s ease;
-appearance: none;
--webkit-appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 26px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .button:hover {
-transform: translateY(-2px);
+    transform: translateY(-2px);
 }
 
 .primary {
-color: white;
-background:
-linear-gradient(
-135deg,
-#8c45d8,
-#c16fff
-);
-border: 1px solid rgba(255, 255, 255, 0.10);
-box-shadow:
-0 10px 30px rgba(151, 73, 224, 0.28);
+    color: white;
+    background:
+        linear-gradient(
+            135deg,
+            #8c45d8,
+            #c16fff
+        );
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+        0 10px 30px rgba(151, 73, 224, 0.28);
 }
 
 .secondary {
-color: white;
-background: rgba(255, 255, 255, 0.07);
-border: 1px solid rgba(255, 255, 255, 0.16);
+    color: white;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .large {
-min-width: 220px;
+    min-width: 220px;
 }
 
+
 /* =================================
-BOTONES DENTRO DEL HERO
-================================= */
+   BOTONES DENTRO DEL HERO
+   ================================= */
 
 .hero .button {
-min-height: 42px;
-padding: 0 22px;
-border-radius: 12px;
-font-size: 12px;
+    min-height: 42px;
+    padding: 0 22px;
+    border-radius: 12px;
+    font-size: 12px;
 }
 
+
 /* =================================
-CONTADOR DE DESCARGAS
-================================= */
+   CONTADOR DE DESCARGAS
+   ================================= */
 
 .download-counter {
-margin-top: 11px;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-padding: 7px 15px;
-border-radius: 999px;
-background: rgba(190, 115, 255, 0.10);
-border: 1px solid rgba(190, 115, 255, 0.22);
-color: rgba(255, 255, 255, 0.82);
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 0.8px;
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 15px;
+    border-radius: 999px;
+    background: rgba(190, 115, 255, 0.10);
+    border: 1px solid rgba(190, 115, 255, 0.22);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
 }
 
 .download-counter strong {
-color: #d39aff;
+    color: #d39aff;
 }
 
+
 /* =================================
-SECCIONES
-================================= */
+   SECCIONES
+   ================================= */
 
 .section {
-margin-top: 24px;
-border-radius: 28px;
-padding: 55px 34px;
+    margin-top: 24px;
+    border-radius: 28px;
+    padding: 55px 34px;
 }
 
 .section-header {
-max-width: 760px;
-margin: 0 auto 34px;
-text-align: center;
+    max-width: 760px;
+    margin: 0 auto 34px;
+    text-align: center;
 }
 
 .section-header h2 {
-margin: 0;
-font-size: clamp(30px, 4vw, 48px);
-letter-spacing: -1px;
+    margin: 0;
+    font-size: clamp(30px, 4vw, 48px);
+    letter-spacing: -1px;
 }
 
 .section-header p:last-child {
-margin: 16px auto 0;
-color: rgba(255, 255, 255, 0.7);
-line-height: 1.7;
+    margin: 16px auto 0;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
 }
 
+
 /* =================================
-VIDEO PRINCIPAL
-================================= */
+   VIDEO PRINCIPAL
+   ================================= */
 
 .video-container {
-width: min(920px, 100%);
-margin: 0 auto;
-overflow: hidden;
-border-radius: 20px;
-aspect-ratio: 16 / 9;
-background: rgba(0, 0, 0, 0.35);
-border: 1px solid rgba(255, 255, 255, 0.1);
+    width: min(920px, 100%);
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 20px;
+    aspect-ratio: 16 / 9;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .video-container iframe {
-width: 100%;
-height: 100%;
-display: block;
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
+
 /* =================================
-FUNCIONES
-================================= */
+   FUNCIONES
+   ================================= */
 
 .cards {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
 }
 
 .feature-card,
 .price-card,
 .news-card,
 .purchase-box {
-background: rgba(255, 255, 255, 0.055);
-border: 1px solid rgba(255, 255, 255, 0.11);
-border-radius: 20px;
-backdrop-filter: blur(12px);
--webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .feature-card {
-padding: 26px;
-position: relative;
+    padding: 26px;
+    position: relative;
 }
 
 .feature-number {
-color: #b777f5;
-font-size: 12px;
-font-weight: 800;
-letter-spacing: 2px;
+    color: #b777f5;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
 .feature-card h3 {
-margin: 18px 0 10px;
+    margin: 18px 0 10px;
 }
 
 .feature-card p {
-margin: 0;
-color: rgba(255, 255, 255, 0.68);
-line-height: 1.6;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.6;
 }
 
 .status {
-position: absolute;
-top: 14px;
-right: 14px;
-padding: 6px 9px;
-border-radius: 8px;
-font-size: 9px;
-font-weight: 800;
-letter-spacing: 0.8px;
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 6px 9px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
 }
 
 .available {
-color: #72ff9b;
-background:
-rgba(65, 255, 120, 0.12);
-border:
-1px solid
-rgba(65, 255, 120, 0.28);
+    color: #72ff9b;
+    background:
+        rgba(65, 255, 120, 0.12);
+    border:
+        1px solid
+        rgba(65, 255, 120, 0.28);
 }
 
 .coming {
-color: #ff7272;
-background:
-rgba(255, 70, 70, 0.12);
-border:
-1px solid
-rgba(255, 70, 70, 0.28);
+    color: #ff7272;
+    background:
+        rgba(255, 70, 70, 0.12);
+    border:
+        1px solid
+        rgba(255, 70, 70, 0.28);
 }
 
+
 /* =================================
-CONFIGURACIONES DE ARMAS
-================================= */
+   CONFIGURACIONES DE ARMAS
+   ================================= */
 
 .weapon-section {
-scroll-margin-top: 110px;
+    scroll-margin-top: 110px;
 }
 
 .weapon-category-title {
-text-align: center;
-margin: 0 0 26px;
+    text-align: center;
+    margin: 0 0 26px;
 }
 
 .weapon-category-title h3 {
-margin: 0;
-font-size: 24px;
-letter-spacing: 0.5px;
+    margin: 0;
+    font-size: 24px;
+    letter-spacing: 0.5px;
 }
 
 .weapon-category-title p {
-margin: 8px 0 0;
-color: rgba(255, 255, 255, 0.62);
-font-size: 13px;
-}
-
-.weapon-grid {
-display: grid;
-grid-template-columns: repeat(5, minmax(0, 1fr));
-gap: 16px;
-}
-
-.weapon-card {
-position: relative;
-overflow: hidden;
-padding: 0;
-border: 1px solid rgba(255, 255, 255, 0.11);
-border-radius: 20px;
-background: rgba(255, 255, 255, 0.055);
-color: white;
-cursor: pointer;
-text-align: left;
-font-family: inherit;
-transition:
-transform 0.22s ease,
-border-color 0.22s ease,
-box-shadow 0.22s ease,
-background 0.22s ease;
-appearance: none;
--webkit-appearance: none;
-}
-
-.weapon-card:hover {
-transform: translateY(-5px);
-border-color: rgba(190, 115, 255, 0.48);
-background: rgba(190, 115, 255, 0.08);
-box-shadow:
-0 18px 45px rgba(0, 0, 0, 0.32),
-0 0 25px rgba(151, 73, 224, 0.10);
-}
-
-.weapon-card:focus-visible {
-outline: 2px solid #c16fff;
-outline-offset: 3px;
-}
-
-/* =================================
-IMÁGENES DE ARMAS
-================================= */
-
-.weapon-image {
-width: 100%;
-height: 145px;
-display: block;
-object-fit: contain;
-object-position: center;
-padding: 22px;
-background:
-linear-gradient(
-135deg,
-rgba(190, 115, 255, 0.13),
-rgba(0, 0, 0, 0.35)
-);
-}
-
-.weapon-card-content {
-padding: 16px;
-text-align: center;
-}
-
-.weapon-card-content h4 {
-margin: 0;
-font-size: 15px;
-letter-spacing: 0.6px;
-}
-
-.weapon-card-content span {
-display: block;
-margin-top: 7px;
-color: #b777f5;
-font-size: 9px;
-font-weight: 800;
-letter-spacing: 1.2px;
-}
-
-/* =================================
-MODAL CONFIGURACIÓN DE ARMA
-================================= */
-
-.weapon-modal {
-position: fixed;
-inset: 0;
-z-index: 10001;
-display: none;
-align-items: center;
-justify-content: center;
-padding: 20px;
-background:
-rgba(0, 0, 0, 0.78);
-backdrop-filter: blur(12px);
--webkit-backdrop-filter: blur(12px);
-}
-
-.weapon-modal.active {
-display: flex;
-}
-
-.weapon-modal-box {
-width: min(520px, 100%);
-position: relative;
-overflow: hidden;
-border-radius: 24px;
-background:
-rgba(20, 14, 30, 0.94);
-border:
-1px solid
-rgba(255, 255, 255, 0.16);
-box-shadow:
-0 30px 90px rgba(0, 0, 0, 0.65),
-0 0 45px rgba(151, 73, 224, 0.10),
-inset 0 1px 0 rgba(255, 255, 255, 0.08);
-backdrop-filter: blur(24px);
--webkit-backdrop-filter: blur(24px);
-text-align: center;
-animation: weaponModalIn 0.2s ease;
-}
-
-@keyframes weaponModalIn {
-from {
-opacity: 0;
-transform:
-translateY(12px)
-scale(0.97);
-}
-
-to {
-    opacity: 1;
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-}
-
-.weapon-modal-image {
-width: 100%;
-height: 220px;
-display: block;
-object-fit: contain;
-object-position: center;
-padding: 22px;
-background:
-linear-gradient(
-135deg,
-rgba(190, 115, 255, 0.14),
-rgba(0, 0, 0, 0.40)
-);
-}
-
-.weapon-modal-content {
-padding: 28px;
-}
-
-.weapon-modal-content .section-tag {
-margin-bottom: 8px;
-}
-
-.weapon-modal-content h2 {
-margin: 0;
-font-size:
-clamp(28px, 5vw, 38px);
-}
-
-.weapon-modal-description {
-margin:
-9px 0 22px;
-color:
-rgba(255, 255, 255, 0.58);
-font-size: 12px;
-}
-
-.weapon-values {
-display: grid;
-grid-template-columns:
-repeat(2, 1fr);
-gap: 14px;
-margin-top: 20px;
-}
-
-.weapon-value {
-padding: 20px 15px;
-border-radius: 16px;
-background:
-rgba(255, 255, 255, 0.055);
-border:
-1px solid
-rgba(255, 255, 255, 0.10);
-}
-
-.weapon-value span {
-display: block;
-margin-bottom: 8px;
-color: #b777f5;
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 1.4px;
-}
-
-.weapon-value strong {
-display: block;
-font-size: 30px;
-font-weight: 900;
-}
-
-.weapon-modal-note {
-margin:
-18px 0 0;
-color:
-rgba(255, 255, 255, 0.48);
-font-size: 10px;
-}
-
-/* =================================
-PRECIOS
-================================= */
-
-.pricing {
-display: grid;
-grid-template-columns:
-repeat(2, minmax(0, 1fr));
-gap: 20px;
-max-width: 850px;
-margin: 0 auto;
-}
-
-.price-card {
-position: relative;
-padding: 34px;
-text-align: center;
-}
-
-.price-card.featured {
-border-color:
-rgba(190, 115, 255, 0.42);
-box-shadow:
-0 20px 50px
-rgba(122, 46, 189, 0.14);
-}
-
-.recommended {
-display: inline-block;
-margin-bottom: 18px;
-padding: 7px 12px;
-border-radius: 999px;
-background:
-rgba(190, 115, 255, 0.15);
-color: #d39aff;
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 1.2px;
-}
-
-.price-type {
-margin: 0;
-color:
-rgba(255, 255, 255, 0.72);
-font-weight: 800;
-letter-spacing: 2px;
-}
-
-.price {
-margin: 16px 0;
-font-size: 52px;
-font-weight: 900;
-}
-
-.price-description {
-margin: 0 0 24px;
-color:
-rgba(255, 255, 255, 0.65);
-}
-
-/* =================================
-COMPRA
-================================= */
-
-.purchase {
-text-align: center;
-}
-
-.purchase-box {
-max-width: 720px;
-margin: 0 auto;
-padding: 32px;
-}
-
-.purchase-box h3 {
-margin-top: 0;
-}
-
-.payment-data {
-display: grid;
-grid-template-columns:
-repeat(3, 1fr);
-gap: 14px;
-margin: 26px 0;
-}
-
-.payment-data > div {
-padding: 18px;
-border-radius: 16px;
-background:
-rgba(0, 0, 0, 0.16);
-}
-
-.payment-data span {
-display: block;
-margin-bottom: 7px;
-color: #b777f5;
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 1px;
-}
-
-.payment-data strong {
-font-size: 14px;
-}
-
-/* =================================
-GAMEPLAY
-================================= */
-
-.video-grid {
-display: grid;
-grid-template-columns:
-repeat(2, 1fr);
-gap: 18px;
-}
-
-.small-video {
-overflow: hidden;
-border-radius: 20px;
-aspect-ratio: 16 / 9;
-border:
-1px solid
-rgba(255, 255, 255, 0.1);
-background:
-rgba(0, 0, 0, 0.35);
-}
-
-.small-video iframe {
-width: 100%;
-height: 100%;
-display: block;
-}
-
-/* =================================
-NOTICIAS
-================================= */
-
-.news-grid {
-display: grid;
-grid-template-columns:
-repeat(3, 1fr);
-gap: 18px;
-}
-
-.news-card {
-padding: 26px;
-}
-
-.news-card span {
-color: #b777f5;
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 1px;
-}
-
-.news-card h3 {
-margin: 14px 0 10px;
-}
-
-.news-card p {
-margin: 0;
-color:
-rgba(255, 255, 255, 0.66);
-line-height: 1.6;
-}
-
-/* =================================
-SOPORTE
-================================= */
-
-.support {
-text-align: center;
-}
-
-.support-button-container {
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
-}
-
-.community {
-max-width: 700px;
-margin: 60px auto 0;
-padding-top: 40px;
-border-top:
-1px solid
-rgba(255, 255, 255, 0.1);
-}
-
-.community p {
-color:
-rgba(255, 255, 255, 0.66);
-line-height: 1.6;
-}
-
-/* =================================
-FOOTER
-================================= */
-
-.footer {
-margin-top: 24px;
-border-radius: 22px;
-padding: 25px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 20px;
-}
-
-.footer p {
-margin: 0;
-color:
-rgba(255, 255, 255, 0.5);
-font-size: 12px;
-}
-
-/* =================================
-RESPONSIVE
-================================= */
-
-@media (max-width: 1050px) {
-.weapon-grid {
-grid-template-columns:
-repeat(3, minmax(0, 1fr));
-}
-}
-
-@media (max-width: 900px) {
-.navbar {
-position: static;
-flex-direction: column;
-align-items: flex-start;
-}
-
-nav {
-    width: 100%;
-    justify-content: flex-start;
-}
-
-.cards {
-    grid-template-columns:
-        repeat(2, 1fr);
-}
-
-.news-grid {
-    grid-template-columns: 1fr;
-}
-
-.weapon-grid {
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-}
-
-}
-
-@media (max-width: 720px) {
-.download-grid {
-grid-template-columns: 1fr;
-}
-
-.download-card {
-    padding: 14px 15px;
-}
-
-}
-
-@media (max-width: 650px) {
-.page {
-width:
-min(100% - 18px, 1180px);
-padding-top: 9px;
-}
-
-.hero {
-    min-height: 620px;
-    padding: 18px 18px;
-}
-
-.hero .eyebrow {
-    font-size: 9px;
-    margin-bottom: 4px;
-}
-
-.hero h1 {
-    font-size: 34px;
-}
-
-.hero .hero-text {
-    font-size: 14px;
-    margin-top: 8px;
-}
-
-.hero .hero-buttons {
-    margin-top: 14px;
-    gap: 8px;
-}
-
-.hero .button {
-    min-height: 40px;
-    padding: 0 18px;
-    font-size: 11px;
-}
-
-.hero-downloads {
-    margin-top: 16px;
-}
-
-.hero-downloads-header {
-    margin-bottom: 11px;
-}
-
-.hero-downloads-header h2 {
-    font-size: 19px;
-    margin-top: 7px;
-}
-
-.hero-downloads-header p {
-    font-size: 10px;
-    line-height: 1.45;
-}
-
-.download-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-.download-card {
-    padding: 12px 13px;
-    gap: 11px;
-    border-radius: 15px;
-}
-
-.download-card-number {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    font-size: 10px;
-}
-
-.download-card-content h3 {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.62);
     font-size: 13px;
 }
 
-.download-card-content p {
-    margin: 4px 0 9px;
-    font-size: 9px;
-}
-
-.download-button {
-    min-height: 37px !important;
-    font-size: 9px !important;
-}
-
-.download-counter {
-    margin-top: 10px;
-    padding: 7px 14px;
-    font-size: 9px;
-}
-
-.section {
-    padding: 38px 20px;
-    border-radius: 22px;
-}
-
-.cards,
-.pricing,
-.video-grid,
-.payment-data {
-    grid-template-columns: 1fr;
-}
-
 .weapon-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
 }
+
+.weapon-card {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.055);
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        background 0.22s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.weapon-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(190, 115, 255, 0.48);
+    background: rgba(190, 115, 255, 0.08);
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.32),
+        0 0 25px rgba(151, 73, 224, 0.10);
+}
+
+.weapon-card:focus-visible {
+    outline: 2px solid #c16fff;
+    outline-offset: 3px;
+}
+
+
+/* =================================
+   IMÁGENES DE ARMAS
+   ================================= */
 
 .weapon-image {
-    height: 180px;
-    padding: 28px;
+    width: 100%;
+    height: 145px;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    padding: 22px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(190, 115, 255, 0.13),
+            rgba(0, 0, 0, 0.35)
+        );
 }
 
-.weapon-modal {
-    padding: 12px;
-}
-
-.weapon-modal-box {
-    border-radius: 20px;
-}
-
-.weapon-modal-image {
-    height: 180px;
-    padding: 25px;
-}
-
-.weapon-modal-content {
-    padding: 24px 18px;
-}
-
-.weapon-values {
-    grid-template-columns: 1fr;
-}
-
-.footer {
-    flex-direction: column;
+.weapon-card-content {
+    padding: 16px;
     text-align: center;
 }
 
-nav {
-    gap: 12px;
+.weapon-card-content h4 {
+    margin: 0;
+    font-size: 15px;
+    letter-spacing: 0.6px;
 }
 
+.weapon-card-content span {
+    display: block;
+    margin-top: 7px;
+    color: #b777f5;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+
+/* =================================
+   MODAL CONFIGURACIÓN DE ARMA
+   ================================= */
+
+.weapon-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background:
+        rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.weapon-modal.active {
+    display: flex;
+}
+
+.weapon-modal-box {
+    width: min(520px, 100%);
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    background:
+        rgba(20, 14, 30, 0.94);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.16);
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.65),
+        0 0 45px rgba(151, 73, 224, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    text-align: center;
+    animation: weaponModalIn 0.2s ease;
+}
+
+@keyframes weaponModalIn {
+    from {
+        opacity: 0;
+        transform:
+            translateY(12px)
+            scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+.weapon-modal-image {
+    width: 100%;
+    height: 220px;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    padding: 22px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(190, 115, 255, 0.14),
+            rgba(0, 0, 0, 0.40)
+        );
+}
+
+.weapon-modal-content {
+    padding: 28px;
+}
+
+.weapon-modal-content .section-tag {
+    margin-bottom: 8px;
+}
+
+.weapon-modal-content h2 {
+    margin: 0;
+    font-size:
+        clamp(28px, 5vw, 38px);
+}
+
+.weapon-modal-description {
+    margin:
+        9px 0 22px;
+    color:
+        rgba(255, 255, 255, 0.58);
+    font-size: 12px;
+}
+
+.weapon-values {
+    display: grid;
+    grid-template-columns:
+        repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.weapon-value {
+    padding: 20px 15px;
+    border-radius: 16px;
+    background:
+        rgba(255, 255, 255, 0.055);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+}
+
+.weapon-value span {
+    display: block;
+    margin-bottom: 8px;
+    color: #b777f5;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.weapon-value strong {
+    display: block;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.weapon-modal-note {
+    margin:
+        18px 0 0;
+    color:
+        rgba(255, 255, 255, 0.48);
+    font-size: 10px;
+}
+
+
+/* =================================
+   PRECIOS
+   ================================= */
+
+.pricing {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.price-card {
+    position: relative;
+    padding: 34px;
+    text-align: center;
+}
+
+.price-card.featured {
+    border-color:
+        rgba(190, 115, 255, 0.42);
+    box-shadow:
+        0 20px 50px
+        rgba(122, 46, 189, 0.14);
+}
+
+.recommended {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background:
+        rgba(190, 115, 255, 0.15);
+    color: #d39aff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.price-type {
+    margin: 0;
+    color:
+        rgba(255, 255, 255, 0.72);
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.price {
+    margin: 16px 0;
+    font-size: 52px;
+    font-weight: 900;
+}
+
+.price-description {
+    margin: 0 0 24px;
+    color:
+        rgba(255, 255, 255, 0.65);
+}
+
+
+/* =================================
+   COMPRA
+   ================================= */
+
+.purchase {
+    text-align: center;
+}
+
+.purchase-box {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.purchase-box h3 {
+    margin-top: 0;
+}
+
+.payment-data {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 14px;
+    margin: 26px 0;
+}
+
+.payment-data > div {
+    padding: 18px;
+    border-radius: 16px;
+    background:
+        rgba(0, 0, 0, 0.16);
+}
+
+.payment-data span {
+    display: block;
+    margin-bottom: 7px;
+    color: #b777f5;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.payment-data strong {
+    font-size: 14px;
+}
+
+
+/* =================================
+   GAMEPLAY
+   ================================= */
+
+.video-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, 1fr);
+    gap: 18px;
+}
+
+.small-video {
+    overflow: hidden;
+    border-radius: 20px;
+    aspect-ratio: 16 / 9;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.1);
+    background:
+        rgba(0, 0, 0, 0.35);
+}
+
+.small-video iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+/* =================================
+   NOTICIAS
+   ================================= */
+
+.news-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 18px;
+}
+
+.news-card {
+    padding: 26px;
+}
+
+.news-card span {
+    color: #b777f5;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.news-card h3 {
+    margin: 14px 0 10px;
+}
+
+.news-card p {
+    margin: 0;
+    color:
+        rgba(255, 255, 255, 0.66);
+    line-height: 1.6;
+}
+
+
+/* =================================
+   SOPORTE
+   ================================= */
+
+.support {
+    text-align: center;
+}
+
+.support-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.community {
+    max-width: 700px;
+    margin: 60px auto 0;
+    padding-top: 40px;
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.1);
+}
+
+.community p {
+    color:
+        rgba(255, 255, 255, 0.66);
+    line-height: 1.6;
+}
+
+
+/* =================================
+   FOOTER
+   ================================= */
+
+.footer {
+    margin-top: 24px;
+    border-radius: 22px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer p {
+    margin: 0;
+    color:
+        rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+}
+
+
+/* =================================
+   RESPONSIVE
+   ================================= */
+
+@media (max-width: 1050px) {
+    .weapon-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar {
+        position: static;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .weapon-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .hero {
+        height: auto;
+        min-height: 650px;
+        max-height: none;
+    }
+
+    .download-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .page {
+        width:
+            min(100% - 18px, 1180px);
+        padding-top: 9px;
+    }
+
+    .hero {
+        min-height: 700px;
+        padding: 22px 18px;
+    }
+
+    .hero .eyebrow {
+        font-size: 9px;
+        margin-bottom: 4px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero .hero-text {
+        font-size: 14px;
+        margin-top: 8px;
+    }
+
+    .hero .hero-buttons {
+        margin-top: 14px;
+        gap: 8px;
+    }
+
+    .hero .button {
+        min-height: 40px;
+        padding: 0 18px;
+        font-size: 11px;
+    }
+
+    .hero-downloads {
+        margin-top: 18px;
+    }
+
+    .hero-downloads-header {
+        margin-bottom: 12px;
+    }
+
+    .hero-downloads-header h2 {
+        font-size: 19px;
+        margin-top: 7px;
+    }
+
+    .hero-downloads-header p {
+        font-size: 10px;
+        line-height: 1.45;
+    }
+
+    .download-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .download-card {
+        padding: 14px;
+        gap: 11px;
+        border-radius: 15px;
+    }
+
+    .download-card-number {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        font-size: 10px;
+    }
+
+    .download-card-content h3 {
+        font-size: 13px;
+    }
+
+    .download-card-content p {
+        margin: 4px 0 9px;
+        font-size: 9px;
+    }
+
+    .download-button {
+        min-height: 38px !important;
+        font-size: 9px !important;
+    }
+
+    .download-counter {
+        margin-top: 11px;
+        padding: 7px 14px;
+        font-size: 9px;
+    }
+
+    .section {
+        padding: 38px 20px;
+        border-radius: 22px;
+    }
+
+    .cards,
+    .pricing,
+    .video-grid,
+    .payment-data {
+        grid-template-columns: 1fr;
+    }
+
+    .weapon-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .weapon-image {
+        height: 180px;
+        padding: 28px;
+    }
+
+    .weapon-modal {
+        padding: 12px;
+    }
+
+    .weapon-modal-box {
+        border-radius: 20px;
+    }
+
+    .weapon-modal-image {
+        height: 180px;
+        padding: 25px;
+    }
+
+    .weapon-modal-content {
+        padding: 24px 18px;
+    }
+
+    .weapon-values {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        gap: 12px;
+    }
 }
