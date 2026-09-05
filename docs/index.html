@@ -114,7 +114,8 @@
         }
 
         .transfer-close,
-        .complaint-close {
+        .complaint-close,
+        .weapon-modal-close {
             position: absolute;
             top: 14px;
             right: 16px;
@@ -130,7 +131,8 @@
         }
 
         .transfer-close:hover,
-        .complaint-close:hover {
+        .complaint-close:hover,
+        .weapon-modal-close:hover {
             background: rgba(255, 255, 255, 0.12);
             transform: translateY(-1px);
         }
@@ -242,6 +244,220 @@
             display: block;
             font-size: 15px;
             word-break: break-word;
+        }
+
+
+        /* =========================================================
+           CONFIGURACIONES DE ARMAS
+        ========================================================= */
+
+        .weapon-section {
+            scroll-margin-top: 110px;
+        }
+
+        .weapon-category-title {
+            text-align: center;
+            margin: 0 0 26px;
+        }
+
+        .weapon-category-title h3 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .weapon-category-title p {
+            margin: 8px 0 0;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 13px;
+        }
+
+        .weapon-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .weapon-card {
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.055);
+            color: white;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            transition:
+                transform 0.22s ease,
+                border-color 0.22s ease,
+                box-shadow 0.22s ease,
+                background 0.22s ease;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .weapon-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(190, 115, 255, 0.48);
+            background: rgba(190, 115, 255, 0.08);
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.32),
+                0 0 25px rgba(151, 73, 224, 0.10);
+        }
+
+        .weapon-image {
+            width: 100%;
+            height: 145px;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(190, 115, 255, 0.13),
+                    rgba(0, 0, 0, 0.35)
+                );
+        }
+
+        .weapon-card-content {
+            padding: 16px;
+            text-align: center;
+        }
+
+        .weapon-card-content h4 {
+            margin: 0;
+            font-size: 15px;
+            letter-spacing: 0.6px;
+        }
+
+        .weapon-card-content span {
+            display: block;
+            margin-top: 7px;
+            color: #b777f5;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+
+
+        /* ================================
+           MODAL CONFIGURACIÓN DE ARMA
+        ================================ */
+
+        .weapon-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .weapon-modal.active {
+            display: flex;
+        }
+
+        .weapon-modal-box {
+            width: min(520px, 100%);
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            background: rgba(20, 14, 30, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow:
+                0 30px 90px rgba(0, 0, 0, 0.65),
+                0 0 45px rgba(151, 73, 224, 0.10),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            text-align: center;
+            animation: weaponModalIn 0.2s ease;
+        }
+
+        @keyframes weaponModalIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .weapon-modal-image {
+            width: 100%;
+            height: 220px;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(190, 115, 255, 0.14),
+                    rgba(0, 0, 0, 0.40)
+                );
+        }
+
+        .weapon-modal-content {
+            padding: 28px;
+        }
+
+        .weapon-modal-content .section-tag {
+            margin-bottom: 8px;
+        }
+
+        .weapon-modal-content h2 {
+            margin: 0;
+            font-size: clamp(28px, 5vw, 38px);
+        }
+
+        .weapon-modal-description {
+            margin: 9px 0 22px;
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 12px;
+        }
+
+        .weapon-values {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .weapon-value {
+            padding: 20px 15px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .weapon-value span {
+            display: block;
+            margin-bottom: 8px;
+            color: #b777f5;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+        }
+
+        .weapon-value strong {
+            display: block;
+            font-size: 30px;
+            font-weight: 900;
+        }
+
+        .weapon-modal-note {
+            margin: 18px 0 0;
+            color: rgba(255, 255, 255, 0.48);
+            font-size: 10px;
         }
 
 
@@ -406,6 +622,15 @@
            RESPONSIVE
         ================================ */
 
+        @media (max-width: 1050px) {
+
+            .weapon-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+        }
+
+
         @media (max-width: 900px) {
 
             .main-videos {
@@ -413,7 +638,12 @@
                 max-width: 650px;
             }
 
+            .weapon-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
         }
+
 
         @media (max-width: 650px) {
 
@@ -437,6 +667,35 @@
             .complaint-modal-box {
                 padding: 28px 20px;
                 border-radius: 20px;
+            }
+
+            .weapon-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .weapon-image {
+                height: 180px;
+            }
+
+            .weapon-modal {
+                padding: 12px;
+            }
+
+            .weapon-modal-box {
+                border-radius: 20px;
+            }
+
+            .weapon-modal-image {
+                height: 180px;
+            }
+
+            .weapon-modal-content {
+                padding: 24px 18px;
+            }
+
+            .weapon-values {
+                grid-template-columns: 1fr;
             }
 
             .main-videos {
@@ -492,6 +751,7 @@
                 <a href="#precios">Comprar</a>
                 <a href="#noticias">Noticias</a>
                 <a href="#soporte">Soporte</a>
+                <a href="#configuraciones-armas">Configuraciones de armas</a>
 
             </nav>
 
@@ -729,6 +989,204 @@
                         </p>
 
                     </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 CONFIGURACIONES DE ARMAS
+            ================================================== -->
+
+            <section
+                id="configuraciones-armas"
+                class="glass section weapon-section">
+
+                <div class="section-header">
+
+                    <p class="section-tag">
+                        HACKAIM
+                    </p>
+
+                    <h2>
+                        CONFIGURACIONES DE ARMAS
+                    </h2>
+
+                    <p>
+                        Seleccioná un arma para consultar su configuración.
+                    </p>
+
+                </div>
+
+
+                <!-- FUSILES DE ASALTO -->
+
+                <div class="weapon-category-title">
+
+                    <h3>
+                        FUSILES DE ASALTO
+                    </h3>
+
+                    <p>
+                        Configuraciones disponibles
+                    </p>
+
+                </div>
+
+
+                <div class="weapon-grid">
+
+
+                    <!-- FG42 -->
+
+                    <button
+                        type="button"
+                        class="weapon-card"
+                        data-weapon="FG42"
+                        data-vertical="-73"
+                        data-horizontal="-11"
+                        data-image="imagenes/armas/fg42.jpg">
+
+                        <img
+                            class="weapon-image"
+                            src="imagenes/armas/fg42.jpg"
+                            alt="FG42">
+
+                        <div class="weapon-card-content">
+
+                            <h4>
+                                FG42
+                            </h4>
+
+                            <span>
+                                VER CONFIGURACIÓN
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- AN-94 -->
+
+                    <button
+                        type="button"
+                        class="weapon-card"
+                        data-weapon="AN-94"
+                        data-vertical="-65"
+                        data-horizontal="-11"
+                        data-image="imagenes/armas/an94.jpg">
+
+                        <img
+                            class="weapon-image"
+                            src="imagenes/armas/an94.jpg"
+                            alt="AN-94">
+
+                        <div class="weapon-card-content">
+
+                            <h4>
+                                AN-94
+                            </h4>
+
+                            <span>
+                                VER CONFIGURACIÓN
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- VX COMPACT -->
+
+                    <button
+                        type="button"
+                        class="weapon-card"
+                        data-weapon="VX COMPACT"
+                        data-vertical="-65"
+                        data-horizontal="-3"
+                        data-image="imagenes/armas/vx-compact.jpg">
+
+                        <img
+                            class="weapon-image"
+                            src="imagenes/armas/vx-compact.jpg"
+                            alt="VX Compact">
+
+                        <div class="weapon-card-content">
+
+                            <h4>
+                                VX COMPACT
+                            </h4>
+
+                            <span>
+                                VER CONFIGURACIÓN
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- MK35 IR -->
+
+                    <button
+                        type="button"
+                        class="weapon-card"
+                        data-weapon="MK35 IR"
+                        data-vertical="-75"
+                        data-horizontal="-7"
+                        data-image="imagenes/armas/mk35-ir.jpg">
+
+                        <img
+                            class="weapon-image"
+                            src="imagenes/armas/mk35-ir.jpg"
+                            alt="MK35 IR">
+
+                        <div class="weapon-card-content">
+
+                            <h4>
+                                MK35 IR
+                            </h4>
+
+                            <span>
+                                VER CONFIGURACIÓN
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- AKA 27 -->
+
+                    <button
+                        type="button"
+                        class="weapon-card"
+                        data-weapon="AKA 27"
+                        data-vertical="-62"
+                        data-horizontal="-7"
+                        data-image="imagenes/armas/aka-27.jpg">
+
+                        <img
+                            class="weapon-image"
+                            src="imagenes/armas/aka-27.jpg"
+                            alt="AKA 27">
+
+                        <div class="weapon-card-content">
+
+                            <h4>
+                                AKA 27
+                            </h4>
+
+                            <span>
+                                VER CONFIGURACIÓN
+                            </span>
+
+                        </div>
+
+                    </button>
+
 
                 </div>
 
@@ -1277,6 +1735,88 @@
 
 
     <!-- =====================================
+         VENTANA DE CONFIGURACIÓN DE ARMA
+    ===================================== -->
+
+    <div
+        class="weapon-modal"
+        id="weaponModal">
+
+        <div class="weapon-modal-box">
+
+            <button
+                class="weapon-modal-close"
+                id="closeWeapon"
+                aria-label="Cerrar"
+                type="button">
+                ×
+            </button>
+
+
+            <img
+                id="weaponModalImage"
+                class="weapon-modal-image"
+                src=""
+                alt="Configuración del arma">
+
+
+            <div class="weapon-modal-content">
+
+                <p class="section-tag">
+                    CONFIGURACIÓN
+                </p>
+
+                <h2 id="weaponModalName">
+                    AN-94
+                </h2>
+
+                <p class="weapon-modal-description">
+                    Valores recomendados para esta clase de arma.
+                </p>
+
+
+                <div class="weapon-values">
+
+                    <div class="weapon-value">
+
+                        <span>
+                            VERTICAL
+                        </span>
+
+                        <strong id="weaponVertical">
+                            -65
+                        </strong>
+
+                    </div>
+
+
+                    <div class="weapon-value">
+
+                        <span>
+                            HORIZONTAL
+                        </span>
+
+                        <strong id="weaponHorizontal">
+                            -11
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <p class="weapon-modal-note">
+                    Configuración MouseControl / HACKAIM
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
          VENTANA DE TRANSFERENCIA
     ===================================== -->
 
@@ -1435,6 +1975,108 @@
     <script>
 
         /* ================================
+           CONFIGURACIONES DE ARMAS
+        ================================ */
+
+        const weaponModal =
+            document.getElementById("weaponModal");
+
+        const closeWeapon =
+            document.getElementById("closeWeapon");
+
+        const weaponModalImage =
+            document.getElementById("weaponModalImage");
+
+        const weaponModalName =
+            document.getElementById("weaponModalName");
+
+        const weaponVertical =
+            document.getElementById("weaponVertical");
+
+        const weaponHorizontal =
+            document.getElementById("weaponHorizontal");
+
+
+        const weaponCards =
+            document.querySelectorAll(".weapon-card");
+
+
+        weaponCards.forEach(function(card) {
+
+            card.addEventListener("click", function() {
+
+                const weapon =
+                    card.dataset.weapon;
+
+                const vertical =
+                    card.dataset.vertical;
+
+                const horizontal =
+                    card.dataset.horizontal;
+
+                const image =
+                    card.dataset.image;
+
+
+                weaponModalName.textContent =
+                    weapon;
+
+                weaponVertical.textContent =
+                    vertical;
+
+                weaponHorizontal.textContent =
+                    horizontal;
+
+                weaponModalImage.src =
+                    image;
+
+                weaponModalImage.alt =
+                    weapon;
+
+
+                weaponModal.classList.add("active");
+
+                document.body.style.overflow =
+                    "hidden";
+
+            });
+
+        });
+
+
+        function closeWeaponModal() {
+
+            weaponModal.classList.remove("active");
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+        closeWeapon.addEventListener(
+            "click",
+            closeWeaponModal
+        );
+
+
+        weaponModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === weaponModal
+                ) {
+
+                    closeWeaponModal();
+
+                }
+
+            }
+        );
+
+
+        /* ================================
            TRANSFERENCIA
         ================================ */
 
@@ -1451,38 +2093,60 @@
             document.getElementById("closeTransferBottom");
 
 
-        transferButton.addEventListener("click", function(event) {
+        transferButton.addEventListener(
+            "click",
+            function(event) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            transferModal.classList.add("active");
-
-        });
-
-
-        closeTransfer.addEventListener("click", function() {
-
-            transferModal.classList.remove("active");
-
-        });
-
-
-        closeTransferBottom.addEventListener("click", function() {
-
-            transferModal.classList.remove("active");
-
-        });
-
-
-        transferModal.addEventListener("click", function(event) {
-
-            if (event.target === transferModal) {
-
-                transferModal.classList.remove("active");
+                transferModal.classList.add(
+                    "active"
+                );
 
             }
+        );
 
-        });
+
+        closeTransfer.addEventListener(
+            "click",
+            function() {
+
+                transferModal.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        closeTransferBottom.addEventListener(
+            "click",
+            function() {
+
+                transferModal.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        transferModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === transferModal
+                ) {
+
+                    transferModal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
 
 
         /* ================================
@@ -1502,60 +2166,94 @@
             document.getElementById("openComplaintEmail");
 
 
-        complaintButton.addEventListener("click", function(event) {
+        complaintButton.addEventListener(
+            "click",
+            function(event) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            complaintModal.classList.add("active");
-
-        });
-
-
-        closeComplaint.addEventListener("click", function() {
-
-            complaintModal.classList.remove("active");
-
-        });
-
-
-        complaintModal.addEventListener("click", function(event) {
-
-            if (event.target === complaintModal) {
-
-                complaintModal.classList.remove("active");
+                complaintModal.classList.add(
+                    "active"
+                );
 
             }
+        );
 
-        });
+
+        closeComplaint.addEventListener(
+            "click",
+            function() {
+
+                complaintModal.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        complaintModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === complaintModal
+                ) {
+
+                    complaintModal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
 
 
         /* ================================
            ABRIR CORREO
         ================================ */
 
-        openComplaintEmail.addEventListener("click", function() {
+        openComplaintEmail.addEventListener(
+            "click",
+            function() {
 
-            window.location.href =
-                "mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl";
+                window.location.href =
+                    "mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl";
 
-        });
+            }
+        );
 
 
         /* ================================
            ESCAPE PARA CERRAR
         ================================ */
 
-        document.addEventListener("keydown", function(event) {
+        document.addEventListener(
+            "keydown",
+            function(event) {
 
-            if (event.key === "Escape") {
+                if (event.key === "Escape") {
 
-                transferModal.classList.remove("active");
+                    weaponModal.classList.remove(
+                        "active"
+                    );
 
-                complaintModal.classList.remove("active");
+                    transferModal.classList.remove(
+                        "active"
+                    );
+
+                    complaintModal.classList.remove(
+                        "active"
+                    );
+
+                    document.body.style.overflow =
+                        "";
+
+                }
 
             }
-
-        });
+        );
 
     </script>
 
