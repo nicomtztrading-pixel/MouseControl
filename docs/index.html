@@ -34,111 +34,6 @@
     <style>
 
         /* ================================
-           VENTANA YA TRANSFERÍ
-        ================================ */
-
-        .transfer-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .transfer-modal.active {
-            display: flex;
-        }
-
-        .transfer-modal-box {
-            width: min(560px, 100%);
-            position: relative;
-            padding: 34px;
-            border-radius: 24px;
-            background: rgba(20, 14, 30, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.55),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            text-align: center;
-        }
-
-        .transfer-modal-box .section-tag {
-            margin-bottom: 10px;
-        }
-
-        .transfer-modal-box h2 {
-            margin: 0;
-            font-size: clamp(26px, 5vw, 38px);
-        }
-
-        .transfer-modal-text {
-            margin: 18px 0 24px;
-            color: rgba(255, 255, 255, 0.76);
-            line-height: 1.7;
-        }
-
-        .transfer-instructions {
-            display: grid;
-            gap: 12px;
-            margin: 24px 0;
-        }
-
-        .transfer-item {
-            padding: 18px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            text-align: left;
-        }
-
-        .transfer-item span {
-            display: block;
-            margin-bottom: 6px;
-            color: #b777f5;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .transfer-item strong {
-            display: block;
-            font-size: 15px;
-            word-break: break-word;
-        }
-
-        .transfer-close,
-        .complaint-close,
-        .weapon-modal-close {
-            position: absolute;
-            top: 14px;
-            right: 16px;
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.06);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .transfer-close:hover,
-        .complaint-close:hover,
-        .weapon-modal-close:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-1px);
-        }
-
-
-        /* ================================
            CONTADOR DE DESCARGAS
         ================================ */
 
@@ -244,6 +139,28 @@
             display: block;
             font-size: 15px;
             word-break: break-word;
+        }
+
+        .complaint-close,
+        .weapon-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .complaint-close:hover,
+        .weapon-modal-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
         }
 
 
@@ -664,19 +581,6 @@
 
 
         @media (max-width: 650px) {
-
-            .transfer-modal {
-                padding: 12px;
-            }
-
-            .transfer-modal-box {
-                padding: 28px 20px;
-                border-radius: 20px;
-            }
-
-            .transfer-item {
-                padding: 15px;
-            }
 
             .complaint-modal {
                 padding: 12px;
@@ -1659,89 +1563,6 @@
             </section>
 
 
-            <!-- COMPRA -->
-
-            <section id="comprar" class="glass section purchase">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        COMPRA
-                    </p>
-
-                    <h2>
-                        COMPRAR MOUSECONTROL
-                    </h2>
-
-                    <p>
-                        Realizá la transferencia y luego enviá el comprobante para recibir tu licencia y el enlace de descarga.
-                    </p>
-
-                </div>
-
-
-                <div class="purchase-box">
-
-                    <h3>
-                        DATOS PARA TRANSFERENCIA
-                    </h3>
-
-
-                    <div class="payment-data">
-
-                        <div>
-
-                            <span>
-                                TITULAR
-                            </span>
-
-                            <strong>
-                                JUAN NICOLAS MARTINEZ
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                ALIAS
-                            </span>
-
-                            <strong>
-                                nicomtz32
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                MEDIO DE PAGO
-                            </span>
-
-                            <strong>
-                                TRANSFERENCIA
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <a
-                        href="#"
-                        class="button primary"
-                        id="transferButton">
-                        YA TRANSFERÍ
-                    </a>
-
-                </div>
-
-            </section>
-
-
             <!-- GAMEPLAY -->
 
             <section class="glass section">
@@ -2057,102 +1878,6 @@
     </div>
 
 
-    <!-- VENTANA DE TRANSFERENCIA -->
-
-    <div
-        class="transfer-modal"
-        id="transferModal">
-
-        <div class="transfer-modal-box">
-
-            <button
-                class="transfer-close"
-                id="closeTransfer"
-                aria-label="Cerrar"
-                type="button">
-                ×
-            </button>
-
-            <p class="section-tag">
-                MOUSECONTROL
-            </p>
-
-            <h2>
-                ¡TRANSFERENCIA RECIBIDA!
-            </h2>
-
-            <p class="transfer-modal-text">
-                Para recibir tu licencia y el link de descarga, necesitamos que nos envíes el comprobante de tu transferencia junto con tu correo electrónico.
-            </p>
-
-            <div class="transfer-instructions">
-
-                <div class="transfer-item">
-
-                    <span>
-                        01 — COMPROBANTE
-                    </span>
-
-                    <strong>
-                        Compartí una captura de pantalla o comprobante de tu transferencia.
-                    </strong>
-
-                </div>
-
-                <div class="transfer-item">
-
-                    <span>
-                        02 — CORREO ELECTRÓNICO
-                    </span>
-
-                    <strong>
-                        Escribí junto al comprobante el correo electrónico donde querés recibir la licencia.
-                    </strong>
-
-                </div>
-
-                <div class="transfer-item">
-
-                    <span>
-                        03 — WHATSAPP
-                    </span>
-
-                    <strong>
-                        +54 9 11 2882-3023
-                    </strong>
-
-                </div>
-
-                <div class="transfer-item">
-
-                    <span>
-                        04 — CORREO
-                    </span>
-
-                    <strong>
-                        nicomartine20@gmail.com
-                    </strong>
-
-                </div>
-
-            </div>
-
-            <p class="transfer-modal-text">
-                Una vez que verifiquemos el pago, te enviaremos tu licencia y el enlace para descargar MouseControl.
-            </p>
-
-            <button
-                class="button primary"
-                id="closeTransferBottom"
-                type="button">
-                ENTENDIDO
-            </button>
-
-        </div>
-
-    </div>
-
-
     <!-- VENTANA DE SOPORTE -->
 
     <div
@@ -2312,79 +2037,6 @@
 
 
         /* ================================
-           TRANSFERENCIA
-        ================================ */
-
-        const transferButton =
-            document.getElementById("transferButton");
-
-        const transferModal =
-            document.getElementById("transferModal");
-
-        const closeTransfer =
-            document.getElementById("closeTransfer");
-
-        const closeTransferBottom =
-            document.getElementById("closeTransferBottom");
-
-
-        transferButton.addEventListener(
-            "click",
-            function(event) {
-
-                event.preventDefault();
-
-                transferModal.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-
-        closeTransfer.addEventListener(
-            "click",
-            function() {
-
-                transferModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        closeTransferBottom.addEventListener(
-            "click",
-            function() {
-
-                transferModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        transferModal.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target === transferModal
-                ) {
-
-                    transferModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* ================================
            SOPORTE / QUEJA
         ================================ */
 
@@ -2471,10 +2123,6 @@
                 if (event.key === "Escape") {
 
                     weaponModal.classList.remove(
-                        "active"
-                    );
-
-                    transferModal.classList.remove(
                         "active"
                     );
 
