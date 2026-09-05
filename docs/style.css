@@ -502,12 +502,30 @@ nav a:hover {
     outline-offset: 3px;
 }
 
+
+/* =================================
+   IMÁGENES DE ARMAS
+================================= */
+
 .weapon-image {
     width: 100%;
     height: 145px;
+
     display: block;
-    object-fit: cover;
+
+    /*
+       La imagen ya no ocupa todo el cuadro.
+       contain permite verla completa.
+    */
+    object-fit: contain;
+
     object-position: center;
+
+    /*
+       Más espacio alrededor del arma
+       para que visualmente se vea más chica.
+    */
+    padding: 22px;
 
     background:
         linear-gradient(
@@ -617,8 +635,15 @@ nav a:hover {
     width: 100%;
     height: 220px;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
+
+    /*
+       También achicamos visualmente la imagen
+       dentro del modal sin modificar el tamaño
+       de la ventana.
+    */
+    padding: 22px;
 
     background:
         linear-gradient(
@@ -1052,6 +1077,8 @@ nav a:hover {
         padding-top: 9px;
     }
 
+    /* SOLO EL PRIMER ENCUADRE */
+
     .hero {
         height: 300px;
 
@@ -1120,6 +1147,7 @@ nav a:hover {
 
     .weapon-image {
         height: 180px;
+        padding: 28px;
     }
 
     .weapon-modal {
@@ -1132,6 +1160,7 @@ nav a:hover {
 
     .weapon-modal-image {
         height: 180px;
+        padding: 25px;
     }
 
     .weapon-modal-content {
