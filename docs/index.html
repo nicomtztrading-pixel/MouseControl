@@ -1359,18 +1359,75 @@
                                 </p>
 
                                 <div class="price">
-                                    $50.000 (arg)40usd
+                                    60 USD
                                 </div>
 
                                 <p class="price-description">
-                                    Pesos argentinos. Licencia válida durante 12 meses.
+                                    Licencia válida durante 12 meses.
                                 </p>
 
-                                <a
-                                    href="#comprar"
-                                    class="button primary">
-                                    COMPRAR
-                                </a>
+
+                                <!-- =====================================
+                                     BOTÓN DLOCAL GO — USD 60
+                                ====================================== -->
+
+                                <script data-reference-id="89f74459-3866-43d8-9726-8259ff1ee825">
+                                (function(){
+
+                                    const z = !!window.DlocalGo;
+
+                                    const s = z
+                                        ? document.querySelector(
+                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
+                                        )
+                                        : document.createElement("script");
+
+                                    z || (
+                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
+                                        s.async = !0,
+                                        document.body.appendChild(s)
+                                    );
+
+                                    s.addEventListener("load", function(){
+
+                                        const e =
+                                            document.querySelector(
+                                                'script[data-reference-id="89f74459-3866-43d8-9726-8259ff1ee825"]'
+                                            );
+
+                                        const t =
+                                            e.parentNode;
+
+                                        const n =
+                                            "dp-btn-89f74459-3866-43d8-9726-8259ff1ee825";
+
+                                        const c =
+                                            document.createElement("div");
+
+                                        c.id = n;
+
+                                        t.insertBefore(c, e);
+
+
+                                        new DlocalGo(
+                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
+                                        ).createCheckout(
+                                            n,
+                                            {
+                                                subType: "BUTTON",
+                                                country: "",
+                                                currency: "USD",
+                                                amount: "60",
+                                                lang: "",
+                                                text: "COMPRAR"
+                                            }
+                                        );
+
+                                    });
+
+                                })();
+                                </script>
+
 
                             </article>
 
