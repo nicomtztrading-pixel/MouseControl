@@ -142,7 +142,8 @@
         }
 
         .complaint-close,
-        .weapon-modal-close {
+        .weapon-modal-close,
+        .payment-close {
             position: absolute;
             top: 14px;
             right: 16px;
@@ -158,7 +159,8 @@
         }
 
         .complaint-close:hover,
-        .weapon-modal-close:hover {
+        .weapon-modal-close:hover,
+        .payment-close:hover {
             background: rgba(255, 255, 255, 0.12);
             transform: translateY(-1px);
         }
@@ -501,6 +503,147 @@
 
 
         /* ================================
+           BOTONES DE COMPRA
+        ================================ */
+
+        .buy-license-button {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+
+        /* ================================
+           MODAL DE PAGO
+        ================================ */
+
+        .payment-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 12000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-modal-box {
+            width: min(500px, 100%);
+            position: relative;
+            padding: 34px;
+            border-radius: 24px;
+            background: rgba(20, 14, 30, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow:
+                0 30px 90px rgba(0, 0, 0, 0.65),
+                0 0 45px rgba(151, 73, 224, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            text-align: center;
+            animation: paymentModalIn 0.2s ease;
+        }
+
+        @keyframes paymentModalIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .payment-modal-box h2 {
+            margin: 0;
+            font-size: clamp(26px, 5vw, 36px);
+        }
+
+        .payment-modal-description {
+            margin: 12px 0 24px;
+            color: rgba(255, 255, 255, 0.64);
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        .payment-product-name {
+            margin-bottom: 22px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: rgba(190, 115, 255, 0.08);
+            border: 1px solid rgba(190, 115, 255, 0.20);
+            color: #d39aff;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+        }
+
+        .payment-form {
+            display: grid;
+            gap: 14px;
+            text-align: left;
+        }
+
+        .payment-field {
+            display: grid;
+            gap: 7px;
+        }
+
+        .payment-field label {
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+        }
+
+        .payment-field input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.055);
+            color: white;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .payment-field input:focus {
+            border-color: rgba(190, 115, 255, 0.60);
+            box-shadow: 0 0 0 3px rgba(190, 115, 255, 0.10);
+        }
+
+        .payment-error {
+            min-height: 18px;
+            color: #ff8f8f;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .payment-submit {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .payment-submit:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+
+        /* ================================
            BOTÓN FLOTANTE WHATSAPP
         ================================ */
 
@@ -582,11 +725,13 @@
 
         @media (max-width: 650px) {
 
-            .complaint-modal {
+            .complaint-modal,
+            .payment-modal {
                 padding: 12px;
             }
 
-            .complaint-modal-box {
+            .complaint-modal-box,
+            .payment-modal-box {
                 padding: 28px 20px;
                 border-radius: 20px;
             }
@@ -728,7 +873,6 @@
 
 
                 <div class="main-videos">
-
 
                     <article class="main-video-card">
 
@@ -1202,66 +1346,12 @@
                                     Licencia válida durante 1 mes.
                                 </p>
 
-
-                                <!-- BOTÓN DLOCAL GO — USD 10 -->
-
-                                <script data-reference-id="cd668f68-8b7a-4dd9-8860-63fe58f57d3d">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="cd668f68-8b7a-4dd9-8860-63fe58f57d3d"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-cd668f68-8b7a-4dd9-8860-63fe58f57d3d";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "10",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
+                                <button
+                                    type="button"
+                                    class="button primary buy-license-button"
+                                    data-product="mousecontrol_monthly">
+                                    COMPRAR
+                                </button>
 
                             </article>
 
@@ -1286,66 +1376,12 @@
                                     Licencia válida durante 12 meses.
                                 </p>
 
-
-                                <!-- BOTÓN DLOCAL GO — USD 60 -->
-
-                                <script data-reference-id="89f74459-3866-43d8-9726-8259ff1ee825">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="89f74459-3866-43d8-9726-8259ff1ee825"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-89f74459-3866-43d8-9726-8259ff1ee825";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "60",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
+                                <button
+                                    type="button"
+                                    class="button primary buy-license-button"
+                                    data-product="mousecontrol_annual">
+                                    COMPRAR
+                                </button>
 
                             </article>
 
@@ -1400,66 +1436,12 @@
                                     Licencia válida durante 1 mes.
                                 </p>
 
-
-                                <!-- BOTÓN DLOCAL GO — USD 13 -->
-
-                                <script data-reference-id="ac2afdcb-af69-48f6-99aa-c1956a2fc859">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="ac2afdcb-af69-48f6-99aa-c1956a2fc859"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-ac2afdcb-af69-48f6-99aa-c1956a2fc859";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "13",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
+                                <button
+                                    type="button"
+                                    class="button primary buy-license-button"
+                                    data-product="hackaim_monthly">
+                                    COMPRAR
+                                </button>
 
                             </article>
 
@@ -1484,66 +1466,12 @@
                                     Licencia válida durante 12 meses.
                                 </p>
 
-
-                                <!-- BOTÓN DLOCAL GO — USD 65 -->
-
-                                <script data-reference-id="ad64f68f-f0ee-466d-b05d-61d9a19b8e00">
-                                (function(){
-
-                                    const z = !!window.DlocalGo;
-
-                                    const s = z
-                                        ? document.querySelector(
-                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
-                                        )
-                                        : document.createElement("script");
-
-                                    z || (
-                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
-                                        s.async = !0,
-                                        document.body.appendChild(s)
-                                    );
-
-                                    s.addEventListener("load", function(){
-
-                                        const e =
-                                            document.querySelector(
-                                                'script[data-reference-id="ad64f68f-f0ee-466d-b05d-61d9a19b8e00"]'
-                                            );
-
-                                        const t =
-                                            e.parentNode;
-
-                                        const n =
-                                            "dp-btn-ad64f68f-f0ee-466d-b05d-61d9a19b8e00";
-
-                                        const c =
-                                            document.createElement("div");
-
-                                        c.id = n;
-
-                                        t.insertBefore(c, e);
-
-
-                                        new DlocalGo(
-                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
-                                        ).createCheckout(
-                                            n,
-                                            {
-                                                subType: "BUTTON",
-                                                country: "",
-                                                currency: "USD",
-                                                amount: "65",
-                                                lang: "",
-                                                text: "COMPRAR"
-                                            }
-                                        );
-
-                                    });
-
-                                })();
-                                </script>
-
+                                <button
+                                    type="button"
+                                    class="button primary buy-license-button"
+                                    data-product="hackaim_annual">
+                                    COMPRAR
+                                </button>
 
                             </article>
 
@@ -1930,6 +1858,98 @@
     </div>
 
 
+    <!-- VENTANA DE PAGO -->
+
+    <div
+        class="payment-modal"
+        id="paymentModal">
+
+        <div class="payment-modal-box">
+
+            <button
+                class="payment-close"
+                id="closePayment"
+                aria-label="Cerrar"
+                type="button">
+                ×
+            </button>
+
+            <p class="section-tag">
+                COMPRA SEGURA
+            </p>
+
+            <h2>
+                COMPLETÁ TUS DATOS
+            </h2>
+
+            <p class="payment-modal-description">
+                Ingresá tu nombre y correo electrónico. Después serás enviado al checkout seguro de dLocal Go.
+            </p>
+
+            <div
+                class="payment-product-name"
+                id="paymentProductName">
+                PRODUCTO
+            </div>
+
+            <form
+                class="payment-form"
+                id="paymentForm">
+
+                <div class="payment-field">
+
+                    <label for="customerName">
+                        NOMBRE COMPLETO
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customerName"
+                        name="name"
+                        placeholder="Tu nombre completo"
+                        autocomplete="name"
+                        required>
+
+                </div>
+
+
+                <div class="payment-field">
+
+                    <label for="customerEmail">
+                        CORREO ELECTRÓNICO
+                    </label>
+
+                    <input
+                        type="email"
+                        id="customerEmail"
+                        name="email"
+                        placeholder="tu@email.com"
+                        autocomplete="email"
+                        required>
+
+                </div>
+
+
+                <div
+                    class="payment-error"
+                    id="paymentError">
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="button primary payment-submit"
+                    id="paymentSubmit">
+                    CONTINUAR AL PAGO
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
     <!-- JAVASCRIPT -->
 
     <script>
@@ -2113,6 +2133,287 @@
 
 
         /* ================================
+           SISTEMA DE COMPRA
+        ================================ */
+
+        const PAYMENT_API =
+            "https://mousecontrol-payment.onrender.com";
+
+        const paymentModal =
+            document.getElementById("paymentModal");
+
+        const closePayment =
+            document.getElementById("closePayment");
+
+        const paymentForm =
+            document.getElementById("paymentForm");
+
+        const paymentProductName =
+            document.getElementById("paymentProductName");
+
+        const customerName =
+            document.getElementById("customerName");
+
+        const customerEmail =
+            document.getElementById("customerEmail");
+
+        const paymentError =
+            document.getElementById("paymentError");
+
+        const paymentSubmit =
+            document.getElementById("paymentSubmit");
+
+
+        const productNames = {
+
+            "mousecontrol_monthly":
+                "MOUSECONTROL — MENSUAL — USD 10",
+
+            "mousecontrol_annual":
+                "MOUSECONTROL — ANUAL — USD 60",
+
+            "hackaim_monthly":
+                "HACKAIM — MENSUAL — USD 13",
+
+            "hackaim_annual":
+                "HACKAIM — ANUAL — USD 65"
+
+        };
+
+
+        let selectedProduct = "";
+
+
+        document
+            .querySelectorAll(".buy-license-button")
+            .forEach(function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        selectedProduct =
+                            button.dataset.product;
+
+                        paymentProductName.textContent =
+                            productNames[selectedProduct]
+                            || "LICENCIA";
+
+                        paymentError.textContent =
+                            "";
+
+                        paymentForm.reset();
+
+                        paymentModal.classList.add(
+                            "active"
+                        );
+
+                        document.body.style.overflow =
+                            "hidden";
+
+                        setTimeout(
+                            function() {
+                                customerName.focus();
+                            },
+                            100
+                        );
+
+                    }
+                );
+
+            });
+
+
+        function closePaymentModal() {
+
+            paymentModal.classList.remove(
+                "active"
+            );
+
+            document.body.style.overflow =
+                "";
+
+            selectedProduct =
+                "";
+
+            paymentError.textContent =
+                "";
+
+        }
+
+
+        closePayment.addEventListener(
+            "click",
+            closePaymentModal
+        );
+
+
+        paymentModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === paymentModal
+                ) {
+
+                    closePaymentModal();
+
+                }
+
+            }
+        );
+
+
+        paymentForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                paymentError.textContent =
+                    "";
+
+                const name =
+                    customerName.value.trim();
+
+                const email =
+                    customerEmail.value.trim();
+
+                if (!name) {
+
+                    paymentError.textContent =
+                        "Ingresá tu nombre completo.";
+
+                    customerName.focus();
+
+                    return;
+
+                }
+
+
+                if (!email) {
+
+                    paymentError.textContent =
+                        "Ingresá tu correo electrónico.";
+
+                    customerEmail.focus();
+
+                    return;
+
+                }
+
+
+                if (!selectedProduct) {
+
+                    paymentError.textContent =
+                        "No se seleccionó un producto.";
+
+                    return;
+
+                }
+
+
+                paymentSubmit.disabled =
+                    true;
+
+                paymentSubmit.textContent =
+                    "CONECTANDO CON DLOCAL...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            PAYMENT_API + "/checkout",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    name:
+                                        name,
+
+                                    email:
+                                        email,
+
+                                    product:
+                                        selectedProduct
+
+                                })
+
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (
+                        !response.ok ||
+                        !result.ok
+                    ) {
+
+                        throw new Error(
+                            result.error
+                            ||
+                            result.dlocal_response
+                            ||
+                            "No se pudo crear el pago."
+                        );
+
+                    }
+
+
+                    const redirectUrl =
+                        result.payment &&
+                        result.payment.redirect_url;
+
+
+                    if (!redirectUrl) {
+
+                        throw new Error(
+                            "dLocal no devolvió la URL de pago."
+                        );
+
+                    }
+
+
+                    window.location.href =
+                        redirectUrl;
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Error de checkout:",
+                        error
+                    );
+
+                    paymentError.textContent =
+                        error.message
+                        ||
+                        "Ocurrió un error al iniciar el pago.";
+
+                    paymentSubmit.disabled =
+                        false;
+
+                    paymentSubmit.textContent =
+                        "CONTINUAR AL PAGO";
+
+                }
+
+            }
+        );
+
+
+        /* ================================
            ESCAPE PARA CERRAR
         ================================ */
 
@@ -2129,6 +2430,8 @@
                     complaintModal.classList.remove(
                         "active"
                     );
+
+                    closePaymentModal();
 
                     document.body.style.overflow =
                         "";
