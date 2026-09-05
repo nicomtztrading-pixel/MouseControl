@@ -1240,6 +1240,8 @@
                 <div class="pricing-products">
 
 
+                    <!-- MOUSECONTROL -->
+
                     <div id="mousecontrol" class="pricing-product">
 
                         <div class="pricing-product-title">
@@ -1262,6 +1264,8 @@
                         <div class="pricing">
 
 
+                            <!-- MOUSECONTROL MENSUAL -->
+
                             <article class="price-card">
 
                                 <p class="price-type">
@@ -1269,21 +1273,80 @@
                                 </p>
 
                                 <div class="price">
-                                    $10.000 (arg)8usd
+                                    10 USD
                                 </div>
 
                                 <p class="price-description">
-                                    Pesos argentinos. Licencia válida durante 1 mes.
+                                    Licencia válida durante 1 mes.
                                 </p>
 
-                                <a
-                                    href="#comprar"
-                                    class="button primary">
-                                    COMPRAR
-                                </a>
+
+                                <!-- =====================================
+                                     BOTÓN DLOCAL GO — USD 10
+                                ====================================== -->
+
+                                <script data-reference-id="cd668f68-8b7a-4dd9-8860-63fe58f57d3d">
+                                (function(){
+
+                                    const z = !!window.DlocalGo;
+
+                                    const s = z
+                                        ? document.querySelector(
+                                            'script[src="https://static.dlocalgo.com/dlocalgo.min.js"]'
+                                        )
+                                        : document.createElement("script");
+
+                                    z || (
+                                        s.src = "https://static.dlocalgo.com/dlocalgo.min.js",
+                                        s.async = !0,
+                                        document.body.appendChild(s)
+                                    );
+
+                                    s.addEventListener("load", function(){
+
+                                        const e =
+                                            document.querySelector(
+                                                'script[data-reference-id="cd668f68-8b7a-4dd9-8860-63fe58f57d3d"]'
+                                            );
+
+                                        const t =
+                                            e.parentNode;
+
+                                        const n =
+                                            "dp-btn-cd668f68-8b7a-4dd9-8860-63fe58f57d3d";
+
+                                        const c =
+                                            document.createElement("div");
+
+                                        c.id = n;
+
+                                        t.insertBefore(c, e);
+
+
+                                        new DlocalGo(
+                                            "dJcGEEHxMuleiQNEwiVPTMwOLLYGsZIc"
+                                        ).createCheckout(
+                                            n,
+                                            {
+                                                subType: "BUTTON",
+                                                country: "",
+                                                currency: "USD",
+                                                amount: "10",
+                                                lang: "",
+                                                text: "COMPRAR"
+                                            }
+                                        );
+
+                                    });
+
+                                })();
+                                </script>
+
 
                             </article>
 
+
+                            <!-- MOUSECONTROL ANUAL -->
 
                             <article class="price-card featured">
 
@@ -1316,6 +1379,8 @@
 
                     </div>
 
+
+                    <!-- HACKAIM -->
 
                     <div id="hackaim" class="pricing-product">
 
