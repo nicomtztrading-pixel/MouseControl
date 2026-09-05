@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+    <meta charset="UTF-8">
 
-    <!-- =====================================
-         GOOGLE ANALYTICS
-    ===================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="description"
+          content="MouseControl y HACKAIM - herramientas y configuraciones para Call of Duty Warzone.">
+
+    <title>MouseControl / HACKAIM</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- GOOGLE ANALYTICS -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZ1YPVD8HB"></script>
 
     <script>
@@ -17,1797 +23,925 @@
         }
 
         gtag('js', new Date());
-
         gtag('config', 'G-TZ1YPVD8HB');
     </script>
-
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>MouseControl / HACKAIM</title>
-
-    <meta name="description" content="Página oficial de MouseControl / HACKAIM">
-
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        /* ================================
-           VENTANA YA TRANSFERÍ
-        ================================ */
-
-        .transfer-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .transfer-modal.active {
-            display: flex;
-        }
-
-        .transfer-modal-box {
-            width: min(560px, 100%);
-            position: relative;
-            padding: 34px;
-            border-radius: 24px;
-            background: rgba(20, 14, 30, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.55),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            text-align: center;
-        }
-
-        .transfer-modal-box .section-tag {
-            margin-bottom: 10px;
-        }
-
-        .transfer-modal-box h2 {
-            margin: 0;
-            font-size: clamp(26px, 5vw, 38px);
-        }
-
-        .transfer-modal-text {
-            margin: 18px 0 24px;
-            color: rgba(255, 255, 255, 0.76);
-            line-height: 1.7;
-        }
-
-        .transfer-instructions {
-            display: grid;
-            gap: 12px;
-            margin: 24px 0;
-        }
-
-        .transfer-item {
-            padding: 18px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            text-align: left;
-        }
-
-        .transfer-item span {
-            display: block;
-            margin-bottom: 6px;
-            color: #b777f5;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .transfer-item strong {
-            display: block;
-            font-size: 15px;
-            word-break: break-word;
-        }
-
-        .transfer-close,
-        .complaint-close,
-        .weapon-modal-close {
-            position: absolute;
-            top: 14px;
-            right: 16px;
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.06);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .transfer-close:hover,
-        .complaint-close:hover,
-        .weapon-modal-close:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-1px);
-        }
-
-
-        /* ================================
-           CONTADOR DE DESCARGAS
-        ================================ */
-
-        .download-counter {
-            margin-top: 30px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(190, 115, 255, 0.10);
-            border: 1px solid rgba(190, 115, 255, 0.22);
-            color: rgba(255, 255, 255, 0.82);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .download-counter strong {
-            color: #d39aff;
-        }
-
-
-        /* ================================
-           BOTÓN SOPORTE CENTRADO
-        ================================ */
-
-        .support-button-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-
-        /* ================================
-           VENTANA DE SOPORTE
-        ================================ */
-
-        .complaint-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .complaint-modal.active {
-            display: flex;
-        }
-
-        .complaint-modal-box {
-            width: min(520px, 100%);
-            position: relative;
-            padding: 34px;
-            border-radius: 24px;
-            background: rgba(20, 14, 30, 0.90);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.55),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            text-align: center;
-        }
-
-        .complaint-modal-box h2 {
-            margin: 0;
-            font-size: clamp(26px, 5vw, 38px);
-        }
-
-        .complaint-text {
-            margin: 18px 0 24px;
-            color: rgba(255, 255, 255, 0.76);
-            line-height: 1.7;
-        }
-
-        .complaint-email {
-            margin: 24px 0;
-            padding: 20px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-        }
-
-        .complaint-email span {
-            display: block;
-            margin-bottom: 8px;
-            color: #b777f5;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .complaint-email strong {
-            display: block;
-            font-size: 15px;
-            word-break: break-word;
-        }
-
-
-        /* =========================================================
-           CONFIGURACIONES DE ARMAS
-        ========================================================= */
-
-        .weapon-section {
-            scroll-margin-top: 110px;
-        }
-
-        .weapon-category-title {
-            text-align: center;
-            margin: 0 0 26px;
-        }
-
-        .weapon-category-title h3 {
-            margin: 0;
-            font-size: 24px;
-            letter-spacing: 0.5px;
-        }
-
-        .weapon-category-title p {
-            margin: 8px 0 0;
-            color: rgba(255, 255, 255, 0.62);
-            font-size: 13px;
-        }
-
-        .weapon-grid {
-            display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .weapon-card {
-            position: relative;
-            overflow: hidden;
-            padding: 0;
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.055);
-            color: white;
-            cursor: pointer;
-            text-align: left;
-            font-family: inherit;
-            transition:
-                transform 0.22s ease,
-                border-color 0.22s ease,
-                box-shadow 0.22s ease,
-                background 0.22s ease;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        .weapon-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(190, 115, 255, 0.48);
-            background: rgba(190, 115, 255, 0.08);
-            box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.32),
-                0 0 25px rgba(151, 73, 224, 0.10);
-        }
-
-        .weapon-image {
-            width: 100%;
-            height: 145px;
-            display: block;
-            object-fit: cover;
-            object-position: center;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(190, 115, 255, 0.13),
-                    rgba(0, 0, 0, 0.35)
-                );
-        }
-
-        .weapon-card-content {
-            padding: 16px;
-            text-align: center;
-        }
-
-        .weapon-card-content h4 {
-            margin: 0;
-            font-size: 15px;
-            letter-spacing: 0.6px;
-        }
-
-        .weapon-card-content span {
-            display: block;
-            margin-top: 7px;
-            color: #b777f5;
-            font-size: 9px;
-            font-weight: 800;
-            letter-spacing: 1.2px;
-        }
-
-
-        /* ================================
-           MODAL CONFIGURACIÓN DE ARMA
-        ================================ */
-
-        .weapon-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 10001;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .weapon-modal.active {
-            display: flex;
-        }
-
-        .weapon-modal-box {
-            width: min(520px, 100%);
-            position: relative;
-            overflow: hidden;
-            border-radius: 24px;
-            background: rgba(20, 14, 30, 0.94);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow:
-                0 30px 90px rgba(0, 0, 0, 0.65),
-                0 0 45px rgba(151, 73, 224, 0.10),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            text-align: center;
-            animation: weaponModalIn 0.2s ease;
-        }
-
-        @keyframes weaponModalIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px) scale(0.97);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .weapon-modal-image {
-            width: 100%;
-            height: 220px;
-            display: block;
-            object-fit: cover;
-            object-position: center;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(190, 115, 255, 0.14),
-                    rgba(0, 0, 0, 0.40)
-                );
-        }
-
-        .weapon-modal-content {
-            padding: 28px;
-        }
-
-        .weapon-modal-content .section-tag {
-            margin-bottom: 8px;
-        }
-
-        .weapon-modal-content h2 {
-            margin: 0;
-            font-size: clamp(28px, 5vw, 38px);
-        }
-
-        .weapon-modal-description {
-            margin: 9px 0 22px;
-            color: rgba(255, 255, 255, 0.58);
-            font-size: 12px;
-        }
-
-        .weapon-values {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-top: 20px;
-        }
-
-        .weapon-value {
-            padding: 20px 15px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.055);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-        }
-
-        .weapon-value span {
-            display: block;
-            margin-bottom: 8px;
-            color: #b777f5;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1.4px;
-        }
-
-        .weapon-value strong {
-            display: block;
-            font-size: 30px;
-            font-weight: 900;
-        }
-
-        .weapon-modal-note {
-            margin: 18px 0 0;
-            color: rgba(255, 255, 255, 0.48);
-            font-size: 10px;
-        }
-
-
-        /* =========================================================
-           SOLO PARA LOS DOS VIDEOS PRINCIPALES
-        ========================================================= */
-
-        .main-videos {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .main-video-card {
-            min-width: 0;
-            text-align: center;
-        }
-
-        .main-video-card .video-container {
-            width: 100%;
-            max-width: none;
-            margin: 0 auto;
-        }
-
-        .main-video-card .video-container iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            display: block;
-        }
-
-        .main-video-title {
-            margin: 0 0 12px;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .main-video-description {
-            margin: 0 0 16px;
-            color: rgba(255, 255, 255, 0.68);
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .main-video-button {
-            margin-top: 16px;
-            width: 100%;
-        }
-
-
-        /* ================================
-           VIDEO INDIVIDUAL HACKAIM
-        ================================ */
-
-        .hackaim-how-video {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .hackaim-how-video iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            display: block;
-        }
-
-
-        /* ================================
-           PRECIOS
-        ================================ */
-
-        .pricing-products {
-            display: grid;
-            gap: 30px;
-        }
-
-        .pricing-product {
-            width: 100%;
-        }
-
-        .pricing-product-title {
-            text-align: center;
-            margin: 0 0 20px;
-        }
-
-        .pricing-product-title .section-tag {
-            margin-bottom: 8px;
-        }
-
-        .pricing-product-title h3 {
-            margin: 0;
-            font-size: 26px;
-        }
-
-        .pricing-product-title p {
-            margin: 8px 0 0;
-            color: rgba(255, 255, 255, 0.65);
-        }
-
-        .pricing-product .pricing {
-            margin-top: 0;
-        }
-
-
-        /* ================================
-           BOTÓN FLOTANTE WHATSAPP
-        ================================ */
-
-        .whatsapp-floating {
-            position: fixed;
-            right: 24px;
-            bottom: 24px;
-            z-index: 11000;
-
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            padding: 13px 18px;
-            border-radius: 999px;
-
-            background: #25D366;
-            color: #ffffff;
-
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-
-            box-shadow:
-                0 12px 35px rgba(0, 0, 0, 0.35),
-                0 0 25px rgba(37, 211, 102, 0.22);
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .whatsapp-floating:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 16px 40px rgba(0, 0, 0, 0.42),
-                0 0 30px rgba(37, 211, 102, 0.30);
-        }
-
-        .whatsapp-floating:active {
-            transform: translateY(-1px);
-        }
-
-        .whatsapp-icon {
-            width: 25px;
-            height: 25px;
-            flex-shrink: 0;
-            display: block;
-        }
-
-
-        /* ================================
-           RESPONSIVE
-        ================================ */
-
-        @media (max-width: 1050px) {
-
-            .weapon-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-
-        }
-
-
-        @media (max-width: 900px) {
-
-            .main-videos {
-                grid-template-columns: 1fr;
-                max-width: 650px;
-            }
-
-            .weapon-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-        }
-
-
-        @media (max-width: 650px) {
-
-            .transfer-modal {
-                padding: 12px;
-            }
-
-            .transfer-modal-box {
-                padding: 28px 20px;
-                border-radius: 20px;
-            }
-
-            .transfer-item {
-                padding: 15px;
-            }
-
-            .complaint-modal {
-                padding: 12px;
-            }
-
-            .complaint-modal-box {
-                padding: 28px 20px;
-                border-radius: 20px;
-            }
-
-            .weapon-grid {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .weapon-image {
-                height: 180px;
-            }
-
-            .weapon-modal {
-                padding: 12px;
-            }
-
-            .weapon-modal-box {
-                border-radius: 20px;
-            }
-
-            .weapon-modal-image {
-                height: 180px;
-            }
-
-            .weapon-modal-content {
-                padding: 24px 18px;
-            }
-
-            .weapon-values {
-                grid-template-columns: 1fr;
-            }
-
-            .main-videos {
-                gap: 20px;
-            }
-
-            .main-video-title {
-                font-size: 18px;
-            }
-
-            .whatsapp-floating {
-                right: 16px;
-                bottom: 16px;
-                padding: 12px 15px;
-                font-size: 12px;
-            }
-
-            .whatsapp-icon {
-                width: 23px;
-                height: 23px;
-            }
-
-        }
-
-    </style>
-
 </head>
-
 
 <body>
 
-    <!-- FONDO -->
-    <div class="background"></div>
+<div class="background"></div>
+
+<div class="page">
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="glass navbar">
+
+        <div class="logo">
+            🎯 MOUSECONTROL
+            <span>/ HACKAIM</span>
+            🖱️
+        </div>
+
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#funciones">Funciones</a>
+            <a href="#videos">Videos</a>
+            <a href="#comprar">Comprar</a>
+            <a href="#noticias">Noticias</a>
+            <a href="#soporte">Soporte</a>
+
+            <a href="#configuraciones-armas">
+                Configuraciones de armas
+            </a>
+        </nav>
+
+    </header>
 
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div class="page">
+    <!-- ================= HERO ================= -->
 
+    <main>
 
-        <!-- ENCABEZADO -->
+        <section id="inicio" class="hero">
 
-        <header class="glass navbar">
+            <div class="hero-content">
 
-            <div class="logo">
-                🎯 MOUSECONTROL <span>/ HACKAIM</span> 🖱️
+                <div class="hero-tag">
+                    SISTEMA PROFESIONAL
+                </div>
+
+                <h1>
+                    MOUSECONTROL
+                    <span>/ HACKAIM</span>
+                </h1>
+
+                <p>
+                    Llevá tu experiencia de juego al siguiente nivel
+                    con nuestras herramientas y configuraciones.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#comprar" class="btn primary">
+                        COMPRAR
+                    </a>
+
+                    <a href="#videos" class="btn secondary">
+                        VER VIDEOS
+                    </a>
+
+                </div>
+
             </div>
 
-            <nav>
+        </section>
 
-                <a href="#inicio">Inicio</a>
-                <a href="#funciones">Funciones</a>
-                <a href="#videos">Videos</a>
-                <a href="#precios">Comprar</a>
-                <a href="#noticias">Noticias</a>
-                <a href="#soporte">Soporte</a>
-                <a href="#configuraciones-armas">Configuraciones de armas</a>
 
-            </nav>
+        <!-- ================= VIDEOS ================= -->
 
-        </header>
+        <section id="videos">
 
+            <div class="section-header">
 
-        <!-- INICIO -->
+                <span>DEMOSTRACIONES</span>
 
-        <main id="inicio">
+                <h2>
+                    MOUSECONTROL EN ACCIÓN
+                </h2>
 
-            <section class="glass hero">
+                <p>
+                    Conocé el funcionamiento del sistema.
+                </p>
 
-                <div class="hero-content">
+            </div>
 
-                    <p class="eyebrow">
-                        🎯 MOUSECONTROL / HACKAIM 🖱️
-                    </p>
+            <div class="video-grid">
 
-                    <h1>
-                        CONTROLÁ TU EXPERIENCIA
-                    </h1>
-
-                    <p class="hero-text">
-                        Controlá tu recoil en todos los juegos.
-                    </p>
-
-                    <div class="download-counter">
-                        🚀 <strong>100.000+</strong> DESCARGAS
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================================
-                 VIDEOS PRINCIPALES
-            ================================ -->
-
-            <section id="videos" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        MOUSECONTROL / HACKAIM
-                    </p>
-
-                    <h2>
-                        ¿CÓMO FUNCIONA?
-                    </h2>
-
-                    <p>
-                        Mirá los videos y conocé cómo funciona cada programa.
-                    </p>
-
-                </div>
-
-
-                <div class="main-videos">
-
-
-                    <!-- MOUSECONTROL -->
-
-                    <article class="main-video-card">
-
-                        <h3 class="main-video-title">
-                            MOUSECONTROL
-                        </h3>
-
-                        <p class="main-video-description">
-                            Conocé las principales funciones de MouseControl.
-                        </p>
-
-                        <div class="video-container">
-
-                            <iframe
-                                src="https://www.youtube.com/embed/UQgaHR6llKA"
-                                title="Cómo funciona MouseControl"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <a
-                            href="#mousecontrol"
-                            class="button primary main-video-button">
-                            COMPRAR MOUSECONTROL
-                        </a>
-
-                    </article>
-
-
-                    <!-- HACKAIM -->
-
-                    <article class="main-video-card">
-
-                        <h3 class="main-video-title">
-                            HACKAIM
-                        </h3>
-
-                        <p class="main-video-description">
-                            Conocé las principales funciones de HACKAIM.
-                        </p>
-
-                        <div class="video-container">
-
-                            <iframe
-                                src="https://www.youtube.com/embed/RIBJBD2AYCA"
-                                title="Cómo funciona HACKAIM"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <a
-                            href="#hackaim"
-                            class="button primary main-video-button">
-                            COMPRAR HACKAIM
-                        </a>
-
-                    </article>
-
-
-                </div>
-
-            </section>
-
-
-            <!-- FUNCIONES -->
-
-            <section id="funciones" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        MOUSECONTROL / HACKAIM
-                    </p>
-
-                    <h2>
-                        FUNCIONES
-                    </h2>
-
-                    <p>
-                        Conocé las principales funciones disponibles y las próximas novedades.
-                    </p>
-
-                </div>
-
-
-                <div class="cards">
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            01
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            ANTI-RECOIL
-                        </h3>
-
-                        <p>
-                            Configurá los parámetros verticales y horizontales de cada perfil.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            02
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            AIM ASSIST
-                        </h3>
-
-                        <p>
-                            Función disponible dentro de HACKAIM.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            03
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            PERFILES
-                        </h3>
-
-                        <p>
-                            Opciones disponibles para personalizar tus perfiles.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card">
-
-                        <div class="feature-number">
-                            04
-                        </div>
-
-                        <div class="status available">
-                            DISPONIBLE
-                        </div>
-
-                        <h3>
-                            CONTROL
-                        </h3>
-
-                        <p>
-                            Herramientas de control y configuración disponibles.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 CONFIGURACIONES DE ARMAS
-            ================================================== -->
-
-            <section
-                id="configuraciones-armas"
-                class="glass section weapon-section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        HACKAIM
-                    </p>
-
-                    <h2>
-                        CONFIGURACIONES DE ARMAS
-                    </h2>
-
-                    <p>
-                        Seleccioná un arma para consultar su configuración.
-                    </p>
-
-                </div>
-
-
-                <!-- FUSILES DE ASALTO -->
-
-                <div class="weapon-category-title">
-
-                    <h3>
-                        FUSILES DE ASALTO
-                    </h3>
-
-                    <p>
-                        Configuraciones disponibles
-                    </p>
-
-                </div>
-
-
-                <div class="weapon-grid">
-
-
-                    <!-- FG42 -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="FG42"
-                        data-vertical="-73"
-                        data-horizontal="-11"
-                        data-image="imagenes/armas/fg42.jpg">
-
-                        <img
-                            class="weapon-image"
-                            src="imagenes/armas/fg42.jpg"
-                            alt="FG42">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                FG42
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- AN-94 -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="AN-94"
-                        data-vertical="-65"
-                        data-horizontal="-11"
-                        data-image="imagenes/armas/an94.jpg">
-
-                        <img
-                            class="weapon-image"
-                            src="imagenes/armas/an94.jpg"
-                            alt="AN-94">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                AN-94
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- VX COMPACT -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="VX COMPACT"
-                        data-vertical="-65"
-                        data-horizontal="-3"
-                        data-image="imagenes/armas/vx-compact.jpg">
-
-                        <img
-                            class="weapon-image"
-                            src="imagenes/armas/vx-compact.jpg"
-                            alt="VX Compact">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                VX COMPACT
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- MK35 IR -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="MK35 IR"
-                        data-vertical="-75"
-                        data-horizontal="-7"
-                        data-image="imagenes/armas/mk35-ir.jpg">
-
-                        <img
-                            class="weapon-image"
-                            src="imagenes/armas/mk35-ir.jpg"
-                            alt="MK35 IR">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                MK35 IR
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                    <!-- AKA 27 -->
-
-                    <button
-                        type="button"
-                        class="weapon-card"
-                        data-weapon="AKA 27"
-                        data-vertical="-62"
-                        data-horizontal="-7"
-                        data-image="imagenes/armas/aka-27.jpg">
-
-                        <img
-                            class="weapon-image"
-                            src="imagenes/armas/aka-27.jpg"
-                            alt="AKA 27">
-
-                        <div class="weapon-card-content">
-
-                            <h4>
-                                AKA 27
-                            </h4>
-
-                            <span>
-                                VER CONFIGURACIÓN
-                            </span>
-
-                        </div>
-
-                    </button>
-
-
-                </div>
-
-            </section>
-
-
-            <!-- ================================
-                 CÓMO FUNCIONA HACKAIM
-            ================================ -->
-
-            <section id="como-funciona-hackaim" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        HACKAIM
-                    </p>
-
-                    <h2>
-                        ¿CÓMO FUNCIONA?
-                    </h2>
-
-                </div>
-
-
-                <div class="hackaim-how-video">
+                <div class="glass video-card">
 
                     <iframe
-                        src="https://www.youtube.com/embed/Knbly_A1JKc"
-                        title="Cómo funciona HACKAIM"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        src="https://www.youtube.com/embed/UQgaHR6llKA"
+                        title="MouseControl"
                         allowfullscreen>
                     </iframe>
 
                 </div>
 
-            </section>
+                <div class="glass video-card">
 
-
-            <!-- PRECIOS -->
-
-            <section id="precios" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        LICENCIAS
-                    </p>
-
-                    <h2>
-                        ELEGÍ TU PLAN
-                    </h2>
-
-                    <p>
-                        Elegí la duración de tu licencia.
-                    </p>
+                    <iframe
+                        src="https://www.youtube.com/embed/RIBJBD2AYCA"
+                        title="MouseControl"
+                        allowfullscreen>
+                    </iframe>
 
                 </div>
 
-
-                <div class="pricing-products">
-
-
-                    <!-- MOUSECONTROL -->
-
-                    <div id="mousecontrol" class="pricing-product">
-
-                        <div class="pricing-product-title">
-
-                            <p class="section-tag">
-                                MOUSECONTROL
-                            </p>
-
-                            <h3>
-                                MOUSECONTROL
-                            </h3>
-
-                            <p>
-                                Elegí la duración de tu licencia.
-                            </p>
-
-                        </div>
-
-
-                        <div class="pricing">
-
-
-                            <article class="price-card">
-
-                                <p class="price-type">
-                                    MENSUAL
-                                </p>
-
-                                <div class="price">
-                                    $10.000 (arg)8usd
-                                </div>
-
-                                <p class="price-description">
-                                    Pesos argentinos. Licencia válida durante 1 mes.
-                                </p>
-
-                                <a
-                                    href="#comprar"
-                                    class="button primary">
-                                    COMPRAR
-                                </a>
-
-                            </article>
-
-
-                            <article class="price-card featured">
-
-                                <div class="recommended">
-                                    RECOMENDADO
-                                </div>
-
-                                <p class="price-type">
-                                    ANUAL
-                                </p>
-
-                                <div class="price">
-                                    $50.000 (arg)40usd
-                                </div>
-
-                                <p class="price-description">
-                                    Pesos argentinos. Licencia válida durante 12 meses.
-                                </p>
-
-                                <a
-                                    href="#comprar"
-                                    class="button primary">
-                                    COMPRAR
-                                </a>
-
-                            </article>
-
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- HACKAIM -->
-
-                    <div id="hackaim" class="pricing-product">
-
-                        <div class="pricing-product-title">
-
-                            <p class="section-tag">
-                                HACKAIM
-                            </p>
-
-                            <h3>
-                                HACKAIM
-                            </h3>
-
-                            <p>
-                                Elegí la duración de tu licencia.
-                            </p>
-
-                        </div>
-
-
-                        <div class="pricing">
-
-
-                            <article class="price-card">
-
-                                <p class="price-type">
-                                    MENSUAL
-                                </p>
-
-                                <div class="price">
-                                    $15.000 ARS (10 USD)
-                                </div>
-
-                                <p class="price-description">
-                                    Pesos argentinos. Licencia válida durante 1 mes.
-                                </p>
-
-                                <a
-                                    href="#comprar"
-                                    class="button primary">
-                                    COMPRAR
-                                </a>
-
-                            </article>
-
-
-                            <article class="price-card featured">
-
-                                <div class="recommended">
-                                    RECOMENDADO
-                                </div>
-
-                                <p class="price-type">
-                                    ANUAL
-                                </p>
-
-                                <div class="price">
-                                    $70.000 ARS (60 USD)
-                                </div>
-
-                                <p class="price-description">
-                                    Pesos argentinos. Licencia válida durante 12 meses.
-                                </p>
-
-                                <a
-                                    href="#comprar"
-                                    class="button primary">
-                                    COMPRAR
-                                </a>
-
-                            </article>
-
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </section>
-
-
-            <!-- COMPRA -->
-
-            <section id="comprar" class="glass section purchase">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        COMPRA
-                    </p>
-
-                    <h2>
-                        COMPRAR MOUSECONTROL
-                    </h2>
-
-                    <p>
-                        Realizá la transferencia y luego enviá el comprobante para recibir tu licencia y el enlace de descarga.
-                    </p>
-
-                </div>
-
-
-                <div class="purchase-box">
-
-                    <h3>
-                        DATOS PARA TRANSFERENCIA
-                    </h3>
-
-
-                    <div class="payment-data">
-
-                        <div>
-
-                            <span>
-                                TITULAR
-                            </span>
-
-                            <strong>
-                                JUAN NICOLAS MARTINEZ
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                ALIAS
-                            </span>
-
-                            <strong>
-                                nicomtz32
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                MEDIO DE PAGO
-                            </span>
-
-                            <strong>
-                                TRANSFERENCIA
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <a
-                        href="#"
-                        class="button primary"
-                        id="transferButton">
-                        YA TRANSFERÍ
-                    </a>
-
-                </div>
-
-            </section>
-
-
-            <!-- GAMEPLAY -->
-
-            <section class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        GAMEPLAY
-                    </p>
-
-                    <h2>
-                        MOUSECONTROL EN ACCIÓN
-                    </h2>
-
-                    <p>
-                        Gameplays y videos mostrando MouseControl en funcionamiento.
-                    </p>
-
-                </div>
-
-
-                <div class="video-grid">
-
-                    <div class="small-video">
-
-                        <iframe
-                            src="https://www.youtube.com/embed/w7G01DRXQY0"
-                            title="Gameplay MouseControl"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-
-                    </div>
-
-
-                    <div class="small-video">
-
-                        <iframe
-                            src="https://www.youtube.com/embed/OTJQx4uUURE"
-                            title="Gameplay MouseControl"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- NOTICIAS -->
-
-            <section id="noticias" class="glass section">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        NOVEDADES
-                    </p>
-
-                    <h2>
-                        NOTICIAS Y ACTUALIZACIONES
-                    </h2>
-
-                    <p>
-                        Acá vamos a publicar las novedades, mejoras y futuras actualizaciones de MouseControl.
-                    </p>
-
-                </div>
-
-
-                <div class="news-grid">
-
-                    <article class="news-card">
-
-                        <span>
-                            ACTUALIZACIÓN
-                        </span>
-
-                        <h3>
-                            MouseControl
-                        </h3>
-
-                        <p>
-                            Primera versión del sitio oficial y del programa.
-                        </p>
-
-                    </article>
-
-
-                    <article class="news-card">
-
-                        <span>
-                            PRÓXIMAMENTE
-                        </span>
-
-                        <h3>
-                            Nuevas funciones
-                        </h3>
-
-                        <p>
-                            Próximamente vamos a publicar nuevas funciones y mejoras.
-                        </p>
-
-                    </article>
-
-
-                    <article class="news-card">
-
-                        <span>
-                            FUTURA ACTUALIZACIÓN
-                        </span>
-
-                        <h3>
-                            Anti-Recoil para mandos
-                        </h3>
-
-                        <p>
-                            Estamos preparando nuevas funciones de Anti-Recoil para mandos.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-
-            <!-- SOPORTE -->
-
-            <section id="soporte" class="glass section support">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        SOPORTE
-                    </p>
-
-                    <h2>
-                        ¿TENÉS UNA QUEJA?
-                    </h2>
-
-                    <p>
-                        Podés enviarnos una queja, sugerencia o problema relacionado con MouseControl.
-                    </p>
-
-                </div>
-
-
-                <div class="support-button-container">
-
-                    <button
-                        type="button"
-                        class="button secondary large"
-                        id="complaintButton">
-                        ENVIAR UNA QUEJA
-                    </button>
-
-                </div>
-
-
-                <div class="community">
-
-                    <h3>
-                        COMUNIDAD
-                    </h3>
-
-                    <p>
-                        Unite próximamente a nuestra comunidad de Discord.
-                    </p>
-
-                    <a
-                        href="https://discord.gg/EPTzMvAQtm"
-                        class="button primary"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        DISCORD
-                    </a>
-
-                </div>
-
-            </section>
-
-        </main>
-
-
-        <!-- PIE -->
-
-        <footer class="glass footer">
-
-            <div class="logo">
-                🎯 MOUSECONTROL <span>/ HACKAIM</span> 🖱️
             </div>
 
-            <p>
-                © 2026 MouseControl / HACKAIM. Todos los derechos reservados.
-            </p>
-
-        </footer>
+        </section>
 
 
-    </div>
+        <!-- ================= FUNCIONES ================= -->
 
+        <section id="funciones">
 
-    <!-- =====================================
-         BOTÓN FLOTANTE WHATSAPP
-    ===================================== -->
+            <div class="section-header">
 
-    <a
-        href="https://wa.me/5491128823023"
-        class="whatsapp-floating"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Consultas a WhatsApp">
+                <span>CARACTERÍSTICAS</span>
 
-        <svg
-            class="whatsapp-icon"
-            viewBox="0 0 32 32"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true">
-
-            <path
-                fill="currentColor"
-                d="M16 3C8.82 3 3 8.72 3 15.78c0 2.45.7 4.73 1.91 6.67L3 29l6.77-1.87A13.02 13.02 0 0 0 16 28.56c7.18 0 13-5.72 13-12.78S23.18 3 16 3Zm0 23.4c-2.03 0-3.92-.59-5.52-1.61l-.39-.24-4.02 1.11 1.1-3.91-.26-.4a10.56 10.56 0 0 1-1.63-5.57C5.28 9.96 10.1 5.22 16 5.22s10.72 4.74 10.72 10.56S21.9 26.4 16 26.4Zm5.87-7.91c-.32-.16-1.89-.92-2.18-1.02-.29-.11-.5-.16-.71.16-.21.32-.81 1.02-.99 1.23-.18.21-.36.24-.68.08-.32-.16-1.35-.49-2.57-1.56-.95-.83-1.59-1.85-1.77-2.17-.18-.32-.02-.49.14-.65.14-.14.32-.36.47-.53.16-.18.21-.3.32-.51.11-.21.05-.39-.03-.55-.08-.16-.71-1.7-.97-2.33-.26-.63-.52-.54-.71-.55h-.6c-.21 0-.55.08-.84.39-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.23 3.38 5.4 4.74.76.33 1.35.53 1.81.68.76.24 1.45.21 2 .13.61-.09 1.89-.77 2.15-1.51.26-.74.26-1.38.18-1.51-.08-.13-.29-.21-.61-.37Z"/>
-
-        </svg>
-
-        <span>
-            Consultas a WhatsApp
-        </span>
-
-    </a>
-
-
-    <!-- =====================================
-         VENTANA DE CONFIGURACIÓN DE ARMA
-    ===================================== -->
-
-    <div
-        class="weapon-modal"
-        id="weaponModal">
-
-        <div class="weapon-modal-box">
-
-            <button
-                class="weapon-modal-close"
-                id="closeWeapon"
-                aria-label="Cerrar"
-                type="button">
-                ×
-            </button>
-
-
-            <img
-                id="weaponModalImage"
-                class="weapon-modal-image"
-                src=""
-                alt="Configuración del arma">
-
-
-            <div class="weapon-modal-content">
-
-                <p class="section-tag">
-                    CONFIGURACIÓN
-                </p>
-
-                <h2 id="weaponModalName">
-                    AN-94
+                <h2>
+                    FUNCIONES
                 </h2>
 
-                <p class="weapon-modal-description">
-                    Valores recomendados para esta clase de arma.
+                <p>
+                    Todo lo necesario en una sola plataforma.
                 </p>
 
+            </div>
 
-                <div class="weapon-values">
 
-                    <div class="weapon-value">
+            <div class="cards-grid">
 
-                        <span>
-                            VERTICAL
-                        </span>
+                <article class="glass feature-card">
 
-                        <strong id="weaponVertical">
-                            -65
-                        </strong>
+                    <div class="feature-icon">
+                        🎯
+                    </div>
+
+                    <h3>
+                        MOUSECONTROL
+                    </h3>
+
+                    <p>
+                        Configuraciones avanzadas para
+                        mejorar el control y precisión.
+                    </p>
+
+                </article>
+
+
+                <article class="glass feature-card">
+
+                    <div class="feature-icon">
+                        ⚙️
+                    </div>
+
+                    <h3>
+                        CONFIGURACIÓN
+                    </h3>
+
+                    <p>
+                        Ajustá cada parámetro según
+                        tu estilo de juego.
+                    </p>
+
+                </article>
+
+
+                <article class="glass feature-card">
+
+                    <div class="feature-icon">
+                        🚀
+                    </div>
+
+                    <h3>
+                        HACKAIM
+                    </h3>
+
+                    <p>
+                        Sistema desarrollado para ofrecer
+                        una experiencia de configuración avanzada.
+                    </p>
+
+                </article>
+
+
+                <article class="glass feature-card">
+
+                    <div class="feature-icon">
+                        🔐
+                    </div>
+
+                    <h3>
+                        SISTEMA DE LICENCIAS
+                    </h3>
+
+                    <p>
+                        Acceso mediante licencias mensuales
+                        y anuales.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!--          CONFIGURACIONES DE ARMAS                -->
+        <!-- ================================================= -->
+
+        <section id="configuraciones-armas">
+
+            <div class="section-header">
+
+                <span>WARZONE / BLACK OPS 7</span>
+
+                <h2>
+                    CONFIGURACIONES DE ARMAS
+                </h2>
+
+                <p>
+                    Seleccioná un arma para consultar su configuración.
+                </p>
+
+            </div>
+
+
+            <div class="weapons-grid">
+
+
+                <!-- ================= FG42 ================= -->
+
+                <article
+                    class="glass weapon-card"
+                    data-weapon="FG42"
+                    data-vertical="-73"
+                    data-horizontal="-11"
+                    data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/FG42_Gunsmith_BO7.png">
+
+                    <div class="weapon-image">
+
+                        <img
+                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/FG42_Gunsmith_BO7.png"
+                            alt="FG42">
 
                     </div>
 
-
-                    <div class="weapon-value">
+                    <div class="weapon-info">
 
                         <span>
-                            HORIZONTAL
+                            FUSIL DE ASALTO
                         </span>
 
-                        <strong id="weaponHorizontal">
-                            -11
-                        </strong>
+                        <h3>
+                            FG42
+                        </h3>
 
+                    </div>
+
+                    <div class="weapon-arrow">
+                        →
+                    </div>
+
+                </article>
+
+
+                <!-- ================= AN-94 ================= -->
+
+                <article
+                    class="glass weapon-card"
+                    data-weapon="AN-94"
+                    data-vertical="-65"
+                    data-horizontal="-11"
+                    data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/AN94_Gunsmith_BO7.png">
+
+                    <div class="weapon-image">
+
+                        <img
+                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/AN94_Gunsmith_BO7.png"
+                            alt="AN-94">
+
+                    </div>
+
+                    <div class="weapon-info">
+
+                        <span>
+                            FUSIL DE ASALTO
+                        </span>
+
+                        <h3>
+                            AN-94
+                        </h3>
+
+                    </div>
+
+                    <div class="weapon-arrow">
+                        →
+                    </div>
+
+                </article>
+
+
+                <!-- ================= VX COMPACT ================= -->
+
+                <article
+                    class="glass weapon-card"
+                    data-weapon="VX Compact"
+                    data-vertical="-65"
+                    data-horizontal="-3"
+                    data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/VX_Compact_Gunsmith_BO7.png">
+
+                    <div class="weapon-image">
+
+                        <img
+                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/VX_Compact_Gunsmith_BO7.png"
+                            alt="VX Compact">
+
+                    </div>
+
+                    <div class="weapon-info">
+
+                        <span>
+                            FUSIL DE ASALTO
+                        </span>
+
+                        <h3>
+                            VX COMPACT
+                        </h3>
+
+                    </div>
+
+                    <div class="weapon-arrow">
+                        →
+                    </div>
+
+                </article>
+
+
+                <!-- ================= MK35 ISR ================= -->
+
+                <article
+                    class="glass weapon-card"
+                    data-weapon="MK35 ISR"
+                    data-vertical="-75"
+                    data-horizontal="-7"
+                    data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/MK35_ISR_Gunsmith_BO7.png">
+
+                    <div class="weapon-image">
+
+                        <img
+                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/MK35_ISR_Gunsmith_BO7.png"
+                            alt="MK35 ISR">
+
+                    </div>
+
+                    <div class="weapon-info">
+
+                        <span>
+                            FUSIL DE ASALTO
+                        </span>
+
+                        <h3>
+                            MK35 ISR
+                        </h3>
+
+                    </div>
+
+                    <div class="weapon-arrow">
+                        →
+                    </div>
+
+                </article>
+
+
+                <!-- ================= AK-27 ================= -->
+
+                <article
+                    class="glass weapon-card"
+                    data-weapon="AK-27"
+                    data-vertical="-62"
+                    data-horizontal="-7"
+                    data-image="https://callofduty.fandom.com/wiki/Special:Redirect/file/AK-27_Gunsmith_BO7.png">
+
+                    <div class="weapon-image">
+
+                        <img
+                            src="https://callofduty.fandom.com/wiki/Special:Redirect/file/AK-27_Gunsmith_BO7.png"
+                            alt="AK-27">
+
+                    </div>
+
+                    <div class="weapon-info">
+
+                        <span>
+                            FUSIL DE ASALTO
+                        </span>
+
+                        <h3>
+                            AK-27
+                        </h3>
+
+                    </div>
+
+                    <div class="weapon-arrow">
+                        →
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!--                    HACKAIM                       -->
+        <!-- ================================================= -->
+
+        <section>
+
+            <div class="section-header">
+
+                <span>HACKAIM</span>
+
+                <h2>
+                    ¿CÓMO FUNCIONA?
+                </h2>
+
+                <p>
+                    Mirá el funcionamiento del sistema.
+                </p>
+
+            </div>
+
+            <div class="glass video-card large-video">
+
+                <iframe
+                    src="https://www.youtube.com/embed/Knbly_A1JKc"
+                    title="HACKAIM"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= COMPRAR ================= -->
+
+        <section id="comprar">
+
+            <div class="section-header">
+
+                <span>LICENCIAS</span>
+
+                <h2>
+                    ELEGÍ TU PLAN
+                </h2>
+
+                <p>
+                    Activá tu licencia y comenzá a utilizar el sistema.
+                </p>
+
+            </div>
+
+
+            <div class="pricing-grid">
+
+
+                <!-- MOUSECONTROL -->
+
+                <article class="glass price-card">
+
+                    <div class="price-tag">
+                        MOUSECONTROL
+                    </div>
+
+                    <h3>
+                        MENSUAL
+                    </h3>
+
+                    <div class="price">
+                        $10.000
+                    </div>
+
+                    <div class="price-usd">
+                        8 USD
+                    </div>
+
+                    <ul>
+
+                        <li>✓ Licencia mensual</li>
+                        <li>✓ Acceso al sistema</li>
+                        <li>✓ Soporte</li>
+
+                    </ul>
+
+                    <button
+                        class="btn primary purchase-button"
+                        data-product="MouseControl Mensual">
+
+                        COMPRAR
+
+                    </button>
+
+                </article>
+
+
+                <article class="glass price-card featured">
+
+                    <div class="price-tag">
+                        MOUSECONTROL
+                    </div>
+
+                    <h3>
+                        ANUAL
+                    </h3>
+
+                    <div class="price">
+                        $50.000
+                    </div>
+
+                    <div class="price-usd">
+                        40 USD
+                    </div>
+
+                    <ul>
+
+                        <li>✓ Licencia anual</li>
+                        <li>✓ Acceso al sistema</li>
+                        <li>✓ Soporte</li>
+
+                    </ul>
+
+                    <button
+                        class="btn primary purchase-button"
+                        data-product="MouseControl Anual">
+
+                        COMPRAR
+
+                    </button>
+
+                </article>
+
+
+                <!-- HACKAIM -->
+
+                <article class="glass price-card">
+
+                    <div class="price-tag">
+                        HACKAIM
+                    </div>
+
+                    <h3>
+                        MENSUAL
+                    </h3>
+
+                    <div class="price">
+                        $15.000 ARS
+                    </div>
+
+                    <div class="price-usd">
+                        10 USD
+                    </div>
+
+                    <ul>
+
+                        <li>✓ Licencia mensual</li>
+                        <li>✓ Acceso al sistema</li>
+                        <li>✓ Soporte</li>
+
+                    </ul>
+
+                    <button
+                        class="btn primary purchase-button"
+                        data-product="Hackaim Mensual">
+
+                        COMPRAR
+
+                    </button>
+
+                </article>
+
+
+                <article class="glass price-card featured">
+
+                    <div class="price-tag">
+                        HACKAIM
+                    </div>
+
+                    <h3>
+                        ANUAL
+                    </h3>
+
+                    <div class="price">
+                        $70.000 ARS
+                    </div>
+
+                    <div class="price-usd">
+                        60 USD
+                    </div>
+
+                    <ul>
+
+                        <li>✓ Licencia anual</li>
+                        <li>✓ Acceso al sistema</li>
+                        <li>✓ Soporte</li>
+
+                    </ul>
+
+                    <button
+                        class="btn primary purchase-button"
+                        data-product="Hackaim Anual">
+
+                        COMPRAR
+
+                    </button>
+
+                </article>
+
+            </div>
+
+
+            <!-- DATOS DE TRANSFERENCIA -->
+
+            <div class="glass purchase-box">
+
+                <h3>
+                    DATOS DE TRANSFERENCIA
+                </h3>
+
+                <div class="purchase-data">
+
+                    <div>
+                        <span>TITULAR</span>
+                        <strong>JUAN NICOLAS MARTINEZ</strong>
+                    </div>
+
+                    <div>
+                        <span>ALIAS</span>
+                        <strong>nicomtz32</strong>
+                    </div>
+
+                    <div>
+                        <span>MEDIO</span>
+                        <strong>TRANSFERENCIA</strong>
                     </div>
 
                 </div>
 
+                <button
+                    class="btn primary"
+                    id="transferButton">
 
-                <p class="weapon-modal-note">
-                    Configuración MouseControl / HACKAIM
+                    YA TRANSFERÍ
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= GAMEPLAY ================= -->
+
+        <section>
+
+            <div class="section-header">
+
+                <span>GAMEPLAY</span>
+
+                <h2>
+                    RESULTADOS
+                </h2>
+
+            </div>
+
+
+            <div class="video-grid">
+
+                <div class="glass video-card">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/w7G01DRXQY0"
+                        title="Gameplay"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+                <div class="glass video-card">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/OTJQx4uUURE"
+                        title="Gameplay"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= NOTICIAS ================= -->
+
+        <section id="noticias">
+
+            <div class="section-header">
+
+                <span>ACTUALIZACIONES</span>
+
+                <h2>
+                    NOTICIAS
+                </h2>
+
+            </div>
+
+
+            <div class="cards-grid">
+
+                <article class="glass news-card">
+
+                    <span>
+                        ACTUALIZACIÓN
+                    </span>
+
+                    <h3>
+                        HACKAIM 2.0
+                    </h3>
+
+                    <p>
+                        Nueva interfaz y mejoras en el sistema.
+                    </p>
+
+                </article>
+
+
+                <article class="glass news-card">
+
+                    <span>
+                        CONFIGURACIONES
+                    </span>
+
+                    <h3>
+                        NUEVAS ARMAS
+                    </h3>
+
+                    <p>
+                        Agregamos configuraciones para nuevas armas.
+                    </p>
+
+                </article>
+
+
+                <article class="glass news-card">
+
+                    <span>
+                        SISTEMA
+                    </span>
+
+                    <h3>
+                        MEJORAS
+                    </h3>
+
+                    <p>
+                        Mejoras generales de estabilidad y rendimiento.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SOPORTE ================= -->
+
+        <section id="soporte">
+
+            <div class="section-header">
+
+                <span>AYUDA</span>
+
+                <h2>
+                    SOPORTE
+                </h2>
+
+                <p>
+                    ¿Tenés algún problema? Estamos para ayudarte.
                 </p>
+
+            </div>
+
+
+            <div class="glass support-box">
+
+                <button
+                    class="btn secondary"
+                    id="complaintButton">
+
+                    REPORTAR UN PROBLEMA
+
+                </button>
+
+
+                <a
+                    href="https://discord.gg/EPTzMvAQtm"
+                    target="_blank"
+                    class="btn primary">
+
+                    DISCORD
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div>
+            🎯 MOUSECONTROL / HACKAIM
+        </div>
+
+        <p>
+            © 2026 MouseControl. Todos los derechos reservados.
+        </p>
+
+    </footer>
+
+</div>
+
+
+<!-- ================================================= -->
+<!--                MODAL DE ARMAS                     -->
+<!-- ================================================= -->
+
+<div
+    class="weapon-modal"
+    id="weaponModal">
+
+    <div class="weapon-modal-overlay"></div>
+
+    <div class="glass weapon-modal-content">
+
+        <button
+            class="modal-close"
+            id="weaponModalClose">
+
+            ×
+
+        </button>
+
+
+        <div class="modal-weapon-image">
+
+            <img
+                id="modalWeaponImage"
+                src=""
+                alt="">
+
+        </div>
+
+
+        <div class="modal-weapon-info">
+
+            <span>
+                CONFIGURACIÓN
+            </span>
+
+            <h2 id="modalWeaponName">
+                ARMA
+            </h2>
+
+
+            <div class="configuration-values">
+
+                <div class="configuration-value">
+
+                    <small>
+                        VERTICAL
+                    </small>
+
+                    <strong id="modalVertical">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="configuration-value">
+
+                    <small>
+                        HORIZONTAL
+                    </small>
+
+                    <strong id="modalHorizontal">
+                        0
+                    </strong>
+
+                </div>
 
             </div>
 
@@ -1815,448 +949,372 @@
 
     </div>
 
+</div>
 
-    <!-- =====================================
-         VENTANA DE TRANSFERENCIA
-    ===================================== -->
 
-    <div
-        class="transfer-modal"
-        id="transferModal">
+<!-- ================================================= -->
+<!--             MODAL TRANSFERENCIA                  -->
+<!-- ================================================= -->
 
-        <div class="transfer-modal-box">
+<div
+    class="generic-modal"
+    id="transferModal">
 
-            <button
-                class="transfer-close"
-                id="closeTransfer"
-                aria-label="Cerrar"
-                type="button">
-                ×
-            </button>
+    <div class="generic-modal-overlay"></div>
 
-            <p class="section-tag">
-                MOUSECONTROL
-            </p>
+    <div class="glass generic-modal-content">
 
-            <h2>
-                ¡TRANSFERENCIA RECIBIDA!
-            </h2>
+        <button
+            class="modal-close"
+            id="transferModalClose">
 
-            <p class="transfer-modal-text">
-                Para recibir tu licencia y el link de descarga, necesitamos que nos envíes el comprobante de tu transferencia junto con tu correo electrónico.
-            </p>
+            ×
 
-            <div class="transfer-instructions">
+        </button>
 
-                <div class="transfer-item">
+        <h2>
+            ¡PERFECTO!
+        </h2>
 
-                    <span>
-                        01 — COMPROBANTE
-                    </span>
+        <p>
+            Una vez realizada la transferencia,
+            enviá el comprobante para activar tu licencia.
+        </p>
 
-                    <strong>
-                        Compartí una captura de pantalla o comprobante de tu transferencia.
-                    </strong>
+        <div class="contact-data">
 
-                </div>
-
-                <div class="transfer-item">
-
-                    <span>
-                        02 — CORREO ELECTRÓNICO
-                    </span>
-
-                    <strong>
-                        Escribí junto al comprobante el correo electrónico donde querés recibir la licencia.
-                    </strong>
-
-                </div>
-
-                <div class="transfer-item">
-
-                    <span>
-                        03 — WHATSAPP
-                    </span>
-
-                    <strong>
-                        +54 9 11 2882-3023
-                    </strong>
-
-                </div>
-
-                <div class="transfer-item">
-
-                    <span>
-                        04 — CORREO
-                    </span>
-
-                    <strong>
-                        nicomartine20@gmail.com
-                    </strong>
-
-                </div>
-
+            <div>
+                <strong>WhatsApp</strong>
+                <span>+54 9 11 2882-3023</span>
             </div>
 
-            <p class="transfer-modal-text">
-                Una vez que verifiquemos el pago, te enviaremos tu licencia y el enlace para descargar MouseControl.
-            </p>
-
-            <button
-                class="button primary"
-                id="closeTransferBottom"
-                type="button">
-                ENTENDIDO
-            </button>
+            <div>
+                <strong>Email</strong>
+                <span>nicomartine20@gmail.com</span>
+            </div>
 
         </div>
 
+        <a
+            href="https://wa.me/5491128823023"
+            target="_blank"
+            class="btn primary">
+
+            ENVIAR COMPROBANTE
+
+        </a>
+
     </div>
 
+</div>
 
-    <!-- =====================================
-         VENTANA DE SOPORTE
-    ===================================== -->
 
-    <div
-        class="complaint-modal"
-        id="complaintModal">
+<!-- ================================================= -->
+<!--             MODAL RECLAMO                        -->
+<!-- ================================================= -->
 
-        <div class="complaint-modal-box">
+<div
+    class="generic-modal"
+    id="complaintModal">
 
-            <button
-                class="complaint-close"
-                id="closeComplaint"
-                aria-label="Cerrar"
-                type="button">
-                ×
-            </button>
+    <div class="generic-modal-overlay"></div>
 
-            <p class="section-tag">
-                SOPORTE
-            </p>
+    <div class="glass generic-modal-content">
 
-            <h2>
-                CONTACTÁ CON NOSOTROS
-            </h2>
+        <button
+            class="modal-close"
+            id="complaintModalClose">
 
-            <p class="complaint-text">
-                Si tenés una queja, sugerencia o problema relacionado con MouseControl, podés comunicarte directamente con nosotros.
-            </p>
+            ×
 
-            <div class="complaint-email">
+        </button>
+
+        <h2>
+            SOPORTE
+        </h2>
+
+        <p>
+            Para reportar un problema podés comunicarte
+            directamente con nosotros.
+        </p>
+
+        <div class="contact-data">
+
+            <div>
+
+                <strong>Email</strong>
 
                 <span>
-                    CORREO DE CONTACTO
-                </span>
-
-                <strong>
                     nicomtz320@gmail.com
-                </strong>
+                </span>
 
             </div>
 
-            <a
-                href="mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl"
-                class="button primary"
-                id="openComplaintEmail">
-                ABRIR CORREO
-            </a>
-
         </div>
+
+        <a
+            href="mailto:nicomtz320@gmail.com"
+            class="btn primary">
+
+            CONTACTAR SOPORTE
+
+        </a>
 
     </div>
 
-
-    <!-- =====================================
-         JAVASCRIPT
-    ===================================== -->
-
-    <script>
-
-        /* ================================
-           CONFIGURACIONES DE ARMAS
-        ================================ */
-
-        const weaponModal =
-            document.getElementById("weaponModal");
-
-        const closeWeapon =
-            document.getElementById("closeWeapon");
-
-        const weaponModalImage =
-            document.getElementById("weaponModalImage");
-
-        const weaponModalName =
-            document.getElementById("weaponModalName");
-
-        const weaponVertical =
-            document.getElementById("weaponVertical");
-
-        const weaponHorizontal =
-            document.getElementById("weaponHorizontal");
+</div>
 
 
-        const weaponCards =
-            document.querySelectorAll(".weapon-card");
+<!-- ================================================= -->
+<!--             WHATSAPP FLOTANTE                    -->
+<!-- ================================================= -->
+
+<a
+    href="https://wa.me/5491128823023"
+    target="_blank"
+    class="whatsapp-float"
+    aria-label="WhatsApp">
+
+    💬
+
+</a>
 
 
-        weaponCards.forEach(function(card) {
+<!-- ================================================= -->
+<!--                    JAVASCRIPT                    -->
+<!-- ================================================= -->
 
-            card.addEventListener("click", function() {
+<script>
 
-                const weapon =
-                    card.dataset.weapon;
-
-                const vertical =
-                    card.dataset.vertical;
-
-                const horizontal =
-                    card.dataset.horizontal;
-
-                const image =
-                    card.dataset.image;
+document.addEventListener("DOMContentLoaded", function () {
 
 
-                weaponModalName.textContent =
-                    weapon;
+    /* =================================================
+       MODAL DE ARMAS
+       ================================================= */
 
-                weaponVertical.textContent =
-                    vertical;
+    const weaponModal =
+        document.getElementById("weaponModal");
 
-                weaponHorizontal.textContent =
-                    horizontal;
+    const weaponModalClose =
+        document.getElementById("weaponModalClose");
 
-                weaponModalImage.src =
-                    image;
+    const modalWeaponImage =
+        document.getElementById("modalWeaponImage");
 
-                weaponModalImage.alt =
-                    weapon;
+    const modalWeaponName =
+        document.getElementById("modalWeaponName");
+
+    const modalVertical =
+        document.getElementById("modalVertical");
+
+    const modalHorizontal =
+        document.getElementById("modalHorizontal");
 
 
-                weaponModal.classList.add("active");
+    document.querySelectorAll(".weapon-card").forEach(card => {
 
-                document.body.style.overflow =
-                    "hidden";
+        card.addEventListener("click", function () {
 
-            });
+            const weapon =
+                this.dataset.weapon;
+
+            const vertical =
+                this.dataset.vertical;
+
+            const horizontal =
+                this.dataset.horizontal;
+
+            const image =
+                this.dataset.image;
+
+
+            modalWeaponName.textContent =
+                weapon;
+
+            modalVertical.textContent =
+                vertical;
+
+            modalHorizontal.textContent =
+                horizontal;
+
+            modalWeaponImage.src =
+                image;
+
+            modalWeaponImage.alt =
+                weapon;
+
+
+            weaponModal.classList.add("active");
+
+            document.body.classList.add("modal-open");
 
         });
 
-
-        function closeWeaponModal() {
-
-            weaponModal.classList.remove("active");
-
-            document.body.style.overflow =
-                "";
-
-        }
+    });
 
 
-        closeWeapon.addEventListener(
+    function closeWeaponModal() {
+
+        weaponModal.classList.remove("active");
+
+        document.body.classList.remove("modal-open");
+
+    }
+
+
+    weaponModalClose.addEventListener(
+        "click",
+        closeWeaponModal
+    );
+
+
+    document
+        .querySelector("#weaponModal .weapon-modal-overlay")
+        .addEventListener(
             "click",
             closeWeaponModal
         );
 
 
-        weaponModal.addEventListener(
+    /* =================================================
+       MODAL TRANSFERENCIA
+       ================================================= */
+
+    const transferButton =
+        document.getElementById("transferButton");
+
+    const transferModal =
+        document.getElementById("transferModal");
+
+    const transferModalClose =
+        document.getElementById("transferModalClose");
+
+
+    transferButton.addEventListener("click", function () {
+
+        transferModal.classList.add("active");
+
+        document.body.classList.add("modal-open");
+
+    });
+
+
+    function closeTransferModal() {
+
+        transferModal.classList.remove("active");
+
+        document.body.classList.remove("modal-open");
+
+    }
+
+
+    transferModalClose.addEventListener(
+        "click",
+        closeTransferModal
+    );
+
+
+    document
+        .querySelector("#transferModal .generic-modal-overlay")
+        .addEventListener(
             "click",
-            function(event) {
-
-                if (
-                    event.target === weaponModal
-                ) {
-
-                    closeWeaponModal();
-
-                }
-
-            }
+            closeTransferModal
         );
 
 
-        /* ================================
-           TRANSFERENCIA
-        ================================ */
+    /* =================================================
+       MODAL SOPORTE
+       ================================================= */
 
-        const transferButton =
-            document.getElementById("transferButton");
+    const complaintButton =
+        document.getElementById("complaintButton");
 
-        const transferModal =
-            document.getElementById("transferModal");
+    const complaintModal =
+        document.getElementById("complaintModal");
 
-        const closeTransfer =
-            document.getElementById("closeTransfer");
-
-        const closeTransferBottom =
-            document.getElementById("closeTransferBottom");
+    const complaintModalClose =
+        document.getElementById("complaintModalClose");
 
 
-        transferButton.addEventListener(
+    complaintButton.addEventListener("click", function () {
+
+        complaintModal.classList.add("active");
+
+        document.body.classList.add("modal-open");
+
+    });
+
+
+    function closeComplaintModal() {
+
+        complaintModal.classList.remove("active");
+
+        document.body.classList.remove("modal-open");
+
+    }
+
+
+    complaintModalClose.addEventListener(
+        "click",
+        closeComplaintModal
+    );
+
+
+    document
+        .querySelector("#complaintModal .generic-modal-overlay")
+        .addEventListener(
             "click",
-            function(event) {
+            closeComplaintModal
+        );
+
+
+    /* =================================================
+       ESCAPE
+       ================================================= */
+
+    document.addEventListener("keydown", function (event) {
+
+        if (event.key === "Escape") {
+
+            closeWeaponModal();
+            closeTransferModal();
+            closeComplaintModal();
+
+        }
+
+    });
+
+
+    /* =================================================
+       SCROLL SUAVE
+       ================================================= */
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+        link.addEventListener("click", function (event) {
+
+            const target =
+                document.querySelector(this.getAttribute("href"));
+
+            if (target) {
 
                 event.preventDefault();
 
-                transferModal.classList.add(
-                    "active"
-                );
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
 
             }
-        );
 
+        });
 
-        closeTransfer.addEventListener(
-            "click",
-            function() {
+    });
 
-                transferModal.classList.remove(
-                    "active"
-                );
+});
 
-            }
-        );
-
-
-        closeTransferBottom.addEventListener(
-            "click",
-            function() {
-
-                transferModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        transferModal.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target === transferModal
-                ) {
-
-                    transferModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* ================================
-           SOPORTE / QUEJA
-        ================================ */
-
-        const complaintButton =
-            document.getElementById("complaintButton");
-
-        const complaintModal =
-            document.getElementById("complaintModal");
-
-        const closeComplaint =
-            document.getElementById("closeComplaint");
-
-        const openComplaintEmail =
-            document.getElementById("openComplaintEmail");
-
-
-        complaintButton.addEventListener(
-            "click",
-            function(event) {
-
-                event.preventDefault();
-
-                complaintModal.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-
-        closeComplaint.addEventListener(
-            "click",
-            function() {
-
-                complaintModal.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-        complaintModal.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target === complaintModal
-                ) {
-
-                    complaintModal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* ================================
-           ABRIR CORREO
-        ================================ */
-
-        openComplaintEmail.addEventListener(
-            "click",
-            function() {
-
-                window.location.href =
-                    "mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl";
-
-            }
-        );
-
-
-        /* ================================
-           ESCAPE PARA CERRAR
-        ================================ */
-
-        document.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (event.key === "Escape") {
-
-                    weaponModal.classList.remove(
-                        "active"
-                    );
-
-                    transferModal.classList.remove(
-                        "active"
-                    );
-
-                    complaintModal.classList.remove(
-                        "active"
-                    );
-
-                    document.body.style.overflow =
-                        "";
-
-                }
-
-            }
-        );
-
-    </script>
+</script>
 
 </body>
-
 </html>
