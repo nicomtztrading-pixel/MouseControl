@@ -144,8 +144,7 @@
     }
 
     .complaint-close,
-    .weapon-modal-close,
-    .payment-close {
+    .weapon-modal-close {
         position: absolute;
         top: 14px;
         right: 16px;
@@ -161,8 +160,7 @@
     }
 
     .complaint-close:hover,
-    .weapon-modal-close:hover,
-    .payment-close:hover {
+    .weapon-modal-close:hover {
         background: rgba(255, 255, 255, 0.12);
         transform: translateY(-1px);
     }
@@ -505,143 +503,15 @@
 
 
     /* ================================
-       BOTONES DE COMPRA
+       BOTONES DE COMPRA DESACTIVADOS
     ================================ */
 
-    .buy-license-button {
+    .buy-disabled-button {
         width: 100%;
         border: none;
-        cursor: pointer;
+        cursor: not-allowed;
         font-family: inherit;
-    }
-
-
-    /* ================================
-       MODAL DE PAGO
-    ================================ */
-
-    .payment-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 12000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.78);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-    }
-
-    .payment-modal.active {
-        display: flex;
-    }
-
-    .payment-modal-box {
-        width: min(500px, 100%);
-        position: relative;
-        padding: 34px;
-        border-radius: 24px;
-        background: rgba(20, 14, 30, 0.96);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        box-shadow:
-            0 30px 90px rgba(0, 0, 0, 0.65),
-            0 0 45px rgba(151, 73, 224, 0.12),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        text-align: center;
-        animation: paymentModalIn 0.2s ease;
-    }
-
-    @keyframes paymentModalIn {
-        from {
-            opacity: 0;
-            transform: translateY(12px) scale(0.97);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-    }
-
-    .payment-modal-box h2 {
-        margin: 0;
-        font-size: clamp(26px, 5vw, 36px);
-    }
-
-    .payment-modal-description {
-        margin: 12px 0 24px;
-        color: rgba(255, 255, 255, 0.64);
-        line-height: 1.6;
-        font-size: 13px;
-    }
-
-    .payment-product-name {
-        margin-bottom: 22px;
-        padding: 14px 16px;
-        border-radius: 14px;
-        background: rgba(190, 115, 255, 0.08);
-        border: 1px solid rgba(190, 115, 255, 0.20);
-        color: #d39aff;
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: 0.6px;
-    }
-
-    .payment-form {
-        display: grid;
-        gap: 14px;
-        text-align: left;
-    }
-
-    .payment-field {
-        display: grid;
-        gap: 7px;
-    }
-
-    .payment-field label {
-        color: rgba(255, 255, 255, 0.72);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.8px;
-    }
-
-    .payment-field input {
-        width: 100%;
-        padding: 14px 15px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.055);
-        color: white;
-        outline: none;
-        font-family: inherit;
-        font-size: 14px;
-        transition: 0.2s ease;
-    }
-
-    .payment-field input:focus {
-        border-color: rgba(190, 115, 255, 0.60);
-        box-shadow: 0 0 0 3px rgba(190, 115, 255, 0.10);
-    }
-
-    .payment-error {
-        min-height: 18px;
-        color: #ff8f8f;
-        font-size: 11px;
-        line-height: 1.5;
-    }
-
-    .payment-submit {
-        width: 100%;
-        border: none;
-        cursor: pointer;
-    }
-
-    .payment-submit:disabled {
-        opacity: 0.65;
-        cursor: wait;
+        opacity: 0.70;
     }
 
 
@@ -781,13 +651,11 @@
 
     @media (max-width: 650px) {
 
-        .complaint-modal,
-        .payment-modal {
+        .complaint-modal {
             padding: 12px;
         }
 
-        .complaint-modal-box,
-        .payment-modal-box {
+        .complaint-modal-box {
             padding: 28px 20px;
             border-radius: 20px;
         }
@@ -870,7 +738,6 @@
 
 <div class="page">
 
-```
 <header class="glass navbar">
 
     <div class="logo">
@@ -882,7 +749,6 @@
         <a href="#inicio">Inicio</a>
         <a href="#funciones">Funciones</a>
         <a href="#videos">Videos</a>
-        <a href="#precios">Comprar</a>
         <a href="#noticias">Noticias</a>
         <a href="#soporte">Soporte</a>
         <a href="#configuraciones-armas">Configuraciones de armas</a>
@@ -1051,12 +917,6 @@
 
                 </div>
 
-                <a
-                    href="#mousecontrol"
-                    class="button primary main-video-button">
-                    COMPRAR MOUSECONTROL
-                </a>
-
             </article>
 
 
@@ -1081,12 +941,6 @@
                     </iframe>
 
                 </div>
-
-                <a
-                    href="#hackaim"
-                    class="button primary main-video-button">
-                    COMPRAR HACKAIM
-                </a>
 
             </article>
 
@@ -1452,7 +1306,7 @@
             </h2>
 
             <p>
-                Elegí la duración de tu licencia.
+                Las ventas se encuentran temporalmente suspendidas.
             </p>
 
         </div>
@@ -1476,7 +1330,7 @@
                     </h3>
 
                     <p>
-                        Elegí la duración de tu licencia.
+                        Licencias disponibles próximamente.
                     </p>
 
                 </div>
@@ -1503,9 +1357,9 @@
 
                         <button
                             type="button"
-                            class="button primary buy-license-button"
-                            data-product="mousecontrol_monthly">
-                            COMPRAR
+                            class="button secondary buy-disabled-button"
+                            disabled>
+                            VENTAS SUSPENDIDAS
                         </button>
 
                     </article>
@@ -1533,9 +1387,9 @@
 
                         <button
                             type="button"
-                            class="button primary buy-license-button"
-                            data-product="mousecontrol_annual">
-                            COMPRAR
+                            class="button secondary buy-disabled-button"
+                            disabled>
+                            VENTAS SUSPENDIDAS
                         </button>
 
                     </article>
@@ -1545,7 +1399,7 @@
 
 
                 <div class="payment-methods-note">
-                    💳 <strong>SE ACEPTAN TODOS LOS MEDIOS DE PAGO</strong>
+                    💳 <strong>VENTAS TEMPORALMENTE SUSPENDIDAS</strong>
                 </div>
 
             </div>
@@ -1566,7 +1420,7 @@
                     </h3>
 
                     <p>
-                        Elegí la duración de tu licencia.
+                        Licencias disponibles próximamente.
                     </p>
 
                 </div>
@@ -1593,9 +1447,9 @@
 
                         <button
                             type="button"
-                            class="button primary buy-license-button"
-                            data-product="hackaim_monthly">
-                            COMPRAR
+                            class="button secondary buy-disabled-button"
+                            disabled>
+                            VENTAS SUSPENDIDAS
                         </button>
 
                     </article>
@@ -1623,9 +1477,9 @@
 
                         <button
                             type="button"
-                            class="button primary buy-license-button"
-                            data-product="hackaim_annual">
-                            COMPRAR
+                            class="button secondary buy-disabled-button"
+                            disabled>
+                            VENTAS SUSPENDIDAS
                         </button>
 
                     </article>
@@ -1635,7 +1489,7 @@
 
 
                 <div class="payment-methods-note">
-                    💳 <strong>SE ACEPTAN TODOS LOS MEDIOS DE PAGO</strong>
+                    💳 <strong>VENTAS TEMPORALMENTE SUSPENDIDAS</strong>
                 </div>
 
             </div>
@@ -1942,38 +1796,37 @@
     </div>
 
 </footer>
-```
 
 </div>
+
 
 <!-- BOTÓN FLOTANTE WHATSAPP -->
 
 <a
- href="https://wa.me/5491128823023"
- class="whatsapp-floating"
- target="_blank"
- rel="noopener noreferrer"
- aria-label="Consultas a WhatsApp">
+    href="https://wa.me/5491128823023"
+    class="whatsapp-floating"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Consultas a WhatsApp">
 
-```
-<svg
-    class="whatsapp-icon"
-    viewBox="0 0 32 32"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true">
+    <svg
+        class="whatsapp-icon"
+        viewBox="0 0 32 32"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true">
 
-    <path
-        fill="currentColor"
-        d="M16 3C8.82 3 3 8.72 3 15.78c0 2.45.7 4.73 1.91 6.67L3 29l6.77-1.87A13.02 13.02 0 0 0 16 28.56c7.18 0 13-5.72 13-12.78S23.18 3 16 3Zm0 23.4c-2.03 0-3.92-.59-5.52-1.61l-.39-.24-4.02 1.11 1.1-3.91-.26-.4a10.56 10.56 0 0 1-1.63-5.57C5.28 9.96 10.1 5.22 16 5.22s10.72 4.74 10.72 10.56S21.9 26.4 16 26.4Zm5.87-7.91c-.32-.16-1.89-.92-2.18-1.02-.29-.11-.5-.16-.71.16-.21.32-.81 1.02-.99 1.23-.18.21-.36.24-.68.08-.32-.16-1.35-.49-2.57-1.56-.95-.83-1.59-1.85-1.77-2.17-.18-.32-.02-.49.14-.65.14-.14.32-.36.47-.53.16-.18.21-.3.32-.51.11-.21.05-.39-.03-.55-.08-.16-.71-1.7-.97-2.33-.26-.63-.52-.54-.71-.55h-.6c-.21 0-.55.08-.84.39-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.23 3.38 5.4 4.74.76.33 1.35.53 1.81.68.76.24 1.45.21 2 .13.61-.09 1.89-.77 2.15-1.51.26-.74.26-1.38.18-1.51-.08-.13-.29-.21-.61-.37Z"/>
+        <path
+            fill="currentColor"
+            d="M16 3C8.82 3 3 8.72 3 15.78c0 2.45.7 4.73 1.91 6.67L3 29l6.77-1.87A13.02 13.02 0 0 0 16 28.56c7.18 0 13-5.72 13-12.78S23.18 3 16 3Zm0 23.4c-2.03 0-3.92-.59-5.52-1.61l-.39-.24-4.02 1.11 1.1-3.91-.26-.4a10.56 10.56 0 0 1-1.63-5.57C5.28 9.96 10.1 5.22 16 5.22s10.72 4.74 10.72 10.56S21.9 26.4 16 26.4Zm5.87-7.91c-.32-.16-1.89-.92-2.18-1.02-.29-.11-.5-.16-.71.16-.21.32-.81 1.02-.99 1.23-.18.21-.36.24-.68.08-.32-.16-1.35-.49-2.57-1.56-.95-.83-1.59-1.85-1.77-2.17-.18-.32-.02-.49.14-.65.14-.14.32-.36.47-.53.16-.18.21-.3.32-.51.11-.21.05-.39-.03-.55-.08-.16-.71-1.7-.97-2.33-.26-.63-.52-.54-.71-.55h-.6c-.21 0-.55.08-.84.39-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.23 3.38 5.4 4.74.76.33 1.35.53 1.81.68.76.24 1.45.21 2 .13.61-.09 1.89-.77 2.15-1.51.26-.74.26-1.38.18-1.51-.08-.13-.29-.21-.61-.37Z"/>
 
-</svg>
+    </svg>
 
-<span>
-    Consultas a WhatsApp
-</span>
-```
+    <span>
+        Consultas a WhatsApp
+    </span>
 
 </a>
+
 
 <!-- VENTANA DE CONFIGURACIÓN DE ARMA -->
 
@@ -1981,80 +1834,79 @@
     class="weapon-modal"
     id="weaponModal">
 
-```
-<div class="weapon-modal-box">
+    <div class="weapon-modal-box">
 
-    <button
-        class="weapon-modal-close"
-        id="closeWeapon"
-        aria-label="Cerrar"
-        type="button">
-        ×
-    </button>
-
-
-    <img
-        id="weaponModalImage"
-        class="weapon-modal-image"
-        src=""
-        alt="Configuración del arma">
+        <button
+            class="weapon-modal-close"
+            id="closeWeapon"
+            aria-label="Cerrar"
+            type="button">
+            ×
+        </button>
 
 
-    <div class="weapon-modal-content">
-
-        <p class="section-tag">
-            CONFIGURACIÓN
-        </p>
-
-        <h2 id="weaponModalName">
-            AN-94
-        </h2>
-
-        <p class="weapon-modal-description">
-            Valores recomendados para esta clase de arma.
-        </p>
+        <img
+            id="weaponModalImage"
+            class="weapon-modal-image"
+            src=""
+            alt="Configuración del arma">
 
 
-        <div class="weapon-values">
+        <div class="weapon-modal-content">
 
-            <div class="weapon-value">
+            <p class="section-tag">
+                CONFIGURACIÓN
+            </p>
 
-                <span>
-                    VERTICAL
-                </span>
+            <h2 id="weaponModalName">
+                AN-94
+            </h2>
 
-                <strong id="weaponVertical">
-                    -65
-                </strong>
+            <p class="weapon-modal-description">
+                Valores recomendados para esta clase de arma.
+            </p>
+
+
+            <div class="weapon-values">
+
+                <div class="weapon-value">
+
+                    <span>
+                        VERTICAL
+                    </span>
+
+                    <strong id="weaponVertical">
+                        -65
+                    </strong>
+
+                </div>
+
+
+                <div class="weapon-value">
+
+                    <span>
+                        HORIZONTAL
+                    </span>
+
+                    <strong id="weaponHorizontal">
+                        -11
+                    </strong>
+
+                </div>
 
             </div>
 
 
-            <div class="weapon-value">
-
-                <span>
-                    HORIZONTAL
-                </span>
-
-                <strong id="weaponHorizontal">
-                    -11
-                </strong>
-
-            </div>
+            <p class="weapon-modal-note">
+                Configuración MouseControl / HACKAIM
+            </p>
 
         </div>
-
-
-        <p class="weapon-modal-note">
-            Configuración MouseControl / HACKAIM
-        </p>
 
     </div>
 
 </div>
-```
 
-</div>
 
 <!-- VENTANA DE SOPORTE -->
 
@@ -2062,145 +1914,51 @@
     class="complaint-modal"
     id="complaintModal">
 
-```
-<div class="complaint-modal-box">
-
-    <button
-        class="complaint-close"
-        id="closeComplaint"
-        aria-label="Cerrar"
-        type="button">
-        ×
-    </button>
-
-    <p class="section-tag">
-        SOPORTE
-    </p>
-
-    <h2>
-        CONTACTÁ CON NOSOTROS
-    </h2>
-
-    <p class="complaint-text">
-        Si tenés una queja, sugerencia o problema relacionado con MouseControl, podés comunicarte directamente con nosotros.
-    </p>
-
-    <div class="complaint-email">
-
-        <span>
-            CORREO DE CONTACTO
-        </span>
-
-        <strong>
-            nicomtz320@gmail.com
-        </strong>
-
-    </div>
-
-    <a
-        href="mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl"
-        class="button primary"
-        id="openComplaintEmail">
-        ABRIR CORREO
-    </a>
-
-</div>
-```
-
-</div>
-
-<!-- VENTANA DE PAGO -->
-
-<div
-    class="payment-modal"
-    id="paymentModal">
-
-```
-<div class="payment-modal-box">
-
-    <button
-        class="payment-close"
-        id="closePayment"
-        aria-label="Cerrar"
-        type="button">
-        ×
-    </button>
-
-    <p class="section-tag">
-        COMPRA SEGURA
-    </p>
-
-    <h2>
-        COMPLETÁ TUS DATOS
-    </h2>
-
-    <p class="payment-modal-description">
-        Ingresá tu nombre y correo electrónico. Después serás enviado al checkout seguro de dLocal Go.
-    </p>
-
-    <div
-        class="payment-product-name"
-        id="paymentProductName">
-        PRODUCTO
-    </div>
-
-    <form
-        class="payment-form"
-        id="paymentForm">
-
-        <div class="payment-field">
-
-            <label for="customerName">
-                NOMBRE COMPLETO
-            </label>
-
-            <input
-                type="text"
-                id="customerName"
-                name="name"
-                placeholder="Tu nombre completo"
-                autocomplete="name"
-                required>
-
-        </div>
-
-
-        <div class="payment-field">
-
-            <label for="customerEmail">
-                CORREO ELECTRÓNICO
-            </label>
-
-            <input
-                type="email"
-                id="customerEmail"
-                name="email"
-                placeholder="tu@email.com"
-                autocomplete="email"
-                required>
-
-        </div>
-
-
-        <div
-            class="payment-error"
-            id="paymentError">
-        </div>
-
+    <div class="complaint-modal-box">
 
         <button
-            type="submit"
-            class="button primary payment-submit"
-            id="paymentSubmit">
-            CONTINUAR AL PAGO
+            class="complaint-close"
+            id="closeComplaint"
+            aria-label="Cerrar"
+            type="button">
+            ×
         </button>
 
-    </form>
+        <p class="section-tag">
+            SOPORTE
+        </p>
+
+        <h2>
+            CONTACTÁ CON NOSOTROS
+        </h2>
+
+        <p class="complaint-text">
+            Si tenés una queja, sugerencia o problema relacionado con MouseControl, podés comunicarte directamente con nosotros.
+        </p>
+
+        <div class="complaint-email">
+
+            <span>
+                CORREO DE CONTACTO
+            </span>
+
+            <strong>
+                nicomtz320@gmail.com
+            </strong>
+
+        </div>
+
+        <a
+            href="mailto:nicomtz320@gmail.com?subject=Consulta%20-%20MouseControl"
+            class="button primary"
+            id="openComplaintEmail">
+            ABRIR CORREO
+        </a>
+
+    </div>
 
 </div>
-```
 
-</div>
 
 <!-- JAVASCRIPT -->
 
@@ -2385,287 +2143,6 @@
 
 
     /* ================================
-       SISTEMA DE COMPRA
-    ================================ */
-
-    const PAYMENT_API =
-        "https://mousecontrol-payment.onrender.com";
-
-    const paymentModal =
-        document.getElementById("paymentModal");
-
-    const closePayment =
-        document.getElementById("closePayment");
-
-    const paymentForm =
-        document.getElementById("paymentForm");
-
-    const paymentProductName =
-        document.getElementById("paymentProductName");
-
-    const customerName =
-        document.getElementById("customerName");
-
-    const customerEmail =
-        document.getElementById("customerEmail");
-
-    const paymentError =
-        document.getElementById("paymentError");
-
-    const paymentSubmit =
-        document.getElementById("paymentSubmit");
-
-
-    const productNames = {
-
-        "mousecontrol_monthly":
-            "MOUSECONTROL — MENSUAL — USD 10",
-
-        "mousecontrol_annual":
-            "MOUSECONTROL — ANUAL — USD 60",
-
-        "hackaim_monthly":
-            "HACKAIM — MENSUAL — USD 13",
-
-        "hackaim_annual":
-            "HACKAIM — ANUAL — USD 65"
-
-    };
-
-
-    let selectedProduct = "";
-
-
-    document
-        .querySelectorAll(".buy-license-button")
-        .forEach(function(button) {
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    selectedProduct =
-                        button.dataset.product;
-
-                    paymentProductName.textContent =
-                        productNames[selectedProduct]
-                        || "LICENCIA";
-
-                    paymentError.textContent =
-                        "";
-
-                    paymentForm.reset();
-
-                    paymentModal.classList.add(
-                        "active"
-                    );
-
-                    document.body.style.overflow =
-                        "hidden";
-
-                    setTimeout(
-                        function() {
-                            customerName.focus();
-                        },
-                        100
-                    );
-
-                }
-            );
-
-        });
-
-
-    function closePaymentModal() {
-
-        paymentModal.classList.remove(
-            "active"
-        );
-
-        document.body.style.overflow =
-            "";
-
-        selectedProduct =
-            "";
-
-        paymentError.textContent =
-            "";
-
-    }
-
-
-    closePayment.addEventListener(
-        "click",
-        closePaymentModal
-    );
-
-
-    paymentModal.addEventListener(
-        "click",
-        function(event) {
-
-            if (
-                event.target === paymentModal
-            ) {
-
-                closePaymentModal();
-
-            }
-
-        }
-    );
-
-
-    paymentForm.addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
-
-            paymentError.textContent =
-                "";
-
-            const name =
-                customerName.value.trim();
-
-            const email =
-                customerEmail.value.trim();
-
-            if (!name) {
-
-                paymentError.textContent =
-                    "Ingresá tu nombre completo.";
-
-                customerName.focus();
-
-                return;
-
-            }
-
-
-            if (!email) {
-
-                paymentError.textContent =
-                    "Ingresá tu correo electrónico.";
-
-                customerEmail.focus();
-
-                return;
-
-            }
-
-
-            if (!selectedProduct) {
-
-                paymentError.textContent =
-                    "No se seleccionó un producto.";
-
-                return;
-
-            }
-
-
-            paymentSubmit.disabled =
-                true;
-
-            paymentSubmit.textContent =
-                "CONECTANDO CON DLOCAL...";
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        PAYMENT_API + "/checkout",
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-
-                                name:
-                                    name,
-
-                                email:
-                                    email,
-
-                                product:
-                                    selectedProduct
-
-                            })
-
-                        }
-                    );
-
-
-                const result =
-                    await response.json();
-
-
-                if (
-                    !response.ok ||
-                    !result.ok
-                ) {
-
-                    throw new Error(
-                        result.error
-                        ||
-                        result.dlocal_response
-                        ||
-                        "No se pudo crear el pago."
-                    );
-
-                }
-
-
-                const redirectUrl =
-                    result.payment &&
-                    result.payment.redirect_url;
-
-
-                if (!redirectUrl) {
-
-                    throw new Error(
-                        "dLocal no devolvió la URL de pago."
-                    );
-
-                }
-
-
-                window.location.href =
-                    redirectUrl;
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Error de checkout:",
-                    error
-                );
-
-                paymentError.textContent =
-                    error.message
-                    ||
-                    "Ocurrió un error al iniciar el pago.";
-
-                paymentSubmit.disabled =
-                    false;
-
-                paymentSubmit.textContent =
-                    "CONTINUAR AL PAGO";
-
-            }
-
-        }
-    );
-
-
-    /* ================================
        ESCAPE PARA CERRAR
     ================================ */
 
@@ -2682,8 +2159,6 @@
                 complaintModal.classList.remove(
                     "active"
                 );
-
-                closePaymentModal();
 
                 document.body.style.overflow =
                     "";
