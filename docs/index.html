@@ -503,6 +503,122 @@
 
 
     /* ================================
+       PROMOCIÓN USDT
+    ================================ */
+
+    .usdt-promo {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto 34px;
+        padding: 28px 30px;
+        box-sizing: border-box;
+        text-align: center;
+
+        border-radius: 24px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(190, 115, 255, 0.18),
+                rgba(255, 255, 255, 0.055)
+            );
+
+        border: 1px solid rgba(190, 115, 255, 0.48);
+
+        box-shadow:
+            0 18px 50px rgba(0, 0, 0, 0.30),
+            0 0 40px rgba(151, 73, 224, 0.14),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+        position: relative;
+        overflow: hidden;
+    }
+
+    .usdt-promo::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.06),
+                transparent
+            );
+        transform: translateX(-100%);
+        animation: usdtPromoShine 4s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    @keyframes usdtPromoShine {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        35%,
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    .usdt-promo-badge {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 13px;
+        padding: 8px 16px;
+        border-radius: 999px;
+
+        background: rgba(190, 115, 255, 0.16);
+        border: 1px solid rgba(190, 115, 255, 0.38);
+
+        color: #d39aff;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+    }
+
+    .usdt-promo-title {
+        position: relative;
+        margin: 0;
+        color: #ffffff;
+        font-size: clamp(21px, 3.5vw, 32px);
+        font-weight: 900;
+        line-height: 1.2;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+    }
+
+    .usdt-promo-title strong {
+        color: #d39aff;
+    }
+
+    .usdt-promo-subtitle {
+        position: relative;
+        max-width: 720px;
+        margin: 13px auto 0;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    .usdt-promo-price {
+        position: relative;
+        margin-top: 18px;
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.7px;
+    }
+
+    .usdt-promo-price strong {
+        color: #d39aff;
+        font-size: 14px;
+    }
+
+
+    /* ================================
        BOTONES DE COMPRA
     ================================ */
 
@@ -704,6 +820,20 @@
         .payment-methods-note {
             margin-top: 16px;
             font-size: 10px;
+        }
+
+        .usdt-promo {
+            margin-bottom: 26px;
+            padding: 24px 18px;
+            border-radius: 20px;
+        }
+
+        .usdt-promo-title {
+            font-size: 21px;
+        }
+
+        .usdt-promo-subtitle {
+            font-size: 12px;
         }
 
         .whatsapp-floating {
@@ -1312,6 +1442,33 @@
             <p>
                 Elegí la duración de tu licencia.
             </p>
+
+        </div>
+
+
+        <!-- =====================================
+             PROMOCIÓN USDT
+        ====================================== -->
+
+        <div class="usdt-promo">
+
+            <div class="usdt-promo-badge">
+                💎 PROMOCIÓN EXCLUSIVA
+            </div>
+
+            <h3 class="usdt-promo-title">
+                PAGANDO EN <strong>USDT</strong>, TENÉS
+                <strong>LOS DOS PROGRAMAS AL PRECIO DE UNO</strong>
+            </h3>
+
+            <p class="usdt-promo-subtitle">
+                Obtené <strong>MouseControl + HACKAIM</strong> pagando el precio de una sola licencia.
+                Consultanos por WhatsApp para conocer el precio promocional en USDT.
+            </p>
+
+            <div class="usdt-promo-price">
+                💎 <strong>MOUSECONTROL + HACKAIM</strong> — UNA SOLA LICENCIA
+            </div>
 
         </div>
 
