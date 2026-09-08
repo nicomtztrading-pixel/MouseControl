@@ -619,6 +619,69 @@
 
 
     /* ================================
+       BOTÓN COMPRAR USDT
+    ================================ */
+
+    .usdt-promo-button {
+        position: relative;
+        margin: 22px auto 0;
+        width: 100%;
+        max-width: 360px;
+        min-height: 48px;
+
+        border: none;
+        border-radius: 12px;
+
+        cursor: pointer;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        box-sizing: border-box;
+
+        background:
+            linear-gradient(
+                135deg,
+                #b777f5,
+                #8e44d8
+            );
+
+        color: #ffffff;
+
+        text-decoration: none;
+
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.8px;
+
+        box-shadow:
+            0 10px 30px rgba(151, 73, 224, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            filter 0.2s ease;
+    }
+
+    .usdt-promo-button:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.08);
+
+        box-shadow:
+            0 14px 35px rgba(151, 73, 224, 0.38),
+            0 0 25px rgba(190, 115, 255, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .usdt-promo-button:active {
+        transform: translateY(0);
+    }
+
+
+    /* ================================
        BOTONES DE COMPRA
     ================================ */
 
@@ -834,6 +897,11 @@
 
         .usdt-promo-subtitle {
             font-size: 12px;
+        }
+
+        .usdt-promo-button {
+            max-width: 100%;
+            min-height: 50px;
         }
 
         .whatsapp-floating {
@@ -1469,6 +1537,16 @@
             <div class="usdt-promo-price">
                 💎 <strong>MOUSECONTROL + HACKAIM</strong> — UNA SOLA LICENCIA
             </div>
+
+            <!-- BOTÓN COMPRA PROMOCIÓN USDT -->
+
+            <a
+                href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20la%20promo%20en%20USDT."
+                class="usdt-promo-button"
+                target="_blank"
+                rel="noopener noreferrer">
+                💎 COMPRAR EN USDT
+            </a>
 
         </div>
 
