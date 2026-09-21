@@ -1,4 +1,4 @@
-{
+* {
 box-sizing: border-box;
 }
 
@@ -763,12 +763,11 @@ scale(0.97);
 }
 
 to {
-    opacity: 1;
-    transform:
-        translateY(0)
-        scale(1);
+opacity: 1;
+transform:
+translateY(0)
+scale(1);
 }
-
 }
 
 .weapon-modal-image {
@@ -1069,233 +1068,87 @@ font-size: 12px;
 }
 
 /* =================================
-RESPONSIVE
+BOTÓN DE ARREPENTIMIENTO
 ================================= */
 
-@media (max-width: 1050px) {
-.weapon-grid {
-grid-template-columns:
-repeat(3, minmax(0, 1fr));
-}
-}
-
-@media (max-width: 900px) {
-.navbar {
-position: static;
-flex-direction: column;
-align-items: flex-start;
-}
-
-nav {
-    width: 100%;
-    justify-content: flex-start;
-}
-
-.cards {
-    grid-template-columns:
-        repeat(2, 1fr);
-}
-
-.news-grid {
-    grid-template-columns: 1fr;
+.regret-button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+max-width: 420px;
+min-height: 50px;
+margin: 12px auto 0;
+box-sizing: border-box;
+border-radius: 13px;
+color: rgba(255, 255, 255, 0.92);
+background: rgba(255, 255, 255, 0.055);
+border: 1px solid rgba(255, 255, 255, 0.18);
+text-decoration: none;
+font-size: 12px;
+font-weight: 900;
+letter-spacing: 0.8px;
+transition:
+transform 0.2s ease,
+background 0.2s ease,
+border-color 0.2s ease,
+box-shadow 0.2s ease;
 }
 
-.weapon-grid {
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+.regret-button:hover {
+transform: translateY(-2px);
+background: rgba(190, 115, 255, 0.10);
+border-color: rgba(190, 115, 255, 0.42);
+box-shadow:
+0 12px 30px rgba(0, 0, 0, 0.24),
+0 0 24px rgba(151, 73, 224, 0.10);
 }
 
+.regret-button:active {
+transform: translateY(0);
 }
 
-@media (max-width: 720px) {
-.hero {
-height: auto;
-min-height: 650px;
-max-height: none;
+/* =================================
+AVISO DE COMPRA
+================================= */
+
+.purchase-notice {
+max-width: 900px;
+margin: 0 auto 25px;
+padding: 19px 22px;
+box-sizing: border-box;
+border-radius: 16px;
+background: rgba(255, 255, 255, 0.045);
+border: 1px solid rgba(255, 255, 255, 0.11);
+text-align: center;
+color: rgba(255, 255, 255, 0.70);
+font-size: 11px;
+line-height: 1.65;
 }
 
-.download-grid {
-    grid-template-columns: 1fr;
+.purchase-notice strong {
+color: #d39aff;
 }
 
+/* =================================
+AVISOS DE TERCEROS
+================================= */
+
+.third-party-notice {
+max-width: 950px;
+margin: 25px auto 0;
+padding: 18px 20px;
+border-radius: 16px;
+background: rgba(255, 255, 255, 0.04);
+border: 1px solid rgba(255, 255, 255, 0.09);
+color: rgba(255, 255, 255, 0.54);
+font-size: 10px;
+line-height: 1.65;
+text-align: center;
 }
 
-@media (max-width: 650px) {
-.page {
-width:
-min(100% - 18px, 1180px);
-padding-top: 9px;
-}
-
-.hero {
-    min-height: 700px;
-    padding: 22px 18px;
-}
-
-.hero .eyebrow {
-    font-size: 9px;
-    margin-bottom: 4px;
-}
-
-.hero h1 {
-    font-size: 34px;
-}
-
-.hero .hero-text {
-    font-size: 14px;
-    margin-top: 8px;
-}
-
-.hero .hero-buttons {
-    margin-top: 14px;
-    gap: 8px;
-}
-
-.hero .button {
-    min-height: 40px;
-    padding: 0 18px;
-    font-size: 11px;
-}
-
-.hero-downloads {
-    margin-top: 18px;
-}
-
-.hero-downloads-header {
-    margin-bottom: 12px;
-}
-
-.hero-downloads-header h2 {
-    font-size: 19px;
-    margin-top: 7px;
-}
-
-.hero-downloads-header p {
-    font-size: 10px;
-    line-height: 1.45;
-}
-
-.download-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-}
-
-.download-card {
-    padding: 14px;
-    gap: 11px;
-    border-radius: 15px;
-}
-
-.download-card-number {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    font-size: 10px;
-}
-
-.download-card-content h3 {
-    font-size: 13px;
-}
-
-.download-card-content p {
-    margin: 4px 0 9px;
-    font-size: 9px;
-}
-
-.download-button {
-    min-height: 38px !important;
-    font-size: 9px !important;
-}
-
-.download-counter {
-    margin-top: 11px;
-    padding: 7px 14px;
-    font-size: 9px;
-}
-
-.section {
-    padding: 38px 20px;
-    border-radius: 22px;
-}
-
-.cards,
-.pricing,
-.video-grid,
-.payment-data {
-    grid-template-columns: 1fr;
-}
-
-.weapon-category-title {
-    margin-bottom: 22px;
-    padding: 16px 12px 18px;
-}
-
-.weapon-category-title h3 {
-    font-size: 20px;
-    letter-spacing: 1px;
-}
-
-.weapon-category-title p {
-    font-size: 9px;
-    letter-spacing: 1px;
-}
-
-.weapon-category-title::after {
-    width: 90%;
-}
-
-.weapon-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-}
-
-.weapon-card {
-    border-radius: 18px;
-}
-
-.weapon-image {
-    height: 185px;
-    padding: 30px;
-}
-
-.weapon-card-content {
-    padding: 16px;
-}
-
-.weapon-card-content h4 {
-    font-size: 14px;
-}
-
-.weapon-modal {
-    padding: 12px;
-}
-
-.weapon-modal-box {
-    border-radius: 20px;
-}
-
-.weapon-modal-image {
-    height: 180px;
-    padding: 25px;
-}
-
-.weapon-modal-content {
-    padding: 24px 18px;
-}
-
-.weapon-values {
-    grid-template-columns: 1fr;
-}
-
-.footer {
-    flex-direction: column;
-    text-align: center;
-}
-
-nav {
-    gap: 12px;
-}
-
+.third-party-notice strong {
+color: rgba(255, 255, 255, 0.76);
 }
 
 /* =================================
@@ -1351,17 +1204,486 @@ line-height: 1.5;
 word-break: break-word;
 }
 
+/* =================================
+PÁGINAS / SECCIONES LEGALES
+================================= */
+
+.legal-pages {
+scroll-margin-top: 110px;
+}
+
+.legal-navigation {
+max-width: 950px;
+margin: 0 auto 32px;
+display: grid;
+grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 12px;
+}
+
+.legal-navigation a {
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 48px;
+padding: 12px 14px;
+box-sizing: border-box;
+border-radius: 13px;
+color: rgba(255, 255, 255, 0.88);
+background: rgba(255, 255, 255, 0.045);
+border: 1px solid rgba(255, 255, 255, 0.11);
+text-decoration: none;
+font-size: 10px;
+font-weight: 900;
+letter-spacing: 0.7px;
+text-align: center;
+transition:
+transform 0.2s ease,
+border-color 0.2s ease,
+background 0.2s ease;
+}
+
+.legal-navigation a:hover {
+transform: translateY(-2px);
+background: rgba(190, 115, 255, 0.09);
+border-color: rgba(190, 115, 255, 0.34);
+}
+
+.legal-document {
+max-width: 950px;
+margin: 0 auto 18px;
+padding: 30px;
+border-radius: 22px;
+background: rgba(255, 255, 255, 0.045);
+border: 1px solid rgba(255, 255, 255, 0.10);
+scroll-margin-top: 110px;
+}
+
+.legal-document:last-child {
+margin-bottom: 0;
+}
+
+.legal-document h3 {
+margin: 0 0 16px;
+color: #ffffff;
+font-size: 22px;
+font-weight: 900;
+letter-spacing: 0.3px;
+}
+
+.legal-document h4 {
+margin: 24px 0 8px;
+color: #d39aff;
+font-size: 14px;
+font-weight: 900;
+letter-spacing: 0.5px;
+}
+
+.legal-document h4:first-of-type {
+margin-top: 0;
+}
+
+.legal-document p {
+margin: 0 0 12px;
+color: rgba(255, 255, 255, 0.70);
+font-size: 13px;
+line-height: 1.75;
+}
+
+.legal-document p:last-child {
+margin-bottom: 0;
+}
+
+.legal-document ul {
+margin: 10px 0 15px;
+padding-left: 22px;
+color: rgba(255, 255, 255, 0.70);
+font-size: 13px;
+line-height: 1.75;
+}
+
+.legal-document li {
+margin-bottom: 7px;
+}
+
+.legal-highlight {
+margin: 18px 0;
+padding: 18px 20px;
+border-radius: 15px;
+background: rgba(190, 115, 255, 0.08);
+border: 1px solid rgba(190, 115, 255, 0.24);
+color: rgba(255, 255, 255, 0.88);
+font-size: 12px;
+font-weight: 700;
+line-height: 1.65;
+}
+
+.legal-highlight strong {
+color: #d39aff;
+}
+
+.legal-updated {
+margin-top: 8px !important;
+color: rgba(255, 255, 255, 0.42) !important;
+font-size: 10px !important;
+}
+
+.legal-contact-button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+max-width: 360px;
+min-height: 48px;
+margin-top: 8px;
+border-radius: 12px;
+color: #ffffff;
+background:
+linear-gradient(
+135deg,
+#8c45d8,
+#c16fff
+);
+text-decoration: none;
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 0.7px;
+box-shadow:
+0 10px 30px rgba(151, 73, 224, 0.24);
+transition:
+transform 0.2s ease,
+filter 0.2s ease,
+box-shadow 0.2s ease;
+}
+
+.legal-contact-button:hover {
+transform: translateY(-2px);
+filter: brightness(1.08);
+box-shadow:
+0 14px 34px rgba(151, 73, 224, 0.34);
+}
+
+.legal-contact-button:active {
+transform: translateY(0);
+}
+
+.legal-arrepentimiento {
+border-color: rgba(190, 115, 255, 0.38);
+background:
+linear-gradient(
+135deg,
+rgba(190, 115, 255, 0.12),
+rgba(255, 255, 255, 0.04)
+);
+}
+
+.legal-arrepentimiento h3 {
+color: #d39aff;
+}
+
+.legal-small-note {
+color: rgba(255, 255, 255, 0.52) !important;
+font-size: 11px !important;
+}
+
+/* =================================
+RESPONSIVE
+================================= */
+
+@media (max-width: 1050px) {
+
+.weapon-grid {
+grid-template-columns:
+repeat(3, minmax(0, 1fr));
+}
+
+}
+
+@media (max-width: 1000px) {
+
+.download-grid {
+grid-template-columns:
+repeat(2, minmax(0, 1fr));
+}
+
+.legal-navigation {
+grid-template-columns:
+repeat(2, minmax(0, 1fr));
+}
+
+}
+
+@media (max-width: 900px) {
+
+.navbar {
+position: static;
+flex-direction: column;
+align-items: flex-start;
+}
+
+nav {
+width: 100%;
+justify-content: flex-start;
+}
+
+.cards {
+grid-template-columns:
+repeat(2, 1fr);
+}
+
+.news-grid {
+grid-template-columns: 1fr;
+}
+
+.weapon-grid {
+grid-template-columns:
+repeat(2, minmax(0, 1fr));
+}
+
+}
+
+@media (max-width: 720px) {
+
+.hero {
+height: auto;
+min-height: 650px;
+max-height: none;
+}
+
+.download-grid {
+grid-template-columns: 1fr;
+}
+
+}
+
 @media (max-width: 650px) {
+
+.page {
+width:
+min(100% - 18px, 1180px);
+padding-top: 9px;
+}
+
+.hero {
+min-height: 700px;
+padding: 22px 18px;
+}
+
+.hero .eyebrow {
+font-size: 9px;
+margin-bottom: 4px;
+}
+
+.hero h1 {
+font-size: 34px;
+}
+
+.hero .hero-text {
+font-size: 14px;
+margin-top: 8px;
+}
+
+.hero .hero-buttons {
+margin-top: 14px;
+gap: 8px;
+}
+
+.hero .button {
+min-height: 40px;
+padding: 0 18px;
+font-size: 11px;
+}
+
+.hero-downloads {
+margin-top: 18px;
+}
+
+.hero-downloads-header {
+margin-bottom: 12px;
+}
+
+.hero-downloads-header h2 {
+font-size: 19px;
+margin-top: 7px;
+}
+
+.hero-downloads-header p {
+font-size: 10px;
+line-height: 1.45;
+}
+
+.download-grid {
+grid-template-columns: 1fr;
+gap: 12px;
+}
+
+.download-card {
+padding: 14px;
+gap: 11px;
+border-radius: 15px;
+}
+
+.download-card-number {
+width: 36px;
+height: 36px;
+border-radius: 10px;
+font-size: 10px;
+}
+
+.download-card-content h3 {
+font-size: 13px;
+}
+
+.download-card-content p {
+margin: 4px 0 9px;
+font-size: 9px;
+}
+
+.download-button {
+min-height: 38px !important;
+font-size: 9px !important;
+}
+
+.download-counter {
+margin-top: 11px;
+padding: 7px 14px;
+font-size: 9px;
+}
+
+.section {
+padding: 38px 20px;
+border-radius: 22px;
+}
+
+.cards,
+.pricing,
+.video-grid,
+.payment-data {
+grid-template-columns: 1fr;
+}
+
+.weapon-category-title {
+margin-bottom: 22px;
+padding: 16px 12px 18px;
+}
+
+.weapon-category-title h3 {
+font-size: 20px;
+letter-spacing: 1px;
+}
+
+.weapon-category-title p {
+font-size: 9px;
+letter-spacing: 1px;
+}
+
+.weapon-category-title::after {
+width: 90%;
+}
+
+.weapon-grid {
+grid-template-columns: 1fr;
+gap: 14px;
+}
+
+.weapon-card {
+border-radius: 18px;
+}
+
+.weapon-image {
+height: 185px;
+padding: 30px;
+}
+
+.weapon-card-content {
+padding: 16px;
+}
+
+.weapon-card-content h4 {
+font-size: 14px;
+}
+
+.weapon-modal {
+padding: 12px;
+}
+
+.weapon-modal-box {
+border-radius: 20px;
+}
+
+.weapon-modal-image {
+height: 180px;
+padding: 25px;
+}
+
+.weapon-modal-content {
+padding: 24px 18px;
+}
+
+.weapon-values {
+grid-template-columns: 1fr;
+}
+
+.footer {
+flex-direction: column;
+text-align: center;
+}
+
+nav {
+gap: 12px;
+}
+
 .legal-info {
 padding: 24px 18px;
 }
 
 .legal-info-content {
-    grid-template-columns: 1fr;
+grid-template-columns: 1fr;
 }
 
 .legal-info-item {
-    text-align: center;
+text-align: center;
+}
+
+.license-scroll-button {
+max-width: 100%;
+min-height: 50px;
+}
+
+.regret-button {
+max-width: 100%;
+min-height: 50px;
+}
+
+.legal-navigation {
+grid-template-columns: 1fr;
+}
+
+.legal-document {
+padding: 24px 18px;
+border-radius: 20px;
+}
+
+.legal-document h3 {
+font-size: 19px;
+}
+
+.legal-document p,
+.legal-document ul {
+font-size: 12px;
+}
+
+.purchase-notice {
+font-size: 10px;
+padding: 17px 16px;
+}
+
+.third-party-notice {
+font-size: 9px;
+padding: 16px;
+}
+
+.legal-contact-button {
+max-width: 100%;
 }
 
 }
