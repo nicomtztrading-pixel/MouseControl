@@ -25,18 +25,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MouseControl / HACKAIM</title>
+<title>MouseControl / HACKAIM | Sitio Oficial</title>
 
 <meta
     name="description"
-    content="Página oficial de MouseControl / HACKAIM">
+    content="Sitio oficial de MouseControl y HACKAIM. Software digital para configuración y control de entradas en PC. Información, licencias, soporte y condiciones de compra.">
 
 <link rel="stylesheet" href="style.css">
 
 <style>
 
     /* ================================
-       CONTADOR DE DESCARGAS
+       CONTADOR / ESTADO
     ================================ */
 
     .download-counter {
@@ -114,6 +114,61 @@
     }
 
     .license-scroll-button:active {
+        transform: translateY(0);
+    }
+
+
+    /* ================================
+       BOTÓN DE ARREPENTIMIENTO
+    ================================ */
+
+    .regret-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        max-width: 420px;
+        min-height: 50px;
+
+        margin: 12px auto 0;
+
+        box-sizing: border-box;
+
+        border-radius: 13px;
+
+        color: rgba(255, 255, 255, 0.92);
+
+        background: rgba(255, 255, 255, 0.055);
+
+        border: 1px solid rgba(255, 255, 255, 0.18);
+
+        text-decoration: none;
+
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.8px;
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .regret-button:hover {
+        transform: translateY(-2px);
+
+        background: rgba(190, 115, 255, 0.10);
+
+        border-color: rgba(190, 115, 255, 0.42);
+
+        box-shadow:
+            0 12px 30px rgba(0, 0, 0, 0.24),
+            0 0 24px rgba(151, 73, 224, 0.10);
+    }
+
+    .regret-button:active {
         transform: translateY(0);
     }
 
@@ -1024,6 +1079,276 @@
     }
 
 
+    /* =========================================================
+       PÁGINAS / SECCIONES LEGALES
+    ========================================================= */
+
+    .legal-pages {
+        scroll-margin-top: 110px;
+    }
+
+    .legal-navigation {
+        max-width: 950px;
+        margin: 0 auto 32px;
+
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .legal-navigation a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 48px;
+        padding: 12px 14px;
+
+        box-sizing: border-box;
+
+        border-radius: 13px;
+
+        color: rgba(255, 255, 255, 0.88);
+        background: rgba(255, 255, 255, 0.045);
+
+        border: 1px solid rgba(255, 255, 255, 0.11);
+
+        text-decoration: none;
+
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.7px;
+        text-align: center;
+
+        transition:
+            transform 0.2s ease,
+            border-color 0.2s ease,
+            background 0.2s ease;
+    }
+
+    .legal-navigation a:hover {
+        transform: translateY(-2px);
+        background: rgba(190, 115, 255, 0.09);
+        border-color: rgba(190, 115, 255, 0.34);
+    }
+
+    .legal-document {
+        max-width: 950px;
+        margin: 0 auto 18px;
+
+        padding: 30px;
+
+        border-radius: 22px;
+
+        background: rgba(255, 255, 255, 0.045);
+
+        border: 1px solid rgba(255, 255, 255, 0.10);
+
+        scroll-margin-top: 110px;
+    }
+
+    .legal-document:last-child {
+        margin-bottom: 0;
+    }
+
+    .legal-document h3 {
+        margin: 0 0 16px;
+
+        color: #ffffff;
+
+        font-size: 22px;
+        font-weight: 900;
+
+        letter-spacing: 0.3px;
+    }
+
+    .legal-document h4 {
+        margin: 24px 0 8px;
+
+        color: #d39aff;
+
+        font-size: 14px;
+        font-weight: 900;
+
+        letter-spacing: 0.5px;
+    }
+
+    .legal-document h4:first-of-type {
+        margin-top: 0;
+    }
+
+    .legal-document p {
+        margin: 0 0 12px;
+
+        color: rgba(255, 255, 255, 0.70);
+
+        font-size: 13px;
+        line-height: 1.75;
+    }
+
+    .legal-document p:last-child {
+        margin-bottom: 0;
+    }
+
+    .legal-document ul {
+        margin: 10px 0 15px;
+        padding-left: 22px;
+
+        color: rgba(255, 255, 255, 0.70);
+
+        font-size: 13px;
+        line-height: 1.75;
+    }
+
+    .legal-document li {
+        margin-bottom: 7px;
+    }
+
+    .legal-highlight {
+        margin: 18px 0;
+        padding: 18px 20px;
+
+        border-radius: 15px;
+
+        background: rgba(190, 115, 255, 0.08);
+
+        border: 1px solid rgba(190, 115, 255, 0.24);
+
+        color: rgba(255, 255, 255, 0.88);
+
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.65;
+    }
+
+    .legal-highlight strong {
+        color: #d39aff;
+    }
+
+    .legal-updated {
+        margin-top: 8px !important;
+
+        color: rgba(255, 255, 255, 0.42) !important;
+
+        font-size: 10px !important;
+    }
+
+    .legal-contact-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        max-width: 360px;
+        min-height: 48px;
+
+        margin-top: 8px;
+
+        border-radius: 12px;
+
+        color: #ffffff;
+
+        background:
+            linear-gradient(
+                135deg,
+                #8c45d8,
+                #c16fff
+            );
+
+        text-decoration: none;
+
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.7px;
+
+        box-shadow:
+            0 10px 30px rgba(151, 73, 224, 0.24);
+    }
+
+    .legal-arrepentimiento {
+        border-color: rgba(190, 115, 255, 0.38);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(190, 115, 255, 0.12),
+                rgba(255, 255, 255, 0.04)
+            );
+    }
+
+    .legal-arrepentimiento h3 {
+        color: #d39aff;
+    }
+
+    .legal-small-note {
+        color: rgba(255, 255, 255, 0.52) !important;
+        font-size: 11px !important;
+    }
+
+
+    /* ================================
+       AVISO DE COMPRA
+    ================================ */
+
+    .purchase-notice {
+        max-width: 900px;
+        margin: 0 auto 25px;
+
+        padding: 19px 22px;
+
+        box-sizing: border-box;
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.045);
+
+        border: 1px solid rgba(255, 255, 255, 0.11);
+
+        text-align: center;
+
+        color: rgba(255, 255, 255, 0.70);
+
+        font-size: 11px;
+
+        line-height: 1.65;
+    }
+
+    .purchase-notice strong {
+        color: #d39aff;
+    }
+
+
+    /* ================================
+       DESCARGO DE TERCEROS
+    ================================ */
+
+    .third-party-notice {
+        max-width: 950px;
+
+        margin: 25px auto 0;
+
+        padding: 18px 20px;
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.09);
+
+        color: rgba(255, 255, 255, 0.54);
+
+        font-size: 10px;
+
+        line-height: 1.65;
+
+        text-align: center;
+    }
+
+    .third-party-notice strong {
+        color: rgba(255, 255, 255, 0.76);
+    }
+
+
     /* ================================
        RESPONSIVE
     ================================ */
@@ -1031,6 +1356,10 @@
     @media (max-width: 1000px) {
 
         .download-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .legal-navigation {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
@@ -1186,6 +1515,34 @@
             min-height: 50px;
         }
 
+        .regret-button {
+            max-width: 100%;
+            min-height: 50px;
+        }
+
+        .legal-navigation {
+            grid-template-columns: 1fr;
+        }
+
+        .legal-document {
+            padding: 24px 18px;
+            border-radius: 20px;
+        }
+
+        .legal-document h3 {
+            font-size: 19px;
+        }
+
+        .legal-document p,
+        .legal-document ul {
+            font-size: 12px;
+        }
+
+        .purchase-notice {
+            font-size: 10px;
+            padding: 17px 16px;
+        }
+
     }
 
 </style>
@@ -1213,6 +1570,7 @@
         <a href="#soporte">Soporte</a>
         <a href="#configuraciones-armas">Configuraciones de armas</a>
         <a href="#trabajar-con-nosotros">¿Querés trabajar con nosotros?</a>
+        <a href="#informacion-legal">Información legal</a>
 
     </nav>
 
@@ -1220,6 +1578,10 @@
 
 
 <main id="inicio">
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
 
     <section class="glass hero">
 
@@ -1234,7 +1596,7 @@
             </h1>
 
             <p class="hero-text">
-                Controlá tu recoil en todos los juegos.
+                Software digital para configuración y control de entradas en PC.
             </p>
 
 
@@ -1255,7 +1617,7 @@
                     </h2>
 
                     <p>
-                        Descarga gratuita. La licencia se compra por separado.
+                        La descarga del software es gratuita. Las funciones que requieren licencia se habilitan según el producto contratado.
                     </p>
 
                 </div>
@@ -1276,7 +1638,7 @@
                             </h3>
 
                             <p>
-                                Descargá e instalá MouseControl en tu PC.
+                                Software de configuración y control de entradas para PC.
                             </p>
 
                             <a
@@ -1305,7 +1667,7 @@
                             </h3>
 
                             <p>
-                                Descargá e instalá la nueva HACKAIM 2.10 en tu PC.
+                                Software de configuración para PC. La versión actual disponible es HACKAIM 2.10.
                             </p>
 
                             <a
@@ -1334,7 +1696,7 @@
                             </h3>
 
                             <p>
-                                Descargá e instalá Warzone Sound en tu PC.
+                                Software independiente para configuración de sonido en PC.
                             </p>
 
                             <a
@@ -1363,11 +1725,22 @@
                     💳 ADQUIRIR LICENCIA
                 </a>
 
+
+                <!-- =====================================
+                     BOTÓN DE ARREPENTIMIENTO
+                ====================================== -->
+
+                <a
+                    href="mailto:nicomtz320@gmail.com?subject=BOT%C3%93N%20DE%20ARREPENTIMIENTO%20-%20Solicitud"
+                    class="regret-button">
+                    ↩ BOTÓN DE ARREPENTIMIENTO
+                </a>
+
             </div>
 
 
             <div class="download-counter">
-                🚀 <strong>100.000+</strong> DESCARGAS
+                🚀 SOFTWARE DIGITAL DISPONIBLE PARA PC
             </div>
 
         </div>
@@ -1511,7 +1884,7 @@
                 </h3>
 
                 <p>
-                    Función disponible dentro de HACKAIM.
+                    Función disponible dentro de HACKAIM, sujeta a las características y compatibilidad de la versión instalada.
                 </p>
 
             </article>
@@ -1558,6 +1931,14 @@
 
             </article>
 
+        </div>
+
+
+        <div class="third-party-notice">
+            <strong>Aviso importante:</strong>
+            MouseControl y HACKAIM son software independiente. El funcionamiento puede depender del sistema operativo,
+            dispositivos conectados, juegos y plataformas de terceros. No se garantiza compatibilidad permanente con
+            productos o servicios de terceros que puedan cambiar sus propias condiciones o sistemas técnicos.
         </div>
 
     </section>
@@ -2059,6 +2440,16 @@
 
         </div>
 
+
+        <div class="third-party-notice">
+
+            <strong>Marcas y nombres de terceros:</strong>
+            los nombres de videojuegos, armas, personajes, marcas y plataformas que puedan aparecer en esta sección
+            pertenecen a sus respectivos titulares. MouseControl / HACKAIM se presenta como software independiente
+            y no afirma estar afiliado, patrocinado ni respaldado por dichos titulares.
+
+        </div>
+
     </section>
 
 
@@ -2115,6 +2506,15 @@
         </div>
 
 
+        <div class="purchase-notice">
+
+            <strong>Antes de comprar:</strong>
+            verificá el producto, la duración de la licencia y el importe aplicable.
+            Las condiciones de compra, entrega, privacidad y reembolso se encuentran disponibles en esta misma página.
+
+        </div>
+
+
         <!-- =====================================
              PROMOCIÓN USDT
         ====================================== -->
@@ -2131,20 +2531,20 @@
             </h3>
 
             <p class="usdt-promo-subtitle">
-                Obtené <strong>MouseControl + HACKAIM</strong> pagando el precio de una sola licencia.
-                Consultanos por WhatsApp para conocer el precio promocional en USDT.
+                Obtené <strong>MouseControl + HACKAIM</strong> mediante la promoción informada por WhatsApp.
+                El precio y las condiciones de esta promoción se informan antes de confirmar la operación.
             </p>
 
             <div class="usdt-promo-price">
-                💎 <strong>MOUSECONTROL + HACKAIM</strong> — UNA SOLA LICENCIA
+                💎 <strong>MOUSECONTROL + HACKAIM</strong> — PROMOCIÓN ESPECIAL
             </div>
 
             <a
-                href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20la%20promo%20en%20USDT."
+                href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20consultar%20la%20promoci%C3%B3n%20de%20MouseControl%20%2B%20HACKAIM."
                 class="usdt-promo-button"
                 target="_blank"
                 rel="noopener noreferrer">
-                💎 COMPRAR EN USDT
+                💎 CONSULTAR PROMOCIÓN
             </a>
 
         </div>
@@ -2190,11 +2590,11 @@
                         </p>
 
                         <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20MouseControl%20%E2%80%94%20Mensual."
+                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20MouseControl%20%E2%80%94%20Mensual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
                             class="button primary buy-license-button"
                             target="_blank"
                             rel="noopener noreferrer">
-                            COMPRAR
+                            INICIAR COMPRA
                         </a>
 
                     </article>
@@ -2219,11 +2619,11 @@
                         </p>
 
                         <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20MouseControl%20%E2%80%94%20Anual."
+                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20MouseControl%20%E2%80%94%20Anual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
                             class="button primary buy-license-button"
                             target="_blank"
                             rel="noopener noreferrer">
-                            COMPRAR
+                            INICIAR COMPRA
                         </a>
 
                     </article>
@@ -2233,7 +2633,7 @@
 
 
                 <div class="payment-methods-note">
-                    💳 <strong>CONTACTANOS PARA ELEGIR EL MÉTODO DE PAGO</strong>
+                    💳 <strong>EL MÉTODO DE PAGO Y EL IMPORTE FINAL SE INFORMAN ANTES DE CONFIRMAR LA COMPRA</strong>
                 </div>
 
             </div>
@@ -2276,11 +2676,11 @@
                         </p>
 
                         <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20HACKAIM%20%E2%80%94%20Mensual."
+                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20HACKAIM%20%E2%80%94%20Mensual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
                             class="button primary buy-license-button"
                             target="_blank"
                             rel="noopener noreferrer">
-                            COMPRAR
+                            INICIAR COMPRA
                         </a>
 
                     </article>
@@ -2305,11 +2705,11 @@
                         </p>
 
                         <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20HACKAIM%20%E2%80%94%20Anual."
+                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20HACKAIM%20%E2%80%94%20Anual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
                             class="button primary buy-license-button"
                             target="_blank"
                             rel="noopener noreferrer">
-                            COMPRAR
+                            INICIAR COMPRA
                         </a>
 
                     </article>
@@ -2319,11 +2719,20 @@
 
 
                 <div class="payment-methods-note">
-                    💳 <strong>CONTACTANOS PARA ELEGIR EL MÉTODO DE PAGO</strong>
+                    💳 <strong>EL MÉTODO DE PAGO Y EL IMPORTE FINAL SE INFORMAN ANTES DE CONFIRMAR LA COMPRA</strong>
                 </div>
 
             </div>
 
+
+        </div>
+
+
+        <div class="third-party-notice">
+
+            Los precios publicados son precios de referencia de cada plan.
+            Antes de completar una operación se informa al comprador el importe final aplicable,
+            la moneda de cobro, el método de pago, el producto contratado y la duración de la licencia.
 
         </div>
 
@@ -2353,11 +2762,11 @@
             </p>
 
             <div class="work-with-us-highlight">
-                GANÁ <strong>COMISIONES TODOS LOS MESES</strong> POR LAS SUSCRIPCIONES QUE GENERES.
+                GANÁ <strong>COMISIONES</strong> según las condiciones comerciales informadas previamente.
             </div>
 
             <a
-                href="https://wa.me/5491128823023?text=Quiero%20vender%20los%20productos%20necesito%20info."
+                href="https://wa.me/5491128823023?text=Quiero%20vender%20los%20productos.%20Necesito%20informaci%C3%B3n%20sobre%20las%20condiciones."
                 class="work-with-us-button"
                 target="_blank"
                 rel="noopener noreferrer">
@@ -2515,7 +2924,7 @@
             </h2>
 
             <p>
-                Podés enviarnos una queja, sugerencia o problema relacionado con MouseControl.
+                Podés enviarnos una queja, sugerencia o problema relacionado con nuestros productos.
             </p>
 
         </div>
@@ -2540,7 +2949,7 @@
             </h3>
 
             <p>
-                Unite próximamente a nuestra comunidad de Discord.
+                Unite a nuestra comunidad de Discord.
             </p>
 
             <a
@@ -2550,6 +2959,726 @@
                 rel="noopener noreferrer">
                 DISCORD
             </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INFORMACIÓN LEGAL
+    ====================================================== -->
+
+    <section
+        id="informacion-legal"
+        class="glass section legal-pages">
+
+        <div class="section-header">
+
+            <p class="section-tag">
+                INFORMACIÓN LEGAL
+            </p>
+
+            <h2>
+                TÉRMINOS, POLÍTICAS Y CONDICIONES
+            </h2>
+
+            <p>
+                Información aplicable a la utilización del sitio, adquisición de licencias y tratamiento de datos.
+            </p>
+
+        </div>
+
+
+        <div class="legal-navigation">
+
+            <a href="#terminos">
+                TÉRMINOS Y CONDICIONES
+            </a>
+
+            <a href="#privacidad">
+                POLÍTICA DE PRIVACIDAD
+            </a>
+
+            <a href="#reembolsos">
+                REEMBOLSOS
+            </a>
+
+            <a href="#entrega">
+                ENTREGA DIGITAL
+            </a>
+
+            <a href="#arrepentimiento">
+                BOTÓN DE ARREPENTIMIENTO
+            </a>
+
+            <a href="#compras">
+                CONDICIONES DE COMPRA
+            </a>
+
+            <a href="#terceros">
+                MARCAS Y TERCEROS
+            </a>
+
+            <a href="#contacto-legal">
+                CONTACTO
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             TÉRMINOS Y CONDICIONES
+        ================================================== -->
+
+        <article
+            id="terminos"
+            class="legal-document">
+
+            <h3>
+                Términos y condiciones de uso
+            </h3>
+
+            <p class="legal-updated">
+                Última actualización: 21 de septiembre de 2026.
+            </p>
+
+
+            <h4>
+                1. Identificación del sitio
+            </h4>
+
+            <p>
+                Este sitio web es administrado por Juan Martinez, con actividad comercial desarrollada desde Argentina.
+                La identificación fiscal y el domicilio correspondiente deberán constar en la información comercial
+                proporcionada al comprador y en los registros aplicables.
+            </p>
+
+
+            <h4>
+                2. Productos
+            </h4>
+
+            <p>
+                MouseControl y HACKAIM son productos de software digital destinados a configuraciones y herramientas
+                de control de entradas en PC. Las características concretas de cada versión son las que se encuentran
+                descritas en este sitio y las que se informan antes de confirmar una compra.
+            </p>
+
+
+            <h4>
+                3. Licencias
+            </h4>
+
+            <p>
+                La adquisición de una licencia otorga al comprador un derecho de uso del software durante el período
+                contratado y bajo las condiciones informadas para el producto correspondiente. La compra de una licencia
+                no implica la transferencia de propiedad del software, código fuente, marcas, diseños ni demás derechos
+                de propiedad intelectual.
+            </p>
+
+
+            <h4>
+                4. Uso del software
+            </h4>
+
+            <p>
+                El comprador debe utilizar el software de conformidad con la legislación aplicable, estas condiciones
+                y las condiciones de uso de los servicios o plataformas de terceros que utilice conjuntamente con el
+                software.
+            </p>
+
+            <p>
+                El titular del sitio no garantiza que una actualización futura de un sistema operativo, videojuego,
+                dispositivo, controlador o plataforma de terceros mantenga exactamente la misma compatibilidad o
+                funcionamiento.
+            </p>
+
+
+            <h4>
+                5. Cuentas y servicios de terceros
+            </h4>
+
+            <p>
+                El software no controla ni administra las cuentas del comprador en videojuegos, plataformas,
+                servicios online o sistemas de terceros. El comprador es responsable de conocer y respetar las
+                condiciones aplicables a dichos servicios.
+            </p>
+
+
+            <h4>
+                6. Resultados
+            </h4>
+
+            <p>
+                Las configuraciones, perfiles y funciones disponibles pueden producir resultados diferentes según el
+                equipo, dispositivo, sensibilidad, configuración del sistema y otros factores técnicos. No se garantiza
+                un resultado específico, rendimiento determinado ni ausencia de restricciones o sanciones aplicadas por
+                terceros.
+            </p>
+
+
+            <h4>
+                7. Propiedad intelectual
+            </h4>
+
+            <p>
+                El software MouseControl / HACKAIM, su código, interfaz, textos, diseño y contenido propio pertenecen
+                a sus respectivos titulares. Queda prohibida la copia, redistribución, venta, modificación o
+                ingeniería inversa no autorizada cuando resulte contraria a la legislación aplicable o a las condiciones
+                de la licencia adquirida.
+            </p>
+
+
+            <h4>
+                8. Modificaciones
+            </h4>
+
+            <p>
+                Las características del software podrán actualizarse o modificarse. Las condiciones esenciales de una
+                compra ya realizada no se modificarán de forma retroactiva en perjuicio del comprador cuando ello esté
+                prohibido por la legislación aplicable.
+            </p>
+
+        </article>
+
+
+        <!-- =================================================
+             POLÍTICA DE PRIVACIDAD
+        ================================================== -->
+
+        <article
+            id="privacidad"
+            class="legal-document">
+
+            <h3>
+                Política de privacidad
+            </h3>
+
+            <p class="legal-updated">
+                Última actualización: 21 de septiembre de 2026.
+            </p>
+
+
+            <h4>
+                1. Responsable
+            </h4>
+
+            <p>
+                El responsable del sitio es Juan Martinez, Argentina.
+            </p>
+
+
+            <h4>
+                2. Datos que pueden recopilarse
+            </h4>
+
+            <p>
+                Dependiendo de la interacción realizada, pueden tratarse datos proporcionados voluntariamente por el
+                usuario, como nombre, correo electrónico, número de teléfono, información necesaria para soporte,
+                información relacionada con una compra y datos incluidos en una consulta.
+            </p>
+
+
+            <h4>
+                3. Finalidad
+            </h4>
+
+            <p>
+                Los datos pueden utilizarse para gestionar consultas, brindar soporte, procesar compras, entregar
+                productos o licencias, gestionar reclamos, responder solicitudes de arrepentimiento o reembolso,
+                mantener registros de operaciones y mejorar el funcionamiento del sitio.
+            </p>
+
+
+            <h4>
+                4. Google Analytics
+            </h4>
+
+            <p>
+                Este sitio utiliza Google Analytics para obtener estadísticas sobre el uso del sitio y analizar
+                información técnica y de navegación. Google Analytics es un servicio de terceros y su tratamiento de
+                información se encuentra sujeto también a las políticas y condiciones de Google.
+            </p>
+
+
+            <h4>
+                5. Servicios externos
+            </h4>
+
+            <p>
+                El sitio puede utilizar servicios externos como Google, YouTube, Google Drive, WhatsApp y Discord.
+                Estos servicios pueden tratar determinados datos de acuerdo con sus propias políticas de privacidad y
+                condiciones de uso.
+            </p>
+
+
+            <h4>
+                6. Comunicación
+            </h4>
+
+            <p>
+                Cuando una persona se comunica por correo electrónico, WhatsApp u otro canal indicado en el sitio,
+                la información proporcionada se utiliza para responder la consulta y gestionar la relación comercial
+                correspondiente.
+            </p>
+
+
+            <h4>
+                7. Conservación y seguridad
+            </h4>
+
+            <p>
+                Se adoptarán medidas razonables para proteger la información tratada frente a accesos o usos no
+                autorizados, dentro de las posibilidades técnicas y organizativas disponibles.
+            </p>
+
+
+            <h4>
+                8. Derechos del titular de los datos
+            </h4>
+
+            <p>
+                Las personas pueden ejercer los derechos que les correspondan conforme a la normativa aplicable en
+                materia de protección de datos personales, incluyendo solicitudes de acceso, rectificación,
+                actualización o supresión cuando corresponda.
+            </p>
+
+
+            <h4>
+                9. Solicitudes relacionadas con privacidad
+            </h4>
+
+            <p>
+                Para realizar una consulta relacionada con los datos personales tratados a través de este sitio,
+                puede utilizarse el correo de contacto indicado en la sección de soporte.
+            </p>
+
+        </article>
+
+
+        <!-- =================================================
+             REEMBOLSOS
+        ================================================== -->
+
+        <article
+            id="reembolsos"
+            class="legal-document">
+
+            <h3>
+                Política de reembolsos
+            </h3>
+
+            <p class="legal-updated">
+                Última actualización: 21 de septiembre de 2026.
+            </p>
+
+
+            <h4>
+                1. Solicitudes
+            </h4>
+
+            <p>
+                Las solicitudes de reembolso deben realizarse mediante los canales oficiales de contacto indicados en
+                este sitio, proporcionando información suficiente para identificar la operación.
+            </p>
+
+
+            <h4>
+                2. Derecho de arrepentimiento
+            </h4>
+
+            <p>
+                Cuando resulte aplicable el derecho legal de revocación o arrepentimiento en una contratación a
+                distancia, se respetarán los plazos, condiciones y efectos previstos por la normativa de protección al
+                consumidor que corresponda.
+            </p>
+
+
+            <h4>
+                3. Productos digitales
+            </h4>
+
+            <p>
+                Tratándose de software, archivos digitales o productos que pueden ser descargados o utilizados
+                inmediatamente, podrán existir excepciones legales al derecho de revocación según las circunstancias
+                concretas de la contratación y la legislación aplicable.
+            </p>
+
+            <p>
+                En particular, la normativa argentina contempla determinadas excepciones relacionadas con programas
+                informáticos y ficheros suministrados electrónicamente que hayan sido puestos a disposición para uso
+                inmediato. La aplicación de una excepción se determinará según las circunstancias concretas de la
+                operación y las normas vigentes.
+            </p>
+
+
+            <h4>
+                4. Reembolsos por problemas técnicos
+            </h4>
+
+            <p>
+                Cuando un comprador informe un problema técnico, se podrá solicitar información básica sobre el equipo,
+                sistema operativo, versión del programa y naturaleza del problema para intentar solucionarlo.
+            </p>
+
+
+            <h4>
+                5. Procesamiento
+            </h4>
+
+            <p>
+                Cuando corresponda efectuar un reintegro, se gestionará mediante el medio de pago utilizado en la
+                operación o mediante el procedimiento disponible del procesador de pagos correspondiente.
+            </p>
+
+        </article>
+
+
+        <!-- =================================================
+             ENTREGA DIGITAL
+        ================================================== -->
+
+        <article
+            id="entrega"
+            class="legal-document">
+
+            <h3>
+                Política de entrega de productos digitales
+            </h3>
+
+            <p class="legal-updated">
+                Última actualización: 21 de septiembre de 2026.
+            </p>
+
+
+            <h4>
+                1. Naturaleza del producto
+            </h4>
+
+            <p>
+                MouseControl y HACKAIM son productos digitales. No se realiza un envío físico.
+            </p>
+
+
+            <h4>
+                2. Descarga del software
+            </h4>
+
+            <p>
+                Los instaladores o archivos disponibles para descarga pueden encontrarse en los enlaces indicados en
+                este sitio.
+            </p>
+
+
+            <h4>
+                3. Entrega de licencia
+            </h4>
+
+            <p>
+                Una vez confirmada la operación y acreditado el pago, se proporcionan al comprador las instrucciones
+                correspondientes para utilizar la licencia contratada mediante los canales de contacto utilizados
+                durante la compra.
+            </p>
+
+
+            <h4>
+                4. Datos necesarios
+            </h4>
+
+            <p>
+                El comprador debe proporcionar datos correctos de contacto cuando estos sean necesarios para efectuar
+                la entrega o brindar soporte. Los errores en los datos proporcionados por el comprador pueden impedir
+                la correcta comunicación o entrega.
+            </p>
+
+
+            <h4>
+                5. Problemas de entrega
+            </h4>
+
+            <p>
+                Si el comprador no recibió las instrucciones correspondientes después de una compra confirmada,
+                deberá comunicarse con soporte utilizando el correo o WhatsApp publicados en este sitio.
+            </p>
+
+        </article>
+
+
+        <!-- =================================================
+             BOTÓN DE ARREPENTIMIENTO
+        ================================================== -->
+
+        <article
+            id="arrepentimiento"
+            class="legal-document legal-arrepentimiento">
+
+            <h3>
+                Botón de arrepentimiento
+            </h3>
+
+            <p class="legal-updated">
+                Derecho de arrepentimiento para contrataciones a distancia.
+            </p>
+
+
+            <div class="legal-highlight">
+
+                <strong>¿Querés revocar una compra?</strong><br>
+
+                Utilizá el botón de abajo para comunicar tu solicitud de arrepentimiento o revocación de la
+                contratación.
+
+            </div>
+
+
+            <p>
+                La solicitud se enviará directamente al correo de atención indicado en este sitio.
+                No es necesario crear una cuenta previamente para iniciar la solicitud.
+            </p>
+
+
+            <p>
+                Cuando corresponda verificar datos de identidad o de la operación para procesar la solicitud,
+                únicamente podrán solicitarse mecanismos razonables destinados a dicha verificación y seguridad,
+                conforme al marco aplicable.
+            </p>
+
+
+            <a
+                href="mailto:nicomtz320@gmail.com?subject=BOT%C3%93N%20DE%20ARREPENTIMIENTO%20-%20Solicitud%20de%20revocaci%C3%B3n"
+                class="legal-contact-button">
+                ↩ SOLICITAR ARREPENTIMIENTO
+            </a>
+
+        </article>
+
+
+        <!-- =================================================
+             CONDICIONES DE COMPRA
+        ================================================== -->
+
+        <article
+            id="compras"
+            class="legal-document">
+
+            <h3>
+                Condiciones de compra
+            </h3>
+
+
+            <h4>
+                1. Información previa
+            </h4>
+
+            <p>
+                Antes de confirmar una operación, el comprador podrá conocer el producto seleccionado, la duración de
+                la licencia, el importe aplicable y el medio de pago disponible.
+            </p>
+
+
+            <h4>
+                2. Precios
+            </h4>
+
+            <p>
+                Los precios publicados en el sitio identifican cada plan. Antes de confirmar el pago se comunicará el
+                importe final aplicable y la moneda o método de cobro correspondiente.
+            </p>
+
+
+            <h4>
+                3. Confirmación
+            </h4>
+
+            <p>
+                La operación se considera confirmada una vez que el comprador acepta las condiciones correspondientes
+                y el pago resulta acreditado mediante el medio de pago elegido.
+            </p>
+
+
+            <h4>
+                4. Licencia contratada
+            </h4>
+
+            <p>
+                La duración de la licencia será la indicada en el plan contratado: mensual o anual, según corresponda.
+            </p>
+
+
+            <h4>
+                5. Software descargado gratuitamente
+            </h4>
+
+            <p>
+                La disponibilidad gratuita de un instalador no significa que todas sus funciones estén habilitadas sin
+                una licencia. Las funciones y condiciones asociadas a cada producto se informan en este sitio.
+            </p>
+
+
+            <h4>
+                6. Canales de contacto
+            </h4>
+
+            <p>
+                Para consultas relacionadas con una compra, el comprador puede comunicarse mediante el correo
+                electrónico o WhatsApp publicados en este sitio.
+            </p>
+
+        </article>
+
+
+        <!-- =================================================
+             MARCAS Y TERCEROS
+        ================================================== -->
+
+        <article
+            id="terceros"
+            class="legal-document">
+
+            <h3>
+                Marcas, videojuegos y servicios de terceros
+            </h3>
+
+
+            <h4>
+                1. Independencia
+            </h4>
+
+            <p>
+                MouseControl / HACKAIM es un producto independiente y no se presenta como un producto oficial de
+                Activision, Call of Duty ni de otros titulares de marcas o servicios mencionados en el sitio.
+            </p>
+
+
+            <h4>
+                2. Marcas
+            </h4>
+
+            <p>
+                Los nombres, logotipos, imágenes y marcas de terceros pertenecen a sus respectivos titulares y se
+                utilizan únicamente en la medida correspondiente a la identificación o descripción del contenido
+                mostrado.
+            </p>
+
+
+            <h4>
+                3. Condiciones de terceros
+            </h4>
+
+            <p>
+                Los usuarios deben consultar y cumplir las condiciones de uso de los videojuegos, plataformas,
+                servicios online y dispositivos que utilicen. El sitio no puede garantizar que las reglas de terceros
+                permanezcan sin cambios.
+            </p>
+
+
+            <h4>
+                4. Sanciones o restricciones de terceros
+            </h4>
+
+            <p>
+                No se garantiza que el uso de un determinado software sea aceptado por un tercero ni que una cuenta
+                permanezca libre de restricciones, suspensiones u otras medidas adoptadas por una plataforma según sus
+                propias reglas.
+            </p>
+
+        </article>
+
+
+        <!-- =================================================
+             CONTACTO LEGAL
+        ================================================== -->
+
+        <article
+            id="contacto-legal"
+            class="legal-document">
+
+            <h3>
+                Contacto e identificación
+            </h3>
+
+
+            <h4>
+                Titular
+            </h4>
+
+            <p>
+                Juan Martinez
+            </p>
+
+
+            <h4>
+                País
+            </h4>
+
+            <p>
+                Argentina
+            </p>
+
+
+            <h4>
+                Identificación fiscal
+            </h4>
+
+            <p>
+                <strong style="color: #d39aff;">
+                    [COMPLETAR CON CUIT REAL ANTES DE PUBLICAR]
+                </strong>
+            </p>
+
+
+            <h4>
+                Domicilio
+            </h4>
+
+            <p>
+                <strong style="color: #d39aff;">
+                    [COMPLETAR CON DOMICILIO REAL ANTES DE PUBLICAR]
+                </strong>
+            </p>
+
+
+            <h4>
+                Correo electrónico
+            </h4>
+
+            <p>
+                nicomtz320@gmail.com
+            </p>
+
+
+            <h4>
+                WhatsApp
+            </h4>
+
+            <p>
+                +54 11 2823-3023
+            </p>
+
+
+            <a
+                href="mailto:nicomtz320@gmail.com?subject=Consulta%20legal%20-%20MouseControl"
+                class="legal-contact-button">
+                CONTACTAR POR CORREO
+            </a>
+
+
+            <p class="legal-small-note" style="margin-top: 20px;">
+                El domicilio y la identificación fiscal deben completarse con los datos reales del proveedor antes de
+                publicar esta versión del sitio.
+            </p>
+
+        </article>
+
+
+        <div class="legal-highlight">
+
+            <strong>Información importante:</strong>
+            estas condiciones están destinadas a informar de forma clara al usuario sobre el producto, el proceso de
+            compra, la entrega digital, los reembolsos, la privacidad y el derecho de arrepentimiento.
+            Las disposiciones legales obligatorias que correspondan prevalecerán sobre cualquier condición que resulte
+            incompatible con ellas.
 
         </div>
 
@@ -2586,7 +3715,7 @@
             <div class="legal-info-item">
 
                 <span>
-                    TITULAR Y ADMINISTRADOR
+                    TITULAR
                 </span>
 
                 <strong>
@@ -2612,11 +3741,11 @@
             <div class="legal-info-item">
 
                 <span>
-                    TIPO DE DOCUMENTO
+                    IDENTIFICACIÓN FISCAL
                 </span>
 
                 <strong>
-                    CUIL
+                    COMPLETAR EN LA SECCIÓN DE CONTACTO
                 </strong>
 
             </div>
@@ -2625,11 +3754,11 @@
             <div class="legal-info-item">
 
                 <span>
-                    DOCUMENTO
+                    DOMICILIO
                 </span>
 
                 <strong>
-                    20378460523
+                    COMPLETAR EN LA SECCIÓN DE CONTACTO
                 </strong>
 
             </div>
@@ -2638,11 +3767,11 @@
             <div class="legal-info-item">
 
                 <span>
-                    TELÉFONO
+                    CORREO
                 </span>
 
                 <strong>
-                    +54 11 2823-3023
+                    nicomtz320@gmail.com
                 </strong>
 
             </div>
@@ -2661,6 +3790,89 @@
             </div>
 
         </div>
+
+    </div>
+
+
+    <div
+        style="
+            width:100%;
+            margin-top:20px;
+            padding-top:18px;
+            border-top:1px solid rgba(255,255,255,0.10);
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:center;
+            align-items:center;
+            gap:10px 18px;
+            text-align:center;
+        ">
+
+        <a
+            href="#terminos"
+            style="
+                color:rgba(255,255,255,0.62);
+                text-decoration:none;
+                font-size:10px;
+                font-weight:800;
+            ">
+            Términos y condiciones
+        </a>
+
+        <a
+            href="#privacidad"
+            style="
+                color:rgba(255,255,255,0.62);
+                text-decoration:none;
+                font-size:10px;
+                font-weight:800;
+            ">
+            Política de privacidad
+        </a>
+
+        <a
+            href="#reembolsos"
+            style="
+                color:rgba(255,255,255,0.62);
+                text-decoration:none;
+                font-size:10px;
+                font-weight:800;
+            ">
+            Política de reembolsos
+        </a>
+
+        <a
+            href="#entrega"
+            style="
+                color:rgba(255,255,255,0.62);
+                text-decoration:none;
+                font-size:10px;
+                font-weight:800;
+            ">
+            Entrega digital
+        </a>
+
+        <a
+            href="#arrepentimiento"
+            style="
+                color:#d39aff;
+                text-decoration:none;
+                font-size:10px;
+                font-weight:900;
+            ">
+            Botón de arrepentimiento
+        </a>
+
+        <a
+            href="#contacto-legal"
+            style="
+                color:rgba(255,255,255,0.62);
+                text-decoration:none;
+                font-size:10px;
+                font-weight:800;
+            ">
+            Contacto
+        </a>
 
     </div>
 
@@ -2732,7 +3944,7 @@
             </h2>
 
             <p class="weapon-modal-description">
-                Valores recomendados para esta clase de arma.
+                Valores de configuración mostrados como referencia.
             </p>
 
 
@@ -2802,7 +4014,8 @@
         </h2>
 
         <p class="complaint-text">
-            Si tenés una queja, sugerencia o problema relacionado con MouseControl, podés comunicarte directamente con nosotros.
+            Si tenés una queja, sugerencia, problema técnico o consulta relacionada con nuestros productos,
+            podés comunicarte directamente con nosotros.
         </p>
 
         <div class="complaint-email">
@@ -3112,6 +4325,53 @@
         );
 
     }
+
+
+    /* ================================
+       SCROLL SUAVE PARA INFORMACIÓN LEGAL
+    ================================ */
+
+    document.querySelectorAll(
+        'a[href^="#"]'
+    ).forEach(function(link) {
+
+        link.addEventListener(
+            "click",
+            function(event) {
+
+                const targetId =
+                    link.getAttribute("href");
+
+                if (
+                    !targetId ||
+                    targetId === "#" ||
+                    targetId === "#inicio" ||
+                    targetId === "#precios" ||
+                    targetId === "#trabajar-con-nosotros"
+                ) {
+
+                    return;
+
+                }
+
+                const target =
+                    document.querySelector(targetId);
+
+                if (target) {
+
+                    event.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+            }
+        );
+
+    });
 
 </script>
 
