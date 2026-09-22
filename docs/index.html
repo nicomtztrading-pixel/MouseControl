@@ -2144,7 +2144,8 @@
                         <button
                             type="button"
                             class="button primary buy-license-button"
-                            data-plan="MENSUAL — 13 USD">
+                            data-plan="MENSUAL — 13 USD"
+                            data-whop-url="https://whop.com/checkout/plan_ZOPk5wedDKVbe/?session=chs_gqC2c0MGl6TraE">
                             INICIAR COMPRA
                         </button>
 
@@ -2176,7 +2177,8 @@
                         <button
                             type="button"
                             class="button primary buy-license-button"
-                            data-plan="ANUAL — 70 USD">
+                            data-plan="ANUAL — 65 USD"
+                            data-whop-url="https://whop.com/checkout/plan_ePsbqTi5S2ea/?session=chs_3nTkpx2Zm78sgz">
                             INICIAR COMPRA
                         </button>
 
@@ -2765,7 +2767,8 @@
 
 
             <h4>
-                3. Productos digitales</h4>
+                3. Productos digitales
+            </h4>
 
             <p>
                 Tratándose de software, archivos digitales o productos que pueden ser descargados o utilizados
@@ -3543,7 +3546,7 @@
         </div>
 
         <a
-            href="https://whop.com/soundwar-2/soundwar/"
+            href="https://whop.com/checkout/plan_ZOPk5wedDKVbe/?session=chs_gqC2c0MGl6TraE"
             class="button primary"
             id="openWhopPurchase"
             target="_blank"
@@ -3763,6 +3766,9 @@
     const purchasePlan =
         document.getElementById("purchasePlan");
 
+    const openWhopPurchase =
+        document.getElementById("openWhopPurchase");
+
 
     purchaseButtons.forEach(function(button) {
 
@@ -3774,6 +3780,9 @@
 
                 purchasePlan.textContent =
                     button.dataset.plan || "PLAN SELECCIONADO";
+
+                openWhopPurchase.href =
+                    button.dataset.whopUrl || "https://whop.com/checkout/plan_ZOPk5wedDKVbe/?session=chs_gqC2c0MGl6TraE";
 
                 purchaseModal.classList.add(
                     "active"
