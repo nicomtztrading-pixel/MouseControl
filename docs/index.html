@@ -627,185 +627,6 @@
 
 
     /* ================================
-       PROMOCIÓN USDT
-    ================================ */
-
-    .usdt-promo {
-        width: 100%;
-        max-width: 900px;
-        margin: 0 auto 34px;
-        padding: 28px 30px;
-        box-sizing: border-box;
-        text-align: center;
-
-        border-radius: 24px;
-
-        background:
-            linear-gradient(
-                135deg,
-                rgba(190, 115, 255, 0.18),
-                rgba(255, 255, 255, 0.055)
-            );
-
-        border: 1px solid rgba(190, 115, 255, 0.48);
-
-        box-shadow:
-            0 18px 50px rgba(0, 0, 0, 0.30),
-            0 0 40px rgba(151, 73, 224, 0.14),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08);
-
-        position: relative;
-        overflow: hidden;
-    }
-
-    .usdt-promo::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-            linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.06),
-                transparent
-            );
-        transform: translateX(-100%);
-        animation: usdtPromoShine 4s ease-in-out infinite;
-        pointer-events: none;
-    }
-
-    @keyframes usdtPromoShine {
-        0% {
-            transform: translateX(-100%);
-        }
-
-        35%,
-        100% {
-            transform: translateX(100%);
-        }
-    }
-
-    .usdt-promo-badge {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 13px;
-        padding: 8px 16px;
-        border-radius: 999px;
-
-        background: rgba(190, 115, 255, 0.16);
-        border: 1px solid rgba(190, 115, 255, 0.38);
-
-        color: #d39aff;
-        font-size: 10px;
-        font-weight: 900;
-        letter-spacing: 1.5px;
-    }
-
-    .usdt-promo-title {
-        position: relative;
-        margin: 0;
-        color: #ffffff;
-        font-size: clamp(21px, 3.5vw, 32px);
-        font-weight: 900;
-        line-height: 1.2;
-        letter-spacing: 0.3px;
-        text-transform: uppercase;
-    }
-
-    .usdt-promo-title strong {
-        color: #d39aff;
-    }
-
-    .usdt-promo-subtitle {
-        position: relative;
-        max-width: 720px;
-        margin: 13px auto 0;
-        color: rgba(255, 255, 255, 0.72);
-        font-size: 13px;
-        line-height: 1.65;
-    }
-
-    .usdt-promo-price {
-        position: relative;
-        margin-top: 18px;
-        color: rgba(255, 255, 255, 0.92);
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.7px;
-    }
-
-    .usdt-promo-price strong {
-        color: #d39aff;
-        font-size: 14px;
-    }
-
-
-    /* ================================
-       BOTÓN COMPRAR USDT
-    ================================ */
-
-    .usdt-promo-button {
-        position: relative;
-        margin: 22px auto 0;
-        width: 100%;
-        max-width: 360px;
-        min-height: 48px;
-
-        border: none;
-        border-radius: 12px;
-
-        cursor: pointer;
-
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        box-sizing: border-box;
-
-        background:
-            linear-gradient(
-                135deg,
-                #b777f5,
-                #8e44d8
-            );
-
-        color: #ffffff;
-
-        text-decoration: none;
-
-        font-family: inherit;
-        font-size: 13px;
-        font-weight: 900;
-        letter-spacing: 0.8px;
-
-        box-shadow:
-            0 10px 30px rgba(151, 73, 224, 0.28),
-            inset 0 1px 0 rgba(255, 255, 255, 0.16);
-
-        transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease,
-            filter 0.2s ease;
-    }
-
-    .usdt-promo-button:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.08);
-
-        box-shadow:
-            0 14px 35px rgba(151, 73, 224, 0.38),
-            0 0 25px rgba(190, 115, 255, 0.18),
-            inset 0 1px 0 rgba(255, 255, 255, 0.18);
-    }
-
-    .usdt-promo-button:active {
-        transform: translateY(0);
-    }
-
-
-    /* ================================
        BOTONES DE COMPRA
     ================================ */
 
@@ -1183,6 +1004,7 @@
         color: rgba(255, 255, 255, 0.70);
 
         font-size: 13px;
+
         line-height: 1.75;
     }
 
@@ -1446,25 +1268,6 @@
         .payment-methods-note {
             margin-top: 16px;
             font-size: 10px;
-        }
-
-        .usdt-promo {
-            margin-bottom: 26px;
-            padding: 24px 18px;
-            border-radius: 20px;
-        }
-
-        .usdt-promo-title {
-            font-size: 21px;
-        }
-
-        .usdt-promo-subtitle {
-            font-size: 12px;
-        }
-
-        .usdt-promo-button {
-            max-width: 100%;
-            min-height: 50px;
         }
 
         .work-with-us-card {
@@ -2500,7 +2303,7 @@
             </h2>
 
             <p>
-                Elegí la duración de tu licencia.
+                Elegí la duración de tu licencia para MouseControl + HACKAIM.
             </p>
 
         </div>
@@ -2509,43 +2312,8 @@
         <div class="purchase-notice">
 
             <strong>Antes de comprar:</strong>
-            verificá el producto, la duración de la licencia y el importe aplicable.
+            verificá la duración de la licencia y el importe aplicable.
             Las condiciones de compra, entrega, privacidad y reembolso se encuentran disponibles en esta misma página.
-
-        </div>
-
-
-        <!-- =====================================
-             PROMOCIÓN USDT
-        ====================================== -->
-
-        <div class="usdt-promo">
-
-            <div class="usdt-promo-badge">
-                💎 PROMOCIÓN EXCLUSIVA
-            </div>
-
-            <h3 class="usdt-promo-title">
-                PAGANDO EN <strong>USDT</strong>, TENÉS
-                <strong>LOS DOS PROGRAMAS AL PRECIO DE UNO</strong>
-            </h3>
-
-            <p class="usdt-promo-subtitle">
-                Obtené <strong>MouseControl + HACKAIM</strong> mediante la promoción informada por WhatsApp.
-                El precio y las condiciones de esta promoción se informan antes de confirmar la operación.
-            </p>
-
-            <div class="usdt-promo-price">
-                💎 <strong>MOUSECONTROL + HACKAIM</strong> — PROMOCIÓN ESPECIAL
-            </div>
-
-            <a
-                href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20consultar%20la%20promoci%C3%B3n%20de%20MouseControl%20%2B%20HACKAIM."
-                class="usdt-promo-button"
-                target="_blank"
-                rel="noopener noreferrer">
-                💎 CONSULTAR PROMOCIÓN
-            </a>
 
         </div>
 
@@ -2553,20 +2321,20 @@
         <div class="pricing-products">
 
 
-            <div id="mousecontrol" class="pricing-product">
+            <div id="mousecontrol-hackaim" class="pricing-product">
 
                 <div class="pricing-product-title">
 
                     <p class="section-tag">
-                        MOUSECONTROL
+                        MOUSECONTROL + HACKAIM
                     </p>
 
                     <h3>
-                        MOUSECONTROL
+                        MOUSECONTROL + HACKAIM
                     </h3>
 
                     <p>
-                        Elegí la duración de tu licencia.
+                        Una sola licencia para acceder a ambos productos durante el período contratado.
                     </p>
 
                 </div>
@@ -2575,91 +2343,9 @@
                 <div class="pricing">
 
 
-                    <article class="price-card">
-
-                        <p class="price-type">
-                            MENSUAL
-                        </p>
-
-                        <div class="price">
-                            10 USD
-                        </div>
-
-                        <p class="price-description">
-                            Licencia válida durante 1 mes.
-                        </p>
-
-                        <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20MouseControl%20%E2%80%94%20Mensual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
-                            class="button primary buy-license-button"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            INICIAR COMPRA
-                        </a>
-
-                    </article>
-
-
-                    <article class="price-card featured">
-
-                        <div class="recommended">
-                            RECOMENDADO
-                        </div>
-
-                        <p class="price-type">
-                            ANUAL
-                        </p>
-
-                        <div class="price">
-                            60 USD
-                        </div>
-
-                        <p class="price-description">
-                            Licencia válida durante 12 meses.
-                        </p>
-
-                        <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20MouseControl%20%E2%80%94%20Anual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
-                            class="button primary buy-license-button"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            INICIAR COMPRA
-                        </a>
-
-                    </article>
-
-
-                </div>
-
-
-                <div class="payment-methods-note">
-                    💳 <strong>EL MÉTODO DE PAGO Y EL IMPORTE FINAL SE INFORMAN ANTES DE CONFIRMAR LA COMPRA</strong>
-                </div>
-
-            </div>
-
-
-            <div id="hackaim" class="pricing-product">
-
-                <div class="pricing-product-title">
-
-                    <p class="section-tag">
-                        HACKAIM
-                    </p>
-
-                    <h3>
-                        HACKAIM
-                    </h3>
-
-                    <p>
-                        Elegí la duración de tu licencia.
-                    </p>
-
-                </div>
-
-
-                <div class="pricing">
-
+                    <!-- =====================================
+                         PLAN MENSUAL
+                    ====================================== -->
 
                     <article class="price-card">
 
@@ -2672,11 +2358,11 @@
                         </div>
 
                         <p class="price-description">
-                            Licencia válida durante 1 mes.
+                            Licencia válida durante 1 mes para MouseControl + HACKAIM.
                         </p>
 
                         <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20HACKAIM%20%E2%80%94%20Mensual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
+                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20el%20plan%20MENSUAL%20de%20MouseControl%20%2B%20HACKAIM%20por%2013%20USD.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
                             class="button primary buy-license-button"
                             target="_blank"
                             rel="noopener noreferrer">
@@ -2685,6 +2371,10 @@
 
                     </article>
 
+
+                    <!-- =====================================
+                         PLAN ANUAL
+                    ====================================== -->
 
                     <article class="price-card featured">
 
@@ -2697,15 +2387,15 @@
                         </p>
 
                         <div class="price">
-                            65 USD
+                            70 USD
                         </div>
 
                         <p class="price-description">
-                            Licencia válida durante 12 meses.
+                            Licencia válida durante 12 meses para MouseControl + HACKAIM.
                         </p>
 
                         <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20HACKAIM%20%E2%80%94%20Anual.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
+                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20el%20plan%20ANUAL%20de%20MouseControl%20%2B%20HACKAIM%20por%2070%20USD.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
                             class="button primary buy-license-button"
                             target="_blank"
                             rel="noopener noreferrer">
@@ -2719,7 +2409,7 @@
 
 
                 <div class="payment-methods-note">
-                    💳 <strong>EL MÉTODO DE PAGO Y EL IMPORTE FINAL SE INFORMAN ANTES DE CONFIRMAR LA COMPRA</strong>
+                    🎁 <strong>SOUNDWAR SE INCLUYE DE REGALO CON LA COMPRA DE CUALQUIER PLAN</strong>
                 </div>
 
             </div>
@@ -2730,7 +2420,8 @@
 
         <div class="third-party-notice">
 
-            Los precios publicados son precios de referencia de cada plan.
+            Los precios publicados corresponden a los planes de MouseControl + HACKAIM.
+            SoundWar se incluye de regalo con la compra de cualquier plan.
             Antes de completar una operación se informa al comprador el importe final aplicable,
             la moneda de cobro, el método de pago, el producto contratado y la duración de la licencia.
 
