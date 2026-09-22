@@ -2361,13 +2361,12 @@
                             Licencia válida durante 1 mes para MouseControl + HACKAIM.
                         </p>
 
-                        <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20el%20plan%20MENSUAL%20de%20MouseControl%20%2B%20HACKAIM%20por%2013%20USD.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
+                        <button
+                            type="button"
                             class="button primary buy-license-button"
-                            target="_blank"
-                            rel="noopener noreferrer">
+                            data-plan="MENSUAL — 13 USD">
                             INICIAR COMPRA
-                        </a>
+                        </button>
 
                     </article>
 
@@ -2394,13 +2393,12 @@
                             Licencia válida durante 12 meses para MouseControl + HACKAIM.
                         </p>
 
-                        <a
-                            href="https://wa.me/5491128823023?text=Hola%2C%20quiero%20comprar%20el%20plan%20ANUAL%20de%20MouseControl%20%2B%20HACKAIM%20por%2070%20USD.%20Quiero%20conocer%20las%20condiciones%20de%20compra."
+                        <button
+                            type="button"
                             class="button primary buy-license-button"
-                            target="_blank"
-                            rel="noopener noreferrer">
+                            data-plan="ANUAL — 70 USD">
                             INICIAR COMPRA
-                        </a>
+                        </button>
 
                     </article>
 
@@ -3722,6 +3720,62 @@
 </div>
 
 
+<!-- VENTANA DE COMPRA -->
+
+<div
+    class="complaint-modal"
+    id="purchaseModal">
+
+    <div class="complaint-modal-box">
+
+        <button
+            class="complaint-close"
+            id="closePurchase"
+            aria-label="Cerrar"
+            type="button">
+            ×
+        </button>
+
+        <p class="section-tag">
+            COMPRA
+        </p>
+
+        <h2>
+            COMPRÁ DESDE WHOP
+        </h2>
+
+        <p class="complaint-text">
+            Al apretar el botón comprar podrás acceder a todos los medios de pago desde Whop.
+            Tu licencia se enviará al correo donde registres tu compra de SoundWar.
+            Esta licencia servirá para MouseControl y HACKAIM.
+        </p>
+
+        <div class="complaint-email">
+
+            <span>
+                PLAN SELECCIONADO
+            </span>
+
+            <strong id="purchasePlan">
+                MENSUAL — 13 USD
+            </strong>
+
+        </div>
+
+        <a
+            href="https://whop.com/soundwar-2/soundwar/"
+            class="button primary"
+            id="openWhopPurchase"
+            target="_blank"
+            rel="noopener noreferrer">
+            COMPRAR EN WHOP
+        </a>
+
+    </div>
+
+</div>
+
+
 <!-- JAVASCRIPT -->
 
 <script>
@@ -3855,6 +3909,9 @@
                 "active"
             );
 
+            document.body.style.overflow =
+                "hidden";
+
         }
     );
 
@@ -3866,6 +3923,9 @@
             complaintModal.classList.remove(
                 "active"
             );
+
+            document.body.style.overflow =
+                "";
 
         }
     );
@@ -3882,6 +3942,9 @@
                 complaintModal.classList.remove(
                     "active"
                 );
+
+                document.body.style.overflow =
+                    "";
 
             }
 
@@ -3905,6 +3968,81 @@
 
 
     /* ================================
+       VENTANA DE COMPRA
+    ================================ */
+
+    const purchaseButtons =
+        document.querySelectorAll(".buy-license-button");
+
+    const purchaseModal =
+        document.getElementById("purchaseModal");
+
+    const closePurchase =
+        document.getElementById("closePurchase");
+
+    const purchasePlan =
+        document.getElementById("purchasePlan");
+
+
+    purchaseButtons.forEach(function(button) {
+
+        button.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                purchasePlan.textContent =
+                    button.dataset.plan || "PLAN SELECCIONADO";
+
+                purchaseModal.classList.add(
+                    "active"
+                );
+
+                document.body.style.overflow =
+                    "hidden";
+
+            }
+        );
+
+    });
+
+
+    function closePurchaseModal() {
+
+        purchaseModal.classList.remove(
+            "active"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    closePurchase.addEventListener(
+        "click",
+        closePurchaseModal
+    );
+
+
+    purchaseModal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === purchaseModal
+            ) {
+
+                closePurchaseModal();
+
+            }
+
+        }
+    );
+
+
+    /* ================================
        ESCAPE PARA CERRAR
     ================================ */
 
@@ -3919,6 +4057,10 @@
                 );
 
                 complaintModal.classList.remove(
+                    "active"
+                );
+
+                purchaseModal.classList.remove(
                     "active"
                 );
 
